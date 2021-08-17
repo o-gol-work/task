@@ -1,10 +1,15 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "department", schema = "task_vsr", catalog = "")
+@Table(name = "department", schema = "task_vsr")
+@Data
+@NoArgsConstructor
 public class DepartmentEntity {
     private Long parentId;
     private Long id;
@@ -30,19 +35,16 @@ public class DepartmentEntity {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
+
+
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "title", nullable = false, length = 100)
@@ -50,9 +52,6 @@ public class DepartmentEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Basic
     @Column(name = "telephone_number", nullable = true, length = 15)
@@ -60,9 +59,6 @@ public class DepartmentEntity {
         return telephoneNumber;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
 
     @Basic
     @Column(name = "department_type_id", nullable = true)
@@ -70,9 +66,7 @@ public class DepartmentEntity {
         return departmentTypeId;
     }
 
-    public void setDepartmentTypeId(Long departmentTypeId) {
-        this.departmentTypeId = departmentTypeId;
-    }
+
 
     @Basic
     @Column(name = "department_parent_structer", nullable = false)
@@ -80,43 +74,12 @@ public class DepartmentEntity {
         return departmentParentStructer;
     }
 
-    public void setDepartmentParentStructer(Long departmentParentStructer) {
-        this.departmentParentStructer = departmentParentStructer;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        DepartmentEntity that = (DepartmentEntity) o;
 
-        if (parentId != null ? !parentId.equals(that.parentId) : that.parentId != null) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (telephoneNumber != null ? !telephoneNumber.equals(that.telephoneNumber) : that.telephoneNumber != null)
-            return false;
-        if (departmentTypeId != null ? !departmentTypeId.equals(that.departmentTypeId) : that.departmentTypeId != null)
-            return false;
-        if (departmentParentStructer != null ? !departmentParentStructer.equals(that.departmentParentStructer) : that.departmentParentStructer != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = parentId != null ? parentId.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (telephoneNumber != null ? telephoneNumber.hashCode() : 0);
-        result = 31 * result + (departmentTypeId != null ? departmentTypeId.hashCode() : 0);
-        result = 31 * result + (departmentParentStructer != null ? departmentParentStructer.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public DepartmentEntity getDepartmentByParentId() {
         return departmentByParentId;
     }
@@ -135,7 +98,7 @@ public class DepartmentEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "department_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "department_type_id", referencedColumnName = "id",insertable = false, updatable = false)
     public DepartmentTypeEntity getDepartmentTypeByDepartmentTypeId() {
         return departmentTypeByDepartmentTypeId;
     }
@@ -145,7 +108,7 @@ public class DepartmentEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "department_parent_structer", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "department_parent_structer", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public DepartmentEntity getDepartmentByDepartmentParentStructer() {
         return departmentByDepartmentParentStructer;
     }

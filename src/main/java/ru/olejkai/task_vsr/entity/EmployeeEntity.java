@@ -1,10 +1,15 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "employee", schema = "task_vsr", catalog = "")
+@Table(name = "employee", schema = "task_vsr")
+@Data
+@NoArgsConstructor
 public class EmployeeEntity {
     private Long id;
     private Integer tabelNumber;
@@ -21,14 +26,12 @@ public class EmployeeEntity {
     private Collection<TaskEntity> tasksById_0;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "tabel_number", nullable = false)
@@ -36,9 +39,6 @@ public class EmployeeEntity {
         return tabelNumber;
     }
 
-    public void setTabelNumber(Integer tabelNumber) {
-        this.tabelNumber = tabelNumber;
-    }
 
     @Basic
     @Column(name = "name", nullable = false, length = 45)
@@ -46,9 +46,6 @@ public class EmployeeEntity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Basic
     @Column(name = "surname", nullable = false, length = 45)
@@ -56,9 +53,6 @@ public class EmployeeEntity {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 
     @Basic
     @Column(name = "telephone_number", nullable = true, length = 15)
@@ -66,9 +60,6 @@ public class EmployeeEntity {
         return telephoneNumber;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
 
     @Basic
     @Column(name = "password", nullable = true, length = 255)
@@ -76,9 +67,6 @@ public class EmployeeEntity {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Basic
     @Column(name = "worked", nullable = false)
@@ -86,9 +74,6 @@ public class EmployeeEntity {
         return worked;
     }
 
-    public void setWorked(Byte worked) {
-        this.worked = worked;
-    }
 
     @Basic
     @Column(name = "post_has_department_id", nullable = false)
@@ -96,46 +81,10 @@ public class EmployeeEntity {
         return postHasDepartmentId;
     }
 
-    public void setPostHasDepartmentId(Long postHasDepartmentId) {
-        this.postHasDepartmentId = postHasDepartmentId;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EmployeeEntity that = (EmployeeEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (tabelNumber != null ? !tabelNumber.equals(that.tabelNumber) : that.tabelNumber != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-        if (telephoneNumber != null ? !telephoneNumber.equals(that.telephoneNumber) : that.telephoneNumber != null)
-            return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (worked != null ? !worked.equals(that.worked) : that.worked != null) return false;
-        if (postHasDepartmentId != null ? !postHasDepartmentId.equals(that.postHasDepartmentId) : that.postHasDepartmentId != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (tabelNumber != null ? tabelNumber.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (telephoneNumber != null ? telephoneNumber.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (worked != null ? worked.hashCode() : 0);
-        result = 31 * result + (postHasDepartmentId != null ? postHasDepartmentId.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
-    @JoinColumn(name = "post_has_department_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "post_has_department_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public PostHasDepartmentEntity getPostHasDepartmentByPostHasDepartmentId() {
         return postHasDepartmentByPostHasDepartmentId;
     }
@@ -143,6 +92,7 @@ public class EmployeeEntity {
     public void setPostHasDepartmentByPostHasDepartmentId(PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId) {
         this.postHasDepartmentByPostHasDepartmentId = postHasDepartmentByPostHasDepartmentId;
     }
+
 
     @OneToMany(mappedBy = "employeeByEmployeeId")
     public Collection<EmployeeCommentEntity> getEmployeeCommentsById() {

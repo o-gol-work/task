@@ -1,17 +1,22 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "task_problem", schema = "task_vsr", catalog = "")
+@Table(name = "task_problem", schema = "task_vsr")
+@Data
+@NoArgsConstructor
 public class TaskProblemEntity {
     private Long parentId;
     private Long id;
     private String title;
+    private TaskProblemEntity taskProblemByParentId;
     private Collection<DepartmentProblemEntity> departmentProblemsById;
     private Collection<TaskEntity> tasksById;
-    private TaskProblemEntity taskProblemByParentId;
     private Collection<TaskProblemEntity> taskProblemsById;
 
     @Basic
@@ -20,19 +25,14 @@ public class TaskProblemEntity {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "title", nullable = true, length = 45)
@@ -40,31 +40,30 @@ public class TaskProblemEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
+    public TaskProblemEntity getTaskProblemByParentId() {
+        return taskProblemByParentId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TaskProblemEntity that = (TaskProblemEntity) o;
-
-        if (parentId != null ? !parentId.equals(that.parentId) : that.parentId != null) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-
-        return true;
+    public void setTaskProblemByParentId(TaskProblemEntity taskProblemByParentId) {
+        this.taskProblemByParentId = taskProblemByParentId;
     }
 
-    @Override
-    public int hashCode() {
-        int result = parentId != null ? parentId.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
+    @OneToMany(mappedBy = "taskProblemByParentId")
+    public Collection<TaskProblemEntity> getTaskProblemsById() {
+        return taskProblemsById;
     }
+
+    public void setTaskProblemsById(Collection<TaskProblemEntity> taskProblemsById) {
+        this.taskProblemsById = taskProblemsById;
+    }
+
 
     @OneToMany(mappedBy = "taskProblemByProblemId")
     public Collection<DepartmentProblemEntity> getDepartmentProblemsById() {
@@ -82,24 +81,5 @@ public class TaskProblemEntity {
 
     public void setTasksById(Collection<TaskEntity> tasksById) {
         this.tasksById = tasksById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    public TaskProblemEntity getTaskProblemByParentId() {
-        return taskProblemByParentId;
-    }
-
-    public void setTaskProblemByParentId(TaskProblemEntity taskProblemByParentId) {
-        this.taskProblemByParentId = taskProblemByParentId;
-    }
-
-    @OneToMany(mappedBy = "taskProblemByParentId")
-    public Collection<TaskProblemEntity> getTaskProblemsById() {
-        return taskProblemsById;
-    }
-
-    public void setTaskProblemsById(Collection<TaskProblemEntity> taskProblemsById) {
-        this.taskProblemsById = taskProblemsById;
     }
 }

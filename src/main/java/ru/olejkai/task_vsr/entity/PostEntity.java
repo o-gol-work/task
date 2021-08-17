@@ -1,10 +1,15 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "post", schema = "task_vsr", catalog = "")
+@Table(name = "post", schema = "task_vsr")
+@Data
+@NoArgsConstructor
 public class PostEntity {
     private Long id;
     private String title;
@@ -14,14 +19,12 @@ public class PostEntity {
     private Collection<PostHasDepartmentEntity> postHasDepartmentsById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "title", nullable = false, length = 45)
@@ -29,9 +32,6 @@ public class PostEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Basic
     @Column(name = "parent_id", nullable = true)
@@ -39,34 +39,11 @@ public class PostEntity {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        PostEntity that = (PostEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (parentId != null ? !parentId.equals(that.parentId) : that.parentId != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public PostEntity getPostByParentId() {
         return postByParentId;
     }

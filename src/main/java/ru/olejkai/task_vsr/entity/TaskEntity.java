@@ -1,11 +1,16 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name = "task", schema = "task_vsr", catalog = "")
+@Table(name = "task", schema = "task_vsr")
+@Data
+@NoArgsConstructor
 public class TaskEntity {
     private Long parentId;
     private Long id;
@@ -34,19 +39,14 @@ public class TaskEntity {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "employee_id_tasker", nullable = false)
@@ -54,9 +54,6 @@ public class TaskEntity {
         return employeeIdTasker;
     }
 
-    public void setEmployeeIdTasker(Long employeeIdTasker) {
-        this.employeeIdTasker = employeeIdTasker;
-    }
 
     @Basic
     @Column(name = "task_problem_id", nullable = false)
@@ -64,9 +61,6 @@ public class TaskEntity {
         return taskProblemId;
     }
 
-    public void setTaskProblemId(Long taskProblemId) {
-        this.taskProblemId = taskProblemId;
-    }
 
     @Basic
     @Column(name = "task_comment_id", nullable = true, length = 45)
@@ -74,9 +68,6 @@ public class TaskEntity {
         return taskCommentId;
     }
 
-    public void setTaskCommentId(String taskCommentId) {
-        this.taskCommentId = taskCommentId;
-    }
 
     @Basic
     @Column(name = "date_begin", nullable = false)
@@ -84,9 +75,6 @@ public class TaskEntity {
         return dateBegin;
     }
 
-    public void setDateBegin(Timestamp dateBegin) {
-        this.dateBegin = dateBegin;
-    }
 
     @Basic
     @Column(name = "employee_id_executer", nullable = true)
@@ -94,9 +82,6 @@ public class TaskEntity {
         return employeeIdExecuter;
     }
 
-    public void setEmployeeIdExecuter(Long employeeIdExecuter) {
-        this.employeeIdExecuter = employeeIdExecuter;
-    }
 
     @Basic
     @Column(name = "department_id_executer", nullable = true)
@@ -104,9 +89,6 @@ public class TaskEntity {
         return departmentIdExecuter;
     }
 
-    public void setDepartmentIdExecuter(Long departmentIdExecuter) {
-        this.departmentIdExecuter = departmentIdExecuter;
-    }
 
     @Basic
     @Column(name = "data_finish", nullable = true)
@@ -114,9 +96,6 @@ public class TaskEntity {
         return dataFinish;
     }
 
-    public void setDataFinish(Timestamp dataFinish) {
-        this.dataFinish = dataFinish;
-    }
 
     @Basic
     @Column(name = "status", nullable = true)
@@ -124,9 +103,6 @@ public class TaskEntity {
         return status;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     @Basic
     @Column(name = "status_exec", nullable = true)
@@ -134,55 +110,9 @@ public class TaskEntity {
         return statusExec;
     }
 
-    public void setStatusExec(Integer statusExec) {
-        this.statusExec = statusExec;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TaskEntity that = (TaskEntity) o;
-
-        if (parentId != null ? !parentId.equals(that.parentId) : that.parentId != null) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (employeeIdTasker != null ? !employeeIdTasker.equals(that.employeeIdTasker) : that.employeeIdTasker != null)
-            return false;
-        if (taskProblemId != null ? !taskProblemId.equals(that.taskProblemId) : that.taskProblemId != null)
-            return false;
-        if (taskCommentId != null ? !taskCommentId.equals(that.taskCommentId) : that.taskCommentId != null)
-            return false;
-        if (dateBegin != null ? !dateBegin.equals(that.dateBegin) : that.dateBegin != null) return false;
-        if (employeeIdExecuter != null ? !employeeIdExecuter.equals(that.employeeIdExecuter) : that.employeeIdExecuter != null)
-            return false;
-        if (departmentIdExecuter != null ? !departmentIdExecuter.equals(that.departmentIdExecuter) : that.departmentIdExecuter != null)
-            return false;
-        if (dataFinish != null ? !dataFinish.equals(that.dataFinish) : that.dataFinish != null) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (statusExec != null ? !statusExec.equals(that.statusExec) : that.statusExec != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = parentId != null ? parentId.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (employeeIdTasker != null ? employeeIdTasker.hashCode() : 0);
-        result = 31 * result + (taskProblemId != null ? taskProblemId.hashCode() : 0);
-        result = 31 * result + (taskCommentId != null ? taskCommentId.hashCode() : 0);
-        result = 31 * result + (dateBegin != null ? dateBegin.hashCode() : 0);
-        result = 31 * result + (employeeIdExecuter != null ? employeeIdExecuter.hashCode() : 0);
-        result = 31 * result + (departmentIdExecuter != null ? departmentIdExecuter.hashCode() : 0);
-        result = 31 * result + (dataFinish != null ? dataFinish.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (statusExec != null ? statusExec.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public TaskEntity getTaskByParentId() {
         return taskByParentId;
     }
@@ -191,17 +121,10 @@ public class TaskEntity {
         this.taskByParentId = taskByParentId;
     }
 
-    @OneToMany(mappedBy = "taskByParentId")
-    public Collection<TaskEntity> getTasksById() {
-        return tasksById;
-    }
 
-    public void setTasksById(Collection<TaskEntity> tasksById) {
-        this.tasksById = tasksById;
-    }
 
     @ManyToOne
-    @JoinColumn(name = "employee_id_tasker", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "employee_id_tasker", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public EmployeeEntity getEmployeeByEmployeeIdTasker() {
         return employeeByEmployeeIdTasker;
     }
@@ -211,7 +134,7 @@ public class TaskEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "task_problem_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "task_problem_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public TaskProblemEntity getTaskProblemByTaskProblemId() {
         return taskProblemByTaskProblemId;
     }
@@ -221,7 +144,7 @@ public class TaskEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "employee_id_executer", referencedColumnName = "id")
+    @JoinColumn(name = "employee_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
     public EmployeeEntity getEmployeeByEmployeeIdExecuter() {
         return employeeByEmployeeIdExecuter;
     }
@@ -231,7 +154,7 @@ public class TaskEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "department_id_executer", referencedColumnName = "id")
+    @JoinColumn(name = "department_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
     public DepartmentEntity getDepartmentByDepartmentIdExecuter() {
         return departmentByDepartmentIdExecuter;
     }
@@ -240,14 +163,7 @@ public class TaskEntity {
         this.departmentByDepartmentIdExecuter = departmentByDepartmentIdExecuter;
     }
 
-    @OneToMany(mappedBy = "taskByTaskId")
-    public Collection<TaskCommentsEntity> getTaskCommentsById() {
-        return taskCommentsById;
-    }
 
-    public void setTaskCommentsById(Collection<TaskCommentsEntity> taskCommentsById) {
-        this.taskCommentsById = taskCommentsById;
-    }
 
     @OneToOne(mappedBy = "taskById")
     public TaskStatusExecuterEntity getTaskStatusExecuterById() {
@@ -265,5 +181,23 @@ public class TaskEntity {
 
     public void setTaskStatusTaskerById(TaskStatusTaskerEntity taskStatusTaskerById) {
         this.taskStatusTaskerById = taskStatusTaskerById;
+    }
+
+    @OneToMany(mappedBy = "taskByParentId")
+    public Collection<TaskEntity> getTasksById() {
+        return tasksById;
+    }
+
+    public void setTasksById(Collection<TaskEntity> tasksById) {
+        this.tasksById = tasksById;
+    }
+
+    @OneToMany(mappedBy = "taskByTaskId")
+    public Collection<TaskCommentsEntity> getTaskCommentsById() {
+        return taskCommentsById;
+    }
+
+    public void setTaskCommentsById(Collection<TaskCommentsEntity> taskCommentsById) {
+        this.taskCommentsById = taskCommentsById;
     }
 }
