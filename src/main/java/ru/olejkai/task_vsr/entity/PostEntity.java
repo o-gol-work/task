@@ -14,9 +14,9 @@ public class PostEntity {
     private Long id;
     private String title;
     private Long parentId;
-    private PostEntity postByParentId;
+    /*private PostEntity postByParentId;
     private Collection<PostEntity> postsById;
-    private Collection<PostHasDepartmentEntity> postHasDepartmentsById;
+    private Collection<PostHasDepartmentEntity> postHasDepartmentsById;*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class PostEntity {
 
 
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public PostEntity getPostByParentId() {
         return postByParentId;
@@ -68,5 +68,5 @@ public class PostEntity {
 
     public void setPostHasDepartmentsById(Collection<PostHasDepartmentEntity> postHasDepartmentsById) {
         this.postHasDepartmentsById = postHasDepartmentsById;
-    }
+    }*/
 }

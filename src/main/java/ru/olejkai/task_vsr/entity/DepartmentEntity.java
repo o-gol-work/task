@@ -15,7 +15,7 @@ public class DepartmentEntity {
     private Long id;
     private String title;
     private String telephoneNumber;
-    private Long departmentTypeId;
+    /*private Long departmentTypeId;
     private Long departmentParentStructer;
     private DepartmentEntity departmentByParentId;
     private Collection<DepartmentEntity> departmentsById;
@@ -27,7 +27,7 @@ public class DepartmentEntity {
     private Collection<DepartmentTaskerToDepartmentsExecutersEntity> departmentTaskerToDepartmentsExecutersById;
     private Collection<DepartmentTaskerToDepartmentsExecutersEntity> departmentTaskerToDepartmentsExecutersById_0;
     private Collection<PostHasDepartmentEntity> postHasDepartmentsById;
-    private Collection<TaskEntity> tasksById;
+    private Collection<TaskEntity> tasksById;*/
 
     @Basic
     @Column(name = "parent_id", nullable = true)
@@ -60,7 +60,7 @@ public class DepartmentEntity {
     }
 
 
-    @Basic
+    /*@Basic
     @Column(name = "department_type_id", nullable = true)
     public Long getDepartmentTypeId() {
         return departmentTypeId;
@@ -178,5 +178,5 @@ public class DepartmentEntity {
 
     public void setTasksById(Collection<TaskEntity> tasksById) {
         this.tasksById = tasksById;
-    }
+    }*/
 }

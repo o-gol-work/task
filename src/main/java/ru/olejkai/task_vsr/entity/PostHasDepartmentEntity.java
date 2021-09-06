@@ -14,7 +14,7 @@ public class PostHasDepartmentEntity {
     private Long postId;
     private Long departmentId;
     private Long id;
-    private Collection<EmployeeEntity> employeesById;
+//    private Collection<EmployeeEntity> employeesById;
     private PostEntity postByPostId;
     private DepartmentEntity departmentByDepartmentId;
 
@@ -42,7 +42,7 @@ public class PostHasDepartmentEntity {
 
 
 
-    @OneToMany(mappedBy = "postHasDepartmentByPostHasDepartmentId")
+    /*@OneToMany(mappedBy = "postHasDepartmentByPostHasDepartmentId")
     public Collection<EmployeeEntity> getEmployeesById() {
         return employeesById;
     }
@@ -50,6 +50,7 @@ public class PostHasDepartmentEntity {
     public void setEmployeesById(Collection<EmployeeEntity> employeesById) {
         this.employeesById = employeesById;
     }
+*/
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)

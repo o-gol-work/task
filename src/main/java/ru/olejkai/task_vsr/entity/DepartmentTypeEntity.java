@@ -13,7 +13,7 @@ import java.util.Collection;
 public class DepartmentTypeEntity {
     private Long id;
     private String title;
-    private Collection<DepartmentEntity> departmentsById;
+//    private Collection<DepartmentEntity> departmentsById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,12 @@ public class DepartmentTypeEntity {
     }
 
 
-    @OneToMany(mappedBy = "departmentTypeByDepartmentTypeId")
+    /*@OneToMany(mappedBy = "departmentTypeByDepartmentTypeId")
     public Collection<DepartmentEntity> getDepartmentsById() {
         return departmentsById;
     }
 
     public void setDepartmentsById(Collection<DepartmentEntity> departmentsById) {
         this.departmentsById = departmentsById;
-    }
+    }*/
 }

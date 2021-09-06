@@ -20,10 +20,10 @@ public class EmployeeEntity {
     private Byte worked;
     private Long postHasDepartmentId;
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
-    private Collection<EmployeeCommentEntity> employeeCommentsById;
+    /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<EmployeeRoleEntity> employeeRolesById;
     private Collection<TaskEntity> tasksById;
-    private Collection<TaskEntity> tasksById_0;
+    private Collection<TaskEntity> tasksById_0;*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,7 +94,7 @@ public class EmployeeEntity {
     }
 
 
-    @OneToMany(mappedBy = "employeeByEmployeeId")
+    /*@OneToMany(mappedBy = "employeeByEmployeeId")
     public Collection<EmployeeCommentEntity> getEmployeeCommentsById() {
         return employeeCommentsById;
     }
@@ -128,5 +128,5 @@ public class EmployeeEntity {
 
     public void setTasksById_0(Collection<TaskEntity> tasksById_0) {
         this.tasksById_0 = tasksById_0;
-    }
+    }*/
 }
