@@ -21,11 +21,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/all_employees")
-    public void allEmployees(){
-//    public List<EmployeeEntity> allEmployees(){
-//        return employeeRepository.findAll();
-        List<EmployeeEntity> employees=employeeRepository.findAll();
-        System.out.println(employees);
+//    public void allEmployees(){
+    public List<EmployeeEntity> allEmployees(){
+        return employeeRepository.findAll();
+//        List<EmployeeEntity> employees=employeeRepository.findAll();
+//        System.out.println(employees);
 
     }
 }
