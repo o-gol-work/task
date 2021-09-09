@@ -15,10 +15,11 @@ public class DepartmentEntity {
     private Long id;
     private String title;
     private String telephoneNumber;
+    private DepartmentEntity departmentByParentId;
+//    private Collection<DepartmentEntity> departmentsById;
     /*private Long departmentTypeId;
     private Long departmentParentStructer;
     private DepartmentEntity departmentByParentId;
-    private Collection<DepartmentEntity> departmentsById;
     private DepartmentTypeEntity departmentTypeByDepartmentTypeId;
     private DepartmentEntity departmentByDepartmentParentStructer;
     private Collection<DepartmentEntity> departmentsById_0;
@@ -58,6 +59,19 @@ public class DepartmentEntity {
     public String getTelephoneNumber() {
         return telephoneNumber;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
+    public DepartmentEntity getDepartmentByParentId() {
+        return departmentByParentId;
+    }
+
+
+    /*@OneToMany(mappedBy = "departmentByParentId",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name="parent_id")
+    public Collection<DepartmentEntity> getDepartmentsById() {
+        return departmentsById;
+    }*/
 
 
     /*@Basic

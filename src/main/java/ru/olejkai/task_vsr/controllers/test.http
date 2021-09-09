@@ -11,3 +11,14 @@ GET http://localhost:8080/employees/all_employees
 
 
 ###
+
+GET http://localhost:8080/departments/all_child_departments
+
+
+###
+
+
+GET http://localhost:8080/departments/parent_department
+
+
+
