@@ -43,9 +43,9 @@ public class DepartmentController {
 
 
     @GetMapping("/parent_department")
-    public void allEmployees(){
-//    public DepartmentEntity test02(){
-        DepartmentEntity departmentEntity=departmentRepository.getDepartmentEntityById(12l);
+//    public void allEmployees(){
+    public Long test02(){
+        return departmentRepository.getDepartmentEntityById(12l).getId();
 //        Long id=  departmentRepository.getDepartmentEntityById(12l).getId();
 //        return departmentRepository.getDepartmentEntityById(12l).getId();
 //        System.out.println(id);

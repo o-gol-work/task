@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -65,6 +66,7 @@ public class DepartmentEntity {
         return telephoneNumber;
     }
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @ManyToOne(
             fetch = FetchType.LAZY
     )
