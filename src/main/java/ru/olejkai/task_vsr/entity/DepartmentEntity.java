@@ -2,9 +2,14 @@ package ru.olejkai.task_vsr.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Collection;
+
+
+
+
 
 @Entity
 @Table(name = "department", schema = "task_vsr")
@@ -15,7 +20,7 @@ public class DepartmentEntity {
     private Long id;
     private String title;
     private String telephoneNumber;
-    private DepartmentEntity departmentByParentId;
+    private DepartmentEntity DepartmentEntityById;
 //    private Collection<DepartmentEntity> departmentsById;
     /*private Long departmentTypeId;
     private Long departmentParentStructer;
@@ -60,11 +65,19 @@ public class DepartmentEntity {
         return telephoneNumber;
     }
 
-    @ManyToOne
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "parent_id", foreignKey=@ForeignKey(name="fk_department_parent"), insertable = false, updatable = false)
+    public DepartmentEntity getDepartmentEntityById() {
+        return DepartmentEntityById;
+    }
+
+    /*@ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public DepartmentEntity getDepartmentByParentId() {
         return departmentByParentId;
-    }
+    }*/
 
 
     /*@OneToMany(mappedBy = "departmentByParentId",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

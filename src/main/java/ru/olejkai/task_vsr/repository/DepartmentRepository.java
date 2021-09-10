@@ -13,6 +13,7 @@ public interface DepartmentRepository extends JpaRepository<DepartmentEntity,Lon
 //    Collection<DepartmentEntity> getDepartmentEntitiesByParentId(Long parentId);
 //    Collection<DepartmentEntity> getDepartmentsById(Long parentId);
 
-    DepartmentEntity getDepartmentEntityByParentId(Long parentId); // создает объект DepartmentEntity по радительскому id (parentId) со вложенными в него другими DepartmentEntity которые являются его родителями, вложенность продолжается до главного родителя
+//    DepartmentEntity getDepartmentEntityByParentId(Long parentId); // создает объект DepartmentEntity по радительскому id (parentId) со вложенными в него другими DepartmentEntity которые являются его родителями, вложенность продолжается до главного родителя
+      DepartmentEntity getDepartmentEntityById(Long id);
 
 }

@@ -17,6 +17,12 @@ import java.util.List;
 public class DepartmentController {
 
     private DepartmentRepository departmentRepository;
+    /*private DepartmentEntity departmentEntity;
+
+    @Autowired
+    public void setDepartmentEntity(DepartmentEntity departmentEntity) {
+        this.departmentEntity = departmentEntity;
+    }*/
 
     @Autowired
     public void setDepartmentRepository(DepartmentRepository departmentRepository) {
@@ -37,13 +43,15 @@ public class DepartmentController {
 
 
     @GetMapping("/parent_department")
-//    public void allEmployees(){
-    public DepartmentEntity test02(){
-        DepartmentEntity entity=departmentRepository.getDepartmentEntityByParentId(11l);
-        System.out.println(entity);
-        return departmentRepository.getDepartmentEntityByParentId(11l);
+    public void allEmployees(){
+//    public DepartmentEntity test02(){
+        DepartmentEntity departmentEntity=departmentRepository.getDepartmentEntityById(12l);
+//        Long id=  departmentRepository.getDepartmentEntityById(12l).getId();
+//        return departmentRepository.getDepartmentEntityById(12l).getId();
+//        System.out.println(id);
+//        return departmentRepository.getDepartmentEntityById(12l);
+
 //        List<EmployeeEntity> employees=employeeRepository.findAll();
-//        System.out.println(employees);
 
     }
 
