@@ -208,4 +208,15 @@ public class DepartmentEntity {
     public void setTasksById(Collection<TaskEntity> tasksById) {
         this.tasksById = tasksById;
     }*/
+
+
+    @Override
+    public String toString() {
+        return "DepartmentEntity{" +
+                "parentId=" + parentId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                '}';
+    }
 }

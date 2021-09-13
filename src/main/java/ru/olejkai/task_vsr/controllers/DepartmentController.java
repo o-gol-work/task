@@ -44,14 +44,24 @@ public class DepartmentController {
 
     @GetMapping("/parent_department")
 //    public void allEmployees(){
-    public Long test02(){
-        return departmentRepository.getDepartmentEntityById(12l).getId();
+    public String test02(){
+        return departmentRepository.getDepartmentEntityById(12l).toString();
 //        Long id=  departmentRepository.getDepartmentEntityById(12l).getId();
 //        return departmentRepository.getDepartmentEntityById(12l).getId();
 //        System.out.println(id);
 //        return departmentRepository.getDepartmentEntityById(12l);
 
 //        List<EmployeeEntity> employees=employeeRepository.findAll();
+
+    }
+
+    @GetMapping("/children_departments")
+//    public void getAllChildren(){
+    public Collection<DepartmentEntity> getAllChildren(){
+        /*Collection<DepartmentEntity> childrenDepartments=departmentRepository.getAllChildren(3l);
+        System.out.println(childrenDepartments);*/
+        return departmentRepository.getAllChildren(3l);
+
 
     }
 
