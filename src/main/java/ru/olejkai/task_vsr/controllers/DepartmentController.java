@@ -39,30 +39,35 @@ public class DepartmentController {
 
     }*/
 
-
+    @GetMapping("/department")
+    public void getDepartment(){
+        DepartmentEntity dep= departmentRepository.getDepartmentEntityById(1l);
+    }
+    /*
+    @GetMapping("/department")
+    public DepartmentEntity getDepartment(){
+        return departmentRepository.getDepartmentEntityById(1l);
+    }*/
 
 
     @GetMapping("/parent_department")
-//    public void allEmployees(){
-    public String test02(){
-        return departmentRepository.getDepartmentEntityById(12l).toString();
-//        Long id=  departmentRepository.getDepartmentEntityById(12l).getId();
-//        return departmentRepository.getDepartmentEntityById(12l).getId();
-//        System.out.println(id);
-//        return departmentRepository.getDepartmentEntityById(12l);
-
-//        List<EmployeeEntity> employees=employeeRepository.findAll();
-
+    public DepartmentEntity getParent(){
+        return departmentRepository.getDepartmentEntityById(12l).getParent();
     }
 
     @GetMapping("/children_departments")
+    public Collection<DepartmentEntity> getChildren(){
+        return departmentRepository.getDepartmentEntityById(1l).getChildren();
+    }
+
+    /*@GetMapping("/children_departments")
 //    public void getAllChildren(){
     public Collection<DepartmentEntity> getAllChildren(){
-        /*Collection<DepartmentEntity> childrenDepartments=departmentRepository.getAllChildren(3l);
-        System.out.println(childrenDepartments);*/
+        *//*Collection<DepartmentEntity> childrenDepartments=departmentRepository.getAllChildren(3l);
+        System.out.println(childrenDepartments);*//*
         return departmentRepository.getAllChildren(3l);
 
 
-    }
+    }*/
 
 }

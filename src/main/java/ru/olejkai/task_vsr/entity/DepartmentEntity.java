@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -16,12 +17,15 @@ import java.util.Collection;
 @Table(name = "department", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","parent","children"})
+
 public class DepartmentEntity {
     private Long parentId;
     private Long id;
     private String title;
     private String telephoneNumber;
-    private DepartmentEntity DepartmentEntityById;
+    private DepartmentEntity parent;
+    private Collection<DepartmentEntity> children;
 //    private Collection<DepartmentEntity> departmentsById;
     /*private Long departmentTypeId;
     private Long departmentParentStructer;
@@ -66,27 +70,22 @@ public class DepartmentEntity {
         return telephoneNumber;
     }
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @ManyToOne(
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "parent_id", foreignKey=@ForeignKey(name="fk_department_parent"), insertable = false, updatable = false)
-    public DepartmentEntity getDepartmentEntityById() {
-        return DepartmentEntityById;
+    public DepartmentEntity getParent() {
+        return parent;
     }
 
-    /*@ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
-    public DepartmentEntity getDepartmentByParentId() {
-        return departmentByParentId;
-    }*/
+    @OneToMany(fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "parent_id")
+    public Collection<DepartmentEntity> getChildren (){
+        return children;
+    }
 
-
-    /*@OneToMany(mappedBy = "departmentByParentId",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name="parent_id")
-    public Collection<DepartmentEntity> getDepartmentsById() {
-        return departmentsById;
-    }*/
 
 
     /*@Basic
