@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DepartmentRepository extends JpaRepository<DepartmentEntity,Long> {
 
-    String queryAllChildren="WITH RECURSIVE r (parent_id, id,  title, telephone_number) AS\n" +
+     final String queryAllChildren="WITH RECURSIVE r (parent_id, id,  title, telephone_number) AS\n" +
             "        -- Initial Subquery\n" +
             "        (SELECT parent_id, id,  title, telephone_number\n" +
             "        FROM department\n" +
@@ -22,33 +22,29 @@ public interface DepartmentRepository extends JpaRepository<DepartmentEntity,Lon
             "        -- Result Query\n" +
             "        SELECT * FROM r";
 
-//    private String  getAllChildren(Long parent_id){
-//        return String.format("WITH RECURSIVE r (id, parent_id, sub_title, level) AS\n" +
-//                "        -- Initial Subquery\n" +
-//                "        (SELECT id, parent_id, title, 1\n" +
-//                "        FROM department\n" +
-//                "        WHERE parent_id = :id\n" +
-//                "        UNION ALL\n" +
-//                "        -- Recursive Subquery\n" +
-//                "        SELECT t.id, t.parent_id, t.title, r.level+1\n" +
-//                "        FROM r INNER JOIN department t\n" +
-//                "        ON r.id = t.parent_id)\n" +
-//                "        -- Result Query\n" +
-//                "        SELECT * FROM r",parent_id);
-//    }
+     final String queryAllParent ="WITH RECURSIVE r(parent_id, id,  title, telephone_number) AS\n" +
+             "        -- Initial Subquery\n" +
+             "        (SELECT dr.parent_id, dr.id,  dr.title, dr.telephone_number\n" +
+             "        FROM department dl\n" +
+             "        LEFT JOIN department dr \n" +
+             "        ON dl.parent_id = dr.id\n" +
+             "        WHERE dl.id = :id\n" +
+             "        UNION ALL\n" +
+             "        -- Recursive Subquery\n" +
+             "        SELECT d.parent_id, d.id,  d.title, d.telephone_number\n" +
+             "        FROM department d, r\n" +
+             "        WHERE d.id = r.parent_id )\n" +
+             "        -- Result Query\n" +
+             "        SELECT parent_id, id,  title, telephone_number\n" +
+             "        FROM r\n";
 
 
-
-
-//    Collection<DepartmentEntity> getDepartmentEntitiesByParentId(Long parentId);
-//    Collection<DepartmentEntity> getDepartmentsById(Long parentId);
-
-//    DepartmentEntity getDepartmentEntityByParentId(Long parentId); // создает объект DepartmentEntity по радительскому id (parentId) со вложенными в него другими DepartmentEntity которые являются его родителями, вложенность продолжается до главного родителя
       DepartmentEntity getDepartmentEntityById(Long id);
 
-//       @Query(value = queryAllChildren ,nativeQuery = true)
-//      Collection<DepartmentEntity> getDepartmentEntitiesById(Long id);
 
        @Query(value = queryAllChildren ,nativeQuery = true)
       Collection<DepartmentEntity>  getAllChildren(Long id);
+
+       @Query(value = queryAllParent ,nativeQuery = true)
+      Collection<DepartmentEntity>  getAllParent(Long id);
 }

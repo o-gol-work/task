@@ -17,57 +17,38 @@ import java.util.List;
 public class DepartmentController {
 
     private DepartmentRepository departmentRepository;
-    /*private DepartmentEntity departmentEntity;
-
-    @Autowired
-    public void setDepartmentEntity(DepartmentEntity departmentEntity) {
-        this.departmentEntity = departmentEntity;
-    }*/
 
     @Autowired
     public void setDepartmentRepository(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
 
-    /*@GetMapping("/all_child_departments")
-//    public void allEmployees(){
-    public Collection<DepartmentEntity> test01(){
-        return departmentRepository.getDepartmentsById(11l);
-//        return departmentRepository.getDepartmentEntitiesByParentId(2L);
-//        List<EmployeeEntity> employees=employeeRepository.findAll();
-//        System.out.println(employees);
-
-    }*/
 
     @GetMapping("/department")
     public void getDepartment(){
         DepartmentEntity dep= departmentRepository.getDepartmentEntityById(1l);
     }
-    /*
-    @GetMapping("/department")
-    public DepartmentEntity getDepartment(){
-        return departmentRepository.getDepartmentEntityById(1l);
-    }*/
-
 
     @GetMapping("/parent_department")
     public DepartmentEntity getParent(){
         return departmentRepository.getDepartmentEntityById(12l).getParent();
     }
 
-    @GetMapping("/children_departments")
+    @GetMapping("/children_first_line_departments")
     public Collection<DepartmentEntity> getChildren(){
         return departmentRepository.getDepartmentEntityById(1l).getChildren();
     }
 
-    /*@GetMapping("/children_departments")
-//    public void getAllChildren(){
+    @GetMapping("/all_children__departments")
     public Collection<DepartmentEntity> getAllChildren(){
-        *//*Collection<DepartmentEntity> childrenDepartments=departmentRepository.getAllChildren(3l);
-        System.out.println(childrenDepartments);*//*
-        return departmentRepository.getAllChildren(3l);
+        return departmentRepository.getAllChildren(1l);
+    }
+
+    @GetMapping("/all_parent_departments")
+    public Collection<DepartmentEntity> getAllParent() {
+        return departmentRepository.getAllParent(12l);
+    }
 
 
-    }*/
 
 }

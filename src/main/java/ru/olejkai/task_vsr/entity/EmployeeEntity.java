@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Collection;
 @Table(name = "employee", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+//@JsonIgnoreProperties({"hibernateLazyInitializer","postHasDepartmentByPostHasDepartmentId"})
 public class EmployeeEntity {
     private Long id;
     private Integer tabelNumber;
@@ -83,16 +85,17 @@ public class EmployeeEntity {
 
 
 
-    @ManyToOne
+    @ManyToOne(
+//            fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "post_has_department_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public PostHasDepartmentEntity getPostHasDepartmentByPostHasDepartmentId() {
         return postHasDepartmentByPostHasDepartmentId;
     }
 
-    public void setPostHasDepartmentByPostHasDepartmentId(PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId) {
+    /*public void setPostHasDepartmentByPostHasDepartmentId(PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId) {
         this.postHasDepartmentByPostHasDepartmentId = postHasDepartmentByPostHasDepartmentId;
-    }
-
+    }*/
 
     /*@OneToMany(mappedBy = "employeeByEmployeeId")
     public Collection<EmployeeCommentEntity> getEmployeeCommentsById() {

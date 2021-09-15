@@ -12,7 +12,15 @@ GET http://localhost:8080/employees/all_employees
 
 ###
 
-GET http://localhost:8080/departments/all_child_departments
+GET http://localhost:8080/employees/employee
+
+
+
+###
+
+
+
+GET http://localhost:8080/departments/department
 
 
 ###
@@ -22,7 +30,17 @@ GET http://localhost:8080/departments/parent_department
 ###
 
 
-GET http://localhost:8080/departments/children_departments
+GET http://localhost:8080/departments/children_first_line_departments
 
+
+###
+
+
+GET http://localhost:8080/departments/all_children__departments
+
+###
+
+
+GET http://localhost:8080/departments/all_parent_departments
 
 
