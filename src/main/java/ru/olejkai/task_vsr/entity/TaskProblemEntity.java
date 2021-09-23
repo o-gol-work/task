@@ -14,10 +14,10 @@ public class TaskProblemEntity {
     private Long parentId;
     private Long id;
     private String title;
-    private TaskProblemEntity taskProblemByParentId;
+    /*private TaskProblemEntity taskProblemByParentId;
     private Collection<DepartmentProblemEntity> departmentProblemsById;
     private Collection<TaskEntity> tasksById;
-    private Collection<TaskProblemEntity> taskProblemsById;
+    private Collection<TaskProblemEntity> taskProblemsById;*/
 
     @Basic
     @Column(name = "parent_id", nullable = true)
@@ -44,7 +44,7 @@ public class TaskProblemEntity {
 
 
 
-
+/*
     @ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public TaskProblemEntity getTaskProblemByParentId() {
@@ -81,5 +81,5 @@ public class TaskProblemEntity {
 
     public void setTasksById(Collection<TaskEntity> tasksById) {
         this.tasksById = tasksById;
-    }
+    }*/
 }

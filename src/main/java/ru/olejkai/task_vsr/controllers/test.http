@@ -43,4 +43,19 @@ GET http://localhost:8080/departments/all_children__departments
 
 GET http://localhost:8080/departments/all_parent_departments
 
+###
 
+
+GET http://localhost:8080/tasks/task
+
+
+
+
+###
+
+
+GET http://localhost:8080/tasks/parent_task
+###
+
+
+GET http://localhost:8080/tasks/children_first_line_tasks

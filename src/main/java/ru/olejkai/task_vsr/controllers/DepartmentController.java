@@ -25,8 +25,8 @@ public class DepartmentController {
 
 
     @GetMapping("/department")
-    public void getDepartment(){
-        DepartmentEntity dep= departmentRepository.getDepartmentEntityById(1l);
+    public DepartmentEntity getDepartment(){
+        return departmentRepository.getDepartmentEntityById(1l);
     }
 
     @GetMapping("/parent_department")

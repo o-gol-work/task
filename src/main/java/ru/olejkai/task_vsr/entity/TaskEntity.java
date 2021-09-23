@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,27 +12,28 @@ import java.util.Collection;
 @Table(name = "task", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","parent","children"})
 public class TaskEntity {
     private Long parentId;
     private Long id;
     private Long employeeIdTasker;
     private Long taskProblemId;
-    private String taskCommentId;
+//    private String taskCommentId;
     private Timestamp dateBegin;
     private Long employeeIdExecuter;
     private Long departmentIdExecuter;
     private Timestamp dataFinish;
     private Integer status;
     private Integer statusExec;
-    private TaskEntity taskByParentId;
-    private Collection<TaskEntity> tasksById;
     private EmployeeEntity employeeByEmployeeIdTasker;
     private TaskProblemEntity taskProblemByTaskProblemId;
     private EmployeeEntity employeeByEmployeeIdExecuter;
     private DepartmentEntity departmentByDepartmentIdExecuter;
-    private Collection<TaskCommentsEntity> taskCommentsById;
-    private TaskStatusExecuterEntity taskStatusExecuterById;
-    private TaskStatusTaskerEntity taskStatusTaskerById;
+    private TaskEntity parent;
+    private Collection<TaskEntity> children;
+//    private Collection<TaskCommentsEntity> taskCommentsById;
+//    private TaskStatusExecuterEntity taskStatusExecuterById;
+//    private TaskStatusTaskerEntity taskStatusTaskerById;
 
     @Basic
     @Column(name = "parent_id", nullable = true)
@@ -62,11 +64,11 @@ public class TaskEntity {
     }
 
 
-    @Basic
+    /*@Basic
     @Column(name = "task_comment_id", nullable = true, length = 45)
     public String getTaskCommentId() {
         return taskCommentId;
-    }
+    }*/
 
 
     @Basic
@@ -111,7 +113,7 @@ public class TaskEntity {
     }
 
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public TaskEntity getTaskByParentId() {
         return taskByParentId;
@@ -119,7 +121,7 @@ public class TaskEntity {
 
     public void setTaskByParentId(TaskEntity taskByParentId) {
         this.taskByParentId = taskByParentId;
-    }
+    }*/
 
 
 
@@ -129,9 +131,9 @@ public class TaskEntity {
         return employeeByEmployeeIdTasker;
     }
 
-    public void setEmployeeByEmployeeIdTasker(EmployeeEntity employeeByEmployeeIdTasker) {
+    /*public void setEmployeeByEmployeeIdTasker(EmployeeEntity employeeByEmployeeIdTasker) {
         this.employeeByEmployeeIdTasker = employeeByEmployeeIdTasker;
-    }
+    }*/
 
     @ManyToOne
     @JoinColumn(name = "task_problem_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
@@ -139,9 +141,9 @@ public class TaskEntity {
         return taskProblemByTaskProblemId;
     }
 
-    public void setTaskProblemByTaskProblemId(TaskProblemEntity taskProblemByTaskProblemId) {
+    /*public void setTaskProblemByTaskProblemId(TaskProblemEntity taskProblemByTaskProblemId) {
         this.taskProblemByTaskProblemId = taskProblemByTaskProblemId;
-    }
+    }*/
 
     @ManyToOne
     @JoinColumn(name = "employee_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
@@ -149,9 +151,9 @@ public class TaskEntity {
         return employeeByEmployeeIdExecuter;
     }
 
-    public void setEmployeeByEmployeeIdExecuter(EmployeeEntity employeeByEmployeeIdExecuter) {
+    /*public void setEmployeeByEmployeeIdExecuter(EmployeeEntity employeeByEmployeeIdExecuter) {
         this.employeeByEmployeeIdExecuter = employeeByEmployeeIdExecuter;
-    }
+    }*/
 
     @ManyToOne
     @JoinColumn(name = "department_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
@@ -159,13 +161,33 @@ public class TaskEntity {
         return departmentByDepartmentIdExecuter;
     }
 
-    public void setDepartmentByDepartmentIdExecuter(DepartmentEntity departmentByDepartmentIdExecuter) {
+    /*public void setDepartmentByDepartmentIdExecuter(DepartmentEntity departmentByDepartmentIdExecuter) {
         this.departmentByDepartmentIdExecuter = departmentByDepartmentIdExecuter;
+    }*/
+
+
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "parent_id", foreignKey=@ForeignKey(name="fk_task_task_parent"), insertable = false, updatable = false)
+    public TaskEntity getParent() {
+        return parent;
     }
 
 
 
-    @OneToOne(mappedBy = "taskById")
+
+    @OneToMany(fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "parent_id")
+    public Collection<TaskEntity> getChildren (){
+        return children;
+    }
+
+
+
+   /* @OneToOne(mappedBy = "taskById")
     public TaskStatusExecuterEntity getTaskStatusExecuterById() {
         return taskStatusExecuterById;
     }
@@ -181,23 +203,23 @@ public class TaskEntity {
 
     public void setTaskStatusTaskerById(TaskStatusTaskerEntity taskStatusTaskerById) {
         this.taskStatusTaskerById = taskStatusTaskerById;
-    }
+    }*/
 
-    @OneToMany(mappedBy = "taskByParentId")
+    /*@OneToMany(mappedBy = "taskByParentId")
     public Collection<TaskEntity> getTasksById() {
         return tasksById;
     }
 
     public void setTasksById(Collection<TaskEntity> tasksById) {
         this.tasksById = tasksById;
-    }
+    }*/
 
-    @OneToMany(mappedBy = "taskByTaskId")
+    /*@OneToMany(mappedBy = "taskByTaskId")
     public Collection<TaskCommentsEntity> getTaskCommentsById() {
         return taskCommentsById;
     }
 
     public void setTaskCommentsById(Collection<TaskCommentsEntity> taskCommentsById) {
         this.taskCommentsById = taskCommentsById;
-    }
+    }*/
 }
