@@ -2,6 +2,7 @@ package ru.olejkai.task_vsr.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
@@ -9,11 +10,11 @@ import javax.persistence.*;
 @Table(name = "employee_role", schema = "task_vsr")
 @Data
 @NoArgsConstructor
-public class EmployeeRoleEntity {
+public class EmployeeRoleEntity implements GrantedAuthority {
     private Long id;
     private String role;
-    private Long employeeId;
-    private EmployeeEntity employeeByEmployeeId;
+    /*private Long employeeId;
+    private EmployeeEntity employeeByEmployeeId;*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,15 @@ public class EmployeeRoleEntity {
     }
 
 
-    @Basic
+
+    @Override
+    @Transient
+    public String getAuthority() {
+        return role;
+    }
+
+
+    /*@Basic
     @Column(name = "employee_id", nullable = false)
     public Long getEmployeeId() {
         return employeeId;
@@ -46,5 +55,5 @@ public class EmployeeRoleEntity {
 
     public void setEmployeeByEmployeeId(EmployeeEntity employeeByEmployeeId) {
         this.employeeByEmployeeId = employeeByEmployeeId;
-    }
+    }*/
 }

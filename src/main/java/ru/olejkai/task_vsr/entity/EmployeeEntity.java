@@ -3,6 +3,8 @@ package ru.olejkai.task_vsr.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -12,7 +14,10 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 //@JsonIgnoreProperties({"hibernateLazyInitializer","postHasDepartmentByPostHasDepartmentId"})
-public class EmployeeEntity {
+//@JsonIgnoreProperties({"hibernateLazyInitializer","employeeRolesById"})
+public class EmployeeEntity
+        implements UserDetails
+{
     private Long id;
     private Integer tabelNumber;
     private String name;
@@ -22,8 +27,10 @@ public class EmployeeEntity {
     private Byte worked;
     private Long postHasDepartmentId;
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
-    /*private Collection<EmployeeCommentEntity> employeeCommentsById;
+//    private Collection<EmployeeRoleEntity> authorities;
     private Collection<EmployeeRoleEntity> employeeRolesById;
+
+    /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<TaskEntity> tasksById;
     private Collection<TaskEntity> tasksById_0;*/
 
@@ -62,12 +69,13 @@ public class EmployeeEntity {
         return telephoneNumber;
     }
 
-
+    @Override
     @Basic
     @Column(name = "password", nullable = true, length = 255)
     public String getPassword() {
         return password;
     }
+
 
 
     @Basic
@@ -92,6 +100,63 @@ public class EmployeeEntity {
     public PostHasDepartmentEntity getPostHasDepartmentByPostHasDepartmentId() {
         return postHasDepartmentByPostHasDepartmentId;
     }
+//    @OneToMany(mappedBy = "employeeByEmployeeId")
+    @OneToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "employee_id")
+        public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
+            return employeeRolesById;
+        }
+
+
+
+
+    /*
+    * SECURiTY
+    *
+    * */
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getEmployeeRolesById();
+    }
+
+    @Override
+    @Transient
+    public String getUsername() {
+        return getTabelNumber().toString();
+    }
+
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return true;
+    }
+
+
+
 
     /*public void setPostHasDepartmentByPostHasDepartmentId(PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId) {
         this.postHasDepartmentByPostHasDepartmentId = postHasDepartmentByPostHasDepartmentId;
@@ -106,10 +171,6 @@ public class EmployeeEntity {
         this.employeeCommentsById = employeeCommentsById;
     }
 
-    @OneToMany(mappedBy = "employeeByEmployeeId")
-    public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
-        return employeeRolesById;
-    }
 
     public void setEmployeeRolesById(Collection<EmployeeRoleEntity> employeeRolesById) {
         this.employeeRolesById = employeeRolesById;

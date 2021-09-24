@@ -59,3 +59,12 @@ GET http://localhost:8080/tasks/parent_task
 
 
 GET http://localhost:8080/tasks/children_first_line_tasks
+
+
+
+
+
+###
+
+
+GET http://localhost:8080/tasks/all_children__tasks

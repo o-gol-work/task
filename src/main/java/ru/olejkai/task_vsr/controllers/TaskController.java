@@ -38,16 +38,15 @@ public class TaskController {
         return taskRepository.getTaskEntityById(275l).getChildren();
     }
 
-    /*@GetMapping("/all_children__tasks")
+    @GetMapping("/all_children__tasks")
     public Collection<TaskEntity> getAllChildren(){
-        return taskRepository.getAllChildren(1l);
+        return taskRepository.getAllChildren(275l);
     }
 
     @GetMapping("/all_parent_tasks")
     public Collection<TaskEntity> getAllParent() {
-        return taskRepository.getAllParent(12l);
+        return taskRepository.getAllParent(280l);
     }
-*/
 
 
 }
