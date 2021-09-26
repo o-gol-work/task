@@ -31,6 +31,10 @@ public class TaskEntity {
     private DepartmentEntity departmentByDepartmentIdExecuter;
     private TaskEntity parent;
     private Collection<TaskEntity> children;
+
+
+
+
 //    private Collection<TaskCommentsEntity> taskCommentsById;
 //    private TaskStatusExecuterEntity taskStatusExecuterById;
 //    private TaskStatusTaskerEntity taskStatusTaskerById;

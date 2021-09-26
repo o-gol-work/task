@@ -23,19 +23,26 @@ public class TaskController {
     }
 
 
+    @GetMapping("/tasks")
+    public Collection<TaskEntity> taskEntities(){
+        return taskRepository.findAll();
+    }
+
     @GetMapping("/task")
     public TaskEntity getTask(){
-        return taskRepository.getTaskEntityById(275l);
+
+//        return taskRepository.getTaskEntityById(275l);
+        return taskRepository.findById(275l).get();
     }
 
     @GetMapping("/parent_task")
     public TaskEntity getParent(){
-        return taskRepository.getTaskEntityById(280l).getParent();
+        return taskRepository.findById(280l).get().getParent();
     }
 
     @GetMapping("/children_first_line_tasks")
     public Collection<TaskEntity> getChildren(){
-        return taskRepository.getTaskEntityById(275l).getChildren();
+        return taskRepository.findById(275l).get().getChildren();
     }
 
     @GetMapping("/all_children__tasks")

@@ -26,17 +26,17 @@ public class DepartmentController {
 
     @GetMapping("/department")
     public DepartmentEntity getDepartment(){
-        return departmentRepository.getDepartmentEntityById(1l);
+        return departmentRepository.findById(1l).get();
     }
 
     @GetMapping("/parent_department")
     public DepartmentEntity getParent(){
-        return departmentRepository.getDepartmentEntityById(12l).getParent();
+        return departmentRepository.findById(12l).get().getParent();
     }
 
     @GetMapping("/children_first_line_departments")
     public Collection<DepartmentEntity> getChildren(){
-        return departmentRepository.getDepartmentEntityById(1l).getChildren();
+        return departmentRepository.findById(1l).get().getChildren();
     }
 
     @GetMapping("/all_children__departments")
