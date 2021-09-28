@@ -6,5 +6,6 @@ import ru.olejkai.task_vsr.entity.EmployeeEntity;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity,Long> {
+     EmployeeEntity findEmployeeEntityByTabelNumber(Integer tabelNumber);
 
 }

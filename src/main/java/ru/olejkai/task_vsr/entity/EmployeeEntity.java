@@ -15,6 +15,14 @@ import java.util.Collection;
 @NoArgsConstructor
 //@JsonIgnoreProperties({"hibernateLazyInitializer","postHasDepartmentByPostHasDepartmentId"})
 //@JsonIgnoreProperties({"hibernateLazyInitializer","employeeRolesById"})
+@JsonIgnoreProperties({"hibernateLazyInitializer",
+        "password",
+        "username",
+        "accountNonLocked",
+        "accountNonExpired",
+        "credentialsNonExpired",
+        "enabled",
+        "authorities"})
 public class EmployeeEntity
         implements UserDetails
 {
@@ -33,6 +41,16 @@ public class EmployeeEntity
     /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<TaskEntity> tasksById;
     private Collection<TaskEntity> tasksById_0;*/
+
+
+    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String password, Collection<EmployeeRoleEntity> employeeRolesById) {
+        this.id = id;
+        this.tabelNumber = tabelNumber;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.employeeRolesById = employeeRolesById;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,12 +87,7 @@ public class EmployeeEntity
         return telephoneNumber;
     }
 
-    @Override
-    @Basic
-    @Column(name = "password", nullable = true, length = 255)
-    public String getPassword() {
-        return password;
-    }
+
 
 
 
@@ -119,6 +132,13 @@ public class EmployeeEntity
     * */
 
     @Override
+    @Basic
+    @Column(name = "password", nullable = true, length = 255)
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getEmployeeRolesById();
@@ -150,7 +170,7 @@ public class EmployeeEntity
     }
 
     @Override
-    @Transient
+    @Transient()
     public boolean isEnabled() {
         return true;
     }
