@@ -15,19 +15,22 @@ import java.util.Collection;
 @NoArgsConstructor
 //@JsonIgnoreProperties({"hibernateLazyInitializer","postHasDepartmentByPostHasDepartmentId"})
 //@JsonIgnoreProperties({"hibernateLazyInitializer","employeeRolesById"})
-@JsonIgnoreProperties({"hibernateLazyInitializer",
+/*@JsonIgnoreProperties({
+        "hibernateLazyInitializer",
         "password",
         "username",
         "accountNonLocked",
         "accountNonExpired",
         "credentialsNonExpired",
         "enabled",
-        "authorities"})
+        "authorities"
+})*/
 public class EmployeeEntity
         implements UserDetails
 {
     private Long id;
     private Integer tabelNumber;
+    private String username;
     private String name;
     private String surname;
     private String telephoneNumber;
@@ -37,19 +40,20 @@ public class EmployeeEntity
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
 //    private Collection<EmployeeRoleEntity> authorities;
     private Collection<EmployeeRoleEntity> employeeRolesById;
+    private Collection<GrantedAuthority> authorities;
 
     /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<TaskEntity> tasksById;
     private Collection<TaskEntity> tasksById_0;*/
 
 
-    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String password, Collection<EmployeeRoleEntity> employeeRolesById) {
+    public EmployeeEntity(Long id, String username, String name, String surname, String password, Collection<GrantedAuthority> authorities) {
         this.id = id;
-        this.tabelNumber = tabelNumber;
+        this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.employeeRolesById = employeeRolesById;
+        this.authorities = authorities;
     }
 
     @Id
@@ -113,9 +117,13 @@ public class EmployeeEntity
     public PostHasDepartmentEntity getPostHasDepartmentByPostHasDepartmentId() {
         return postHasDepartmentByPostHasDepartmentId;
     }
+
+
+
+
 //    @OneToMany(mappedBy = "employeeByEmployeeId")
     @OneToMany(
-//            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER
 //            cascade = CascadeType.ALL
     )
     @JoinColumn(name = "employee_id")
