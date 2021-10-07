@@ -13,8 +13,11 @@ import javax.persistence.*;
 public class EmployeeRoleEntity implements GrantedAuthority {
     private Long id;
     private String role;
-    /*private Long employeeId;
-    private EmployeeEntity employeeByEmployeeId;*/
+    private Long employeeId;
+    private String authority;
+//    private EmployeeEntity employeeByEmployeeId;
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,21 +36,27 @@ public class EmployeeRoleEntity implements GrantedAuthority {
 
 
     @Override
-    @Transient
     public String getAuthority() {
         return role;
     }
 
 
-    /*@Basic
+    @Basic
     @Column(name = "employee_id", nullable = false)
     public Long getEmployeeId() {
         return employeeId;
     }
 
+    public EmployeeRoleEntity(String role, Long employeeId) {
+        this.role = role;
+        this.employeeId = employeeId;
+    }
 
+    public EmployeeRoleEntity(String role) {
+        this.role = role;
+    }
 
-    @ManyToOne
+    /* @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
     public EmployeeEntity getEmployeeByEmployeeId() {
         return employeeByEmployeeId;

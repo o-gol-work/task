@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("start/departments")
 public class DepartmentController {
 
     private DepartmentRepository departmentRepository;

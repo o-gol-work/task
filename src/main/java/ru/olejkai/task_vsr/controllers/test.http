@@ -30,6 +30,7 @@ GET http://localhost:8080/departments/department
 
 
 GET http://localhost:8080/departments/parent_department
+
 ###
 
 
@@ -58,6 +59,7 @@ GET http://localhost:8080/tasks/task
 
 
 GET http://localhost:8080/tasks/parent_task
+
 ###
 
 

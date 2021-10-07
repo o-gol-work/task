@@ -12,7 +12,7 @@ import ru.olejkai.task_vsr.repository.TaskRepository;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("start/tasks")
 public class TaskController {
 
     private TaskRepository taskRepository;

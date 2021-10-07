@@ -12,7 +12,7 @@ import ru.olejkai.task_vsr.services.CustomUserDetailsServices;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("start/employees")
 //@RequestMapping
 public class EmployeeController {
 
