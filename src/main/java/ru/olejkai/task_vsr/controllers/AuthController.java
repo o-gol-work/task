@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> authenticateEmployee(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) throws EmployeeEntityExistExeption {
+    public ResponseEntity<Object> authenticateEmployee(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult)  {
         ResponseEntity<Object> responseEntity = responseErrorValidation.mapValidationServices(bindingResult);
         if (!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
 
@@ -63,7 +63,7 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerEmployee(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult) throws EmployeeEntityExistExeption {
+    public ResponseEntity<Object> registerEmployee(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult)  {
         ResponseEntity<Object> responseEntity=responseErrorValidation.mapValidationServices(bindingResult);
         if(!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
 

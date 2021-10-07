@@ -30,7 +30,7 @@ public class EmployeeCreateServices {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public EmployeeEntity createEmployee(SignupRequest employee) throws EmployeeEntityExistExeption {
+    public EmployeeEntity createEmployee(SignupRequest employee)  {
         EmployeeEntity employeeEntity= new EmployeeEntity();
         employeeEntity.setTabelNumber(employee.getTabelNumber());
         employeeEntity.setName(employee.getName());
