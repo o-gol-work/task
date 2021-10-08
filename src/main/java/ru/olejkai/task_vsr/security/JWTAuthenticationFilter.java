@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 
-public class JWTAuthenticationFilter extends OncePerRequestFilter {
+ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     public static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
@@ -32,12 +32,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailsServices customUserDetailsServices;
 
 
-    @Override
+   @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        LOG.info("Filter begin");
         try {
             String jwt =getJWTFromRequest(request);
+            LOG.info(jwt);
             if(StringUtils.hasText(jwt)&&jwtTokenProvider.validationToken(jwt)){
                 Long userId=jwtTokenProvider.getUserIdFromToken(jwt);
+                LOG.info("userId");
                 EmployeeEntity employeeDetail=customUserDetailsServices.loadUserById(userId);
 
                 UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
@@ -49,8 +52,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
 //            e.printStackTrace();
             LOG.error(e.getMessage() + "error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
-            filterChain.doFilter(request,response);
         }
+            filterChain.doFilter(request,response);
 
 
     }
@@ -65,3 +68,45 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     }
 }
+
+
+/*public class JWTAuthenticationFilter extends OncePerRequestFilter {
+    public static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
+
+    @Autowired
+    private JWTTokenProvider jwtTokenProvider;
+    @Autowired
+    private CustomUserDetailsServices customUserDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String jwt = getJWTFromRequest(httpServletRequest);
+            if (StringUtils.hasText(jwt) && jwtTokenProvider.validationToken(jwt)) {
+                Long userId = jwtTokenProvider.getUserIdFromToken(jwt);
+                EmployeeEntity userDetails = customUserDetailsService.loadUserById(userId);
+
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, Collections.emptyList()
+                );
+
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));;
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (Exception ex) {
+            LOG.error("Could not set user authentication");
+        }
+
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
+
+    private String getJWTFromRequest(HttpServletRequest request) {
+        String bearToken = request.getHeader(SecurityConstants.HEADER_STRING);
+        if (StringUtils.hasText(bearToken) && bearToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            return bearToken.split(" ")[1];
+        }
+        return null;
+    }
+
+
+}*/

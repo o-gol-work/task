@@ -1,5 +1,7 @@
 package ru.olejkai.task_vsr.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,7 @@ import ru.olejkai.task_vsr.payload.request.LoginRequest;
 import ru.olejkai.task_vsr.payload.request.SignupRequest;
 import ru.olejkai.task_vsr.payload.responce.JWTTokenSuccessResponse;
 import ru.olejkai.task_vsr.payload.responce.MessageResponse;
+import ru.olejkai.task_vsr.security.JWTAuthenticationFilter;
 import ru.olejkai.task_vsr.security.JWTTokenProvider;
 import ru.olejkai.task_vsr.security.SecurityConstants;
 import ru.olejkai.task_vsr.services.EmployeeCreateServices;
@@ -28,6 +31,7 @@ import javax.validation.Valid;
 @PreAuthorize("permitAll()")
 public class AuthController {
 
+    public static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
     private ResponseErrorValidation responseErrorValidation;
     private EmployeeCreateServices employeeCreateServices;
@@ -43,7 +47,11 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> authenticateEmployee(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult)  {
+    public ResponseEntity<Object> authenticateEmployee(
+            @Valid @RequestBody LoginRequest loginRequest
+            , BindingResult bindingResult)  {
+        LOG.info("Signin start");
+        System.out.println("fuuuuuuuuuuu");
         ResponseEntity<Object> responseEntity = responseErrorValidation.mapValidationServices(bindingResult);
         if (!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
 
@@ -64,6 +72,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Object> registerEmployee(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult)  {
+        LOG.info("Signout start");
+
         ResponseEntity<Object> responseEntity=responseErrorValidation.mapValidationServices(bindingResult);
         if(!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
 
