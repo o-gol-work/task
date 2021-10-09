@@ -54,13 +54,15 @@ public class AuthController {
         System.out.println("fuuuuuuuuuuu");
         ResponseEntity<Object> responseEntity = responseErrorValidation.mapValidationServices(bindingResult);
         if (!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
-
+        LOG.info("Signin no exeption");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+        LOG.info("Singin end");
+        System.out.println("fuuuuuuuuuuuuuuuuuuuuu end");
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
 
 

@@ -40,7 +40,7 @@ import java.util.Collections;
             LOG.info(jwt);
             if(StringUtils.hasText(jwt)&&jwtTokenProvider.validationToken(jwt)){
                 Long userId=jwtTokenProvider.getUserIdFromToken(jwt);
-                LOG.info("userId");
+                LOG.info(userId.toString());
                 EmployeeEntity employeeDetail=customUserDetailsServices.loadUserById(userId);
 
                 UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
@@ -50,7 +50,7 @@ import java.util.Collections;
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             LOG.error(e.getMessage() + "error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
         }
             filterChain.doFilter(request,response);

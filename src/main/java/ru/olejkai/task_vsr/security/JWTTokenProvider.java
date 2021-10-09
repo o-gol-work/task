@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,18 +25,19 @@ public class JWTTokenProvider {
         Map<String , Object> claimsMap= new HashMap<>();
 
         claimsMap.put("id",employeeId);
-        claimsMap.put("username",Integer.toString(employee.getTabelNumber()));
+        claimsMap.put("username",employee.getUsername());
         claimsMap.put("name",employee.getName());
         claimsMap.put("surname",employee.getSurname());
-
+        String encodedString = Base64.getEncoder().encodeToString(SecurityConstants.SECRET.getBytes());
         return Jwts.builder()
                 .setSubject(employeeId)
                 .addClaims(claimsMap)
                 .setIssuedAt(now)
                 .setExpiration(expiryDat)
-                .signWith(SignatureAlgorithm.ES512, SecurityConstants.SECRET)
+//                .signWith(SignatureAlgorithm.HS512, encodedString)
+//                .signWith(SignatureAlgorithm.HS512, "SecretKeyGenJWT")
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
-
 
 
     }
@@ -62,6 +64,7 @@ public class JWTTokenProvider {
                 .setSigningKey(SecurityConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
-        return Long.parseLong(claims.getId());
+        String id = (String) claims.get("id");
+        return Long.parseLong(id);
     }
 }

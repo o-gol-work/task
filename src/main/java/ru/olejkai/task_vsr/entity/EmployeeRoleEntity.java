@@ -10,11 +10,10 @@ import javax.persistence.*;
 @Table(name = "employee_role", schema = "task_vsr")
 @Data
 @NoArgsConstructor
-public class EmployeeRoleEntity implements GrantedAuthority {
+public class EmployeeRoleEntity {
     private Long id;
     private String role;
     private Long employeeId;
-    private String authority;
 //    private EmployeeEntity employeeByEmployeeId;
 
 
@@ -35,10 +34,7 @@ public class EmployeeRoleEntity implements GrantedAuthority {
 
 
 
-    @Override
-    public String getAuthority() {
-        return role;
-    }
+
 
 
     @Basic

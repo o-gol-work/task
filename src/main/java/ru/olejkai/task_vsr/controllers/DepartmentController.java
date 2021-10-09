@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("start/departments")
+@RequestMapping("/departments")
 public class DepartmentController {
 
     private DepartmentRepository departmentRepository;
@@ -26,7 +26,7 @@ public class DepartmentController {
 
     @GetMapping("/department")
     public DepartmentEntity getDepartment(){
-        return departmentRepository.findById(1l).get();
+        return departmentRepository.findById(4l).get();
     }
 
     @GetMapping("/parent_department")

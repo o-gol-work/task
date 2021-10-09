@@ -45,11 +45,11 @@ public class CustomUserDetailsServices implements UserDetailsService {
 
     private EmployeeEntity build(EmployeeEntity employee){
         Collection<GrantedAuthority> roles=employee.getEmployeeRolesById().stream()
-                .map(role-> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
+                .map(role-> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
 
         return  new EmployeeEntity(
                 employee.getId(),
-                employee.getUsername(),
+                Integer.toString(employee.getTabelNumber()),
                 employee.getName(),
                 employee.getSurname(),
                 employee.getPassword(),

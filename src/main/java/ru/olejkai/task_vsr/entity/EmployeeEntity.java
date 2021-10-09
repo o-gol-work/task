@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "employee", schema = "task_vsr")
@@ -40,7 +42,9 @@ public class EmployeeEntity
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
 //    private Collection<EmployeeRoleEntity> authorities;
     private Collection<EmployeeRoleEntity> employeeRolesById;
-    private Collection<GrantedAuthority> authorities;
+//    private Collection<GrantedAuthority> authorities;
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
 
     /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<TaskEntity> tasksById;
@@ -151,13 +155,14 @@ public class EmployeeEntity
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getEmployeeRolesById();
+//        return getEmployeeRolesById().stream().map(role->new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
     @Transient
     public String getUsername() {
-        return getTabelNumber().toString();
+        return username;
     }
 
 
