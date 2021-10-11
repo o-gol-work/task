@@ -53,6 +53,7 @@ import java.util.Collections;
             e.printStackTrace();
             LOG.error(e.getMessage() + "error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
         }
+       LOG.info("Filter end");
             filterChain.doFilter(request,response);
 
 

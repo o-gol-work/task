@@ -34,9 +34,9 @@ public class EmployeeController {
     @GetMapping("/employee")
     public EmployeeEntity employee(){
 //        return employeeRepository.getById(3l);
-        EmployeeEntity employee=employeeRepository.findEmployeeEntityByTabelNumber(1111).get();
-        UserDetails userDetails=customUserDetailsServices.loadUserByUsername("1111");
+        /*EmployeeEntity employee=employeeRepository.findEmployeeEntityByTabelNumber(1111).get();
+        UserDetails userDetails=customUserDetailsServices.loadUserByUsername("1111");*/
 
-        return employeeRepository.findById(3l).get();
+        return employeeRepository.findById(19l).get();
     }
 }

@@ -16,33 +16,41 @@ import ru.olejkai.task_vsr.repository.EmployeeRepository;
 import ru.olejkai.task_vsr.repository.EmployeeRoleEntityRepository;
 import ru.olejkai.task_vsr.security.JWTTokenProvider;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 @Slf4j
 @Service
 public class EmployeeCreateServices {
     public static final Logger LOG = LoggerFactory.getLogger(EmployeeCreateServices.class);
     private EmployeeRepository employeeRepository;
-    EmployeeRoleEntityRepository employeeRoleEntityRepository;
+    private EmployeeRoleEntityRepository employeeRoleEntityRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public EmployeeCreateServices(EmployeeRepository employeeRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public EmployeeCreateServices(EmployeeRepository employeeRepository, BCryptPasswordEncoder bCryptPasswordEncoder,EmployeeRoleEntityRepository employeeRoleEntityRepository) {
         this.employeeRepository = employeeRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.employeeRoleEntityRepository=employeeRoleEntityRepository;
     }
 
     public EmployeeEntity createEmployee(SignupRequest employee)  {
         EmployeeEntity employeeEntity= new EmployeeEntity();
-        employeeEntity.setTabelNumber(employee.getTabelNumber());
+        employeeEntity.setTabelNumber(Integer.parseInt(employee.getTabelNumber()));
         employeeEntity.setName(employee.getName());
         employeeEntity.setSurname(employee.getSurname());
-//        employeeEntity.setTelephoneNumber(employee.getTelephoneNumber());
-        employeeEntity.getEmployeeRolesById().add(new EmployeeRoleEntity("ROLE_USER"));
+        employeeEntity.setTelephoneNumber(employee.getTelephoneNumber());
+        employeeEntity.setPostHasDepartmentId(Long.parseLong(employee.getPostHasDepartmentId()));
+//        employeeEntity.getEmployeeRolesById().add(new EmployeeRoleEntity("ROLE_USER"));
+//        employeeEntity.setEmployeeRolesById(new List<EmployeeRoleEntity>().add(new EmployeeRoleEntity("ROLE_USER")) );
         employeeEntity.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeEntity.setWorked((byte) 1);
         try{
             LOG.info("Save Employee {}",employee.getTabelNumber());
-//            employeeRoleEntityRepository.save(new EmployeeRoleEntity("ROLE_USER",employeeEntity.getId()));
-            return employeeEntity= employeeRepository.save(employeeEntity);
+            employeeEntity= employeeRepository.save(employeeEntity);
+            employeeRoleEntityRepository.save(new EmployeeRoleEntity("ROLE_USER",employeeEntity.getId()));
+            return employeeEntity;
         }catch (Exception  e){
             LOG.error("Registr Employee error {}", e.getMessage());
             throw new EmployeeEntityExistExeption(employeeEntity.getName());
