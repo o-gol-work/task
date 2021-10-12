@@ -35,6 +35,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
     TaskEntity findTaskEntityById(Long id);
 
 
+
     @Query(value = queryAllChildren ,nativeQuery = true)
     Collection<TaskEntity> getAllChildren(Long id);
 

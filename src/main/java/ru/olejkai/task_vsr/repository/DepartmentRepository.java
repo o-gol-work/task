@@ -40,6 +40,7 @@ public interface DepartmentRepository extends JpaRepository<DepartmentEntity,Lon
 
 
       DepartmentEntity getDepartmentEntityById(Long id);
+      Collection<DepartmentEntity> findAllByOrderByTitleAsc();
 
 
        @Query(value = queryAllChildren ,nativeQuery = true)
