@@ -24,8 +24,11 @@ public class SignupRequest {
     private String telephoneNumber;
     @NotEmpty(message = "postHasDepartmentId not empty")
     private String postHasDepartmentId;
+    /*@NotEmpty(message = "postHasDepartmentId not empty")
+    private Po*/
     @NotEmpty(message = "password not empty")
     private  String password;
     private  String confirmPassword;
+
 
 }

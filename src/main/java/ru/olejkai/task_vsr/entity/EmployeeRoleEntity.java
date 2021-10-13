@@ -17,6 +17,15 @@ public class EmployeeRoleEntity {
 //    private EmployeeEntity employeeByEmployeeId;
 
 
+    public EmployeeRoleEntity(Long id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
+    public EmployeeRoleEntity(String role, Long employeeId) {
+        this.role = role;
+        this.employeeId = employeeId;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,14 +52,18 @@ public class EmployeeRoleEntity {
         return employeeId;
     }
 
-    public EmployeeRoleEntity(String role, Long employeeId) {
+    /*public EmployeeRoleEntity(String role, Long employeeId) {
         this.role = role;
         this.employeeId = employeeId;
-    }
-
-    public EmployeeRoleEntity(String role) {
+    }*/
+    /*public EmployeeRoleEntity(String role, Long id) {
         this.role = role;
-    }
+        this.id = id;
+    }*/
+
+//    public EmployeeRoleEntity(String role) {
+//        this.role = role;
+//    }
 
     /* @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)

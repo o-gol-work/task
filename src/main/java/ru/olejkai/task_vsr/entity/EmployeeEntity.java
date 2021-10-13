@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class EmployeeEntity
     private Long postHasDepartmentId;
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
 //    private Collection<EmployeeRoleEntity> authorities;
-    private Collection<EmployeeRoleEntity> employeeRolesById;
+    private Collection<EmployeeRoleEntity> employeeRolesById=new ArrayList<>();
 //    private Collection<GrantedAuthority> authorities;
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
@@ -130,7 +131,7 @@ public class EmployeeEntity
             fetch = FetchType.EAGER
 //            cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id",referencedColumnName = "id")
         public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
             return employeeRolesById;
         }
