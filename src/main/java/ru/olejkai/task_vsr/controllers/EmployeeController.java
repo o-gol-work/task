@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
+import ru.olejkai.task_vsr.search.EmployeeSearchValues;
 import ru.olejkai.task_vsr.services.CustomUserDetailsServices;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("start/employees")
@@ -29,6 +29,17 @@ public class EmployeeController {
     public EmployeeController(EmployeeRepository employeeRepository, CustomUserDetailsServices customUserDetailsServices) {
         this.employeeRepository = employeeRepository;
         this.customUserDetailsServices = customUserDetailsServices;
+    }
+
+    @PostMapping("/find_empl/")
+    public ResponseEntity<Collection<EmployeeEntity>> findBySurname(@RequestBody EmployeeSearchValues surname1){
+        return ResponseEntity.ok(employeeRepository.findBySurname(surname1.getEmployeeSurname()));
+    }
+
+    @PostMapping("/find_empl_surn/")
+    public ResponseEntity<Collection<String>> findBySurnameText(@RequestBody EmployeeSearchValues surname1){
+        String surname=surname1.getEmployeeSurname();
+        return ResponseEntity.ok(employeeRepository.findBySurname(surname).stream().map(entity->entity.getSurname()).collect(Collectors.toList()));
     }
 
     @GetMapping("/all_employees")

@@ -1,9 +1,12 @@
 package ru.olejkai.task_vsr.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
@@ -41,4 +44,18 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 
     @Query(value = queryAllParent ,nativeQuery = true)
     Collection<TaskEntity>  getAllParent(Long id);
+
+
+
+
+    Page<Collection<TaskEntity>> findTaskEntitiesByParam(@Param("employeeIdTasker")String employeeIdTasker
+            ,@Param("taskProblemId")String taskProblemId
+            ,@Param("dateBegin")Timestamp dateBegin
+            ,@Param("employeeIdExecuter")String employeeIdExecuter
+            ,@Param("dataFinish")Timestamp dataFinish
+            ,@Param("status")Integer status
+                                                         );
+
+
+
 }

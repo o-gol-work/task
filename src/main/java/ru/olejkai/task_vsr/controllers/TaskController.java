@@ -29,7 +29,7 @@ public class TaskController {
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
 
 
-    @GetMapping("/start/tasks")
+    @GetMapping("/all_tasks")
     public Collection<TaskEntity> taskEntities(){
         return taskRepository.findAll();
     }
