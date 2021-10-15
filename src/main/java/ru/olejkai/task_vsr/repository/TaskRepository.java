@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.olejkai.task_vsr.entity.TaskEntity;
+import ru.olejkai.task_vsr.search.TaskSearchValues;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -46,14 +47,25 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
     Collection<TaskEntity>  getAllParent(Long id);
 
 
-
-
-    Page<Collection<TaskEntity>> findTaskEntitiesByParam(@Param("employeeIdTasker")String employeeIdTasker
-            ,@Param("taskProblemId")String taskProblemId
+    @Query("SELECT t FROM TaskEntity t \n" +
+            "where\n" +
+            "(:employeeIdTasker is null or :employeeIdTasker ='' or lower(t.employeeByEmployeeIdTasker.surname) like lower(concat('%',:employeeIdTasker,'%') ) and t.parentId is null) " +
+            /*"and\n " +
+            "(:taskProblemId is null or :taskProblemId ='' or lower(t.taskProblemByTaskProblemId.title) like lower(concat('%',:taskProblemId,'%') ) ) and\n " +
+            "(:dateBegin is null or :dateBegin>=t.dateBegin) and\n" +
+            "(:employeeIdExecuter is null or :employeeIdExecuter ='' or lower(t.employeeByEmployeeIdExecuter.surname) like lower(concat('%',:employeeIdExecuter,'%') ) ) and\n " +
+            "(:departmentIdExecuter is null or :departmentIdExecuter ='' or lower(t.departmentByDepartmentIdExecuter.title) like lower(concat('%',:departmentIdExecuter,'%') ) ) and\n " +
+            "(:dataFinish is null or :dataFinish>=t.dataFinish) and\n" +
+            "(:status is null or :status=t.status)" +
+            "order by t.dateBegin asc" +*/
+            "")
+    Collection<TaskEntity> findTaskEntitiesByParam(@Param("employeeIdTasker")String employeeIdTasker
+            /*,@Param("taskProblemId")String taskProblemId
             ,@Param("dateBegin")Timestamp dateBegin
             ,@Param("employeeIdExecuter")String employeeIdExecuter
+            ,@Param("departmentIdExecuter")String departmentIdExecuter
             ,@Param("dataFinish")Timestamp dataFinish
-            ,@Param("status")Integer status
+            ,@Param("status")Integer status*/
                                                          );
 
 

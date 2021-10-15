@@ -3,17 +3,17 @@ package ru.olejkai.task_vsr.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.olejkai.task_vsr.entity.DepartmentEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.DepartmentRepository;
 import ru.olejkai.task_vsr.repository.TaskRepository;
+import ru.olejkai.task_vsr.search.TaskSearchValues;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 @RestController
@@ -32,6 +32,21 @@ public class TaskController {
     @GetMapping("/all_tasks")
     public Collection<TaskEntity> taskEntities(){
         return taskRepository.findAll();
+    }
+
+    @PostMapping("/search")
+    public Collection<TaskEntity> findTaskEntitiesByParam(@RequestBody TaskSearchValues taskSearchValues){
+        return taskRepository.findTaskEntitiesByParam(
+                taskSearchValues.getEmployeeIdTasker()
+                /*,taskSearchValues.getTaskProblemId(),
+                taskSearchValues.getDateBegin(),
+                taskSearchValues.getEmployeeIdExecuter(),
+                taskSearchValues.getDepartmentIdExecuter(),
+                taskSearchValues.getDataFinish(),
+                taskSearchValues.getStatus()
+*/
+        );
+
     }
 
     @GetMapping("/task/{id}")
