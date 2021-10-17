@@ -38,13 +38,12 @@ public class TaskController {
     public Collection<TaskEntity> findTaskEntitiesByParam(@RequestBody TaskSearchValues taskSearchValues){
         return taskRepository.findTaskEntitiesByParam(
                 taskSearchValues.getEmployeeIdTasker()
-                /*,taskSearchValues.getTaskProblemId(),
-                taskSearchValues.getDateBegin(),
-                taskSearchValues.getEmployeeIdExecuter(),
+                ,taskSearchValues.getTaskProblemId()
+                ,taskSearchValues.getDateBegin()
+                /*,taskSearchValues.getEmployeeIdExecuter(),
                 taskSearchValues.getDepartmentIdExecuter(),
                 taskSearchValues.getDataFinish(),
-                taskSearchValues.getStatus()
-*/
+                taskSearchValues.getStatus()*/
         );
 
     }
