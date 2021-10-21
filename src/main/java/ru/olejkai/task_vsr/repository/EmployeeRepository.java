@@ -18,7 +18,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity,Long> {
 
     @Query("select e from EmployeeEntity e where " +
             "(:surname is null or :surname ='' or lower(e.surname) like lower(concat('%',:surname,'%') )) " +
-            " order by e.surname asc")
+            " order by e.id asc")
 //    @Query(query)
     List<EmployeeEntity> findBySurname(@Param("surname")String surname);
 

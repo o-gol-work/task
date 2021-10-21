@@ -31,21 +31,36 @@ public class TaskController {
 
     @GetMapping("/all_tasks")
     public Collection<TaskEntity> taskEntities(){
+        Collection<TaskEntity> tasks=taskRepository.findAll();
         return taskRepository.findAll();
     }
 
     @PostMapping("/search")
     public Collection<TaskEntity> findTaskEntitiesByParam(@RequestBody TaskSearchValues taskSearchValues){
-        return taskRepository.findTaskEntitiesByParam(
+        if(taskSearchValues.getEmployeeIdExecuter()!=null && taskSearchValues.getEmployeeIdExecuter()!=""){
+        return taskRepository.findTaskEntitiesByParamOne(
                 taskSearchValues.getEmployeeIdTasker()
                 ,taskSearchValues.getTaskProblemId()
                 ,taskSearchValues.getDateBegin()
-                /*,taskSearchValues.getEmployeeIdExecuter(),
-                taskSearchValues.getDepartmentIdExecuter(),
-                taskSearchValues.getDataFinish(),
-                taskSearchValues.getStatus()*/
-        );
+                ,
+                taskSearchValues.getEmployeeIdExecuter()
+                ,taskSearchValues.getDepartmentIdExecuter()
+                , taskSearchValues.getDataFinish()
+                , taskSearchValues.getStatus()
 
+        );
+        }else {
+            return taskRepository.findTaskEntitiesByParamTwo(
+                    taskSearchValues.getEmployeeIdTasker()
+                    ,taskSearchValues.getTaskProblemId()
+                    ,taskSearchValues.getDateBegin()
+//                    ,
+//                    taskSearchValues.getEmployeeIdExecuter()
+                    ,taskSearchValues.getDepartmentIdExecuter()
+                    , taskSearchValues.getDataFinish()
+                    , taskSearchValues.getStatus()
+            );
+        }
     }
 
     @GetMapping("/task/{id}")

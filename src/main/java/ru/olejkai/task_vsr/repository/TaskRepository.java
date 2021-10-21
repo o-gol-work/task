@@ -67,23 +67,52 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             "(:taskProblemId is null or :taskProblemId ='' or lower(t.taskProblemByTaskProblemId.title) like lower(concat('%',:taskProblemId,'%') ) ) " +
             "and\n " +
             "(:dateBegin is null  or :dateBegin>=t.dateBegin) " +
-            /*"or\n" +
-            "(:employeeIdExecuter is null or :employeeIdExecuter ='' or lower(t.employeeByEmployeeIdExecuter.surname) like lower(concat('%',:employeeIdExecuter,'%') ) ) " +
-            "or\n " +
+            "and\n" +
+            "(" +
+//            ":employeeIdExecuter is null or :employeeIdExecuter ='' or " +
+            "lower(t.employeeByEmployeeIdExecuter.surname) like lower(concat('%',:employeeIdExecuter,'%') ) ) " +
+            "and\n " +
             "(:departmentIdExecuter is null or :departmentIdExecuter ='' or lower(t.departmentByDepartmentIdExecuter.title) like lower(concat('%',:departmentIdExecuter,'%') ) ) " +
-            "or\n " +
+            "and\n " +
             "(:dataFinish is null  or :dataFinish>=t.dataFinish) " +
-            "or\n" +
+            "and\n" +
             "(:status is null or :status=t.status)" +
-            "order by t.dateBegin asc" +*/
+            "order by t.dateBegin asc" +
             "")
-    Collection<TaskEntity> findTaskEntitiesByParam(@Param("employeeIdTasker")String employeeIdTasker
+    Collection<TaskEntity> findTaskEntitiesByParamOne(@Param("employeeIdTasker")String employeeIdTasker
             ,@Param("taskProblemId")String taskProblemId
             ,@Param("dateBegin")Timestamp dateBegin
-            /*,@Param("employeeIdExecuter")String employeeIdExecuter
+            ,@Param("employeeIdExecuter")String employeeIdExecuter
             ,@Param("departmentIdExecuter")String departmentIdExecuter
             ,@Param("dataFinish")Timestamp dataFinish
-            ,@Param("status")Integer status*/
+            ,@Param("status")Integer status
+                                                         );
+
+
+    @Query("SELECT t FROM TaskEntity t \n" +
+            "where\n" +
+            "(:employeeIdTasker is null or :employeeIdTasker ='' or lower(t.employeeByEmployeeIdTasker.surname) like lower(concat('%',:employeeIdTasker,'%') ) and t.parentId is null) " +
+            "and\n " +
+            "(:taskProblemId is null or :taskProblemId ='' or lower(t.taskProblemByTaskProblemId.title) like lower(concat('%',:taskProblemId,'%') ) ) " +
+            "and\n " +
+            "(:dateBegin is null  or :dateBegin>=t.dateBegin) " +
+//            "and\n" +
+//            "(:employeeIdExecuter is null or :employeeIdExecuter ='' or lower(t.employeeByEmployeeIdExecuter.surname) like lower(concat('%',:employeeIdExecuter,'%') ) ) " +
+            "and\n " +
+            "(:departmentIdExecuter is null or :departmentIdExecuter ='' or lower(t.departmentByDepartmentIdExecuter.title) like lower(concat('%',:departmentIdExecuter,'%') ) ) " +
+            "and\n " +
+            "(:dataFinish is null  or :dataFinish>=t.dataFinish) " +
+            "and\n" +
+            "(:status is null or :status=t.status)" +
+            "order by t.dateBegin asc" +
+            "")
+    Collection<TaskEntity> findTaskEntitiesByParamTwo(@Param("employeeIdTasker")String employeeIdTasker
+            ,@Param("taskProblemId")String taskProblemId
+            ,@Param("dateBegin")Timestamp dateBegin
+//            ,@Param("employeeIdExecuter")String employeeIdExecuter
+            ,@Param("departmentIdExecuter")String departmentIdExecuter
+            ,@Param("dataFinish")Timestamp dataFinish
+            ,@Param("status")Integer status
                                                          );
 
 
