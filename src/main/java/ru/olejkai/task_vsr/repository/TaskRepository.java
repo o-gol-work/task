@@ -1,6 +1,8 @@
 package ru.olejkai.task_vsr.repository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -60,7 +62,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             "order by t.dateBegin asc" +
             "")*/
 
-    @Query("SELECT t FROM TaskEntity t \n" +
+    @Query("SELECT t FROM TaskEntity t left join EmployeeEntity e on (e.id=t.employeeIdExecuter)\n" +
             "where\n" +
             "(:employeeIdTasker is null or :employeeIdTasker ='' or lower(t.employeeByEmployeeIdTasker.surname) like lower(concat('%',:employeeIdTasker,'%') ) and t.parentId is null) " +
             "and\n " +
@@ -69,23 +71,27 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             "(:dateBegin is null  or :dateBegin>=t.dateBegin) " +
             "and\n" +
             "(" +
-//            ":employeeIdExecuter is null or :employeeIdExecuter ='' or " +
-            "lower(t.employeeByEmployeeIdExecuter.surname) like lower(concat('%',:employeeIdExecuter,'%') ) ) " +
+            ":employeeIdExecuter is null or :employeeIdExecuter ='' or " +
+//            "t.employeeIdExecuter is null and" +
+            "  lower(e.surname) like lower(concat('%',:employeeIdExecuter,'%') ) " +
+            ")" +
             "and\n " +
             "(:departmentIdExecuter is null or :departmentIdExecuter ='' or lower(t.departmentByDepartmentIdExecuter.title) like lower(concat('%',:departmentIdExecuter,'%') ) ) " +
             "and\n " +
             "(:dataFinish is null  or :dataFinish>=t.dataFinish) " +
             "and\n" +
             "(:status is null or :status=t.status)" +
-            "order by t.dateBegin asc" +
+//            "order by t.dateBegin asc" +
             "")
-    Collection<TaskEntity> findTaskEntitiesByParamOne(@Param("employeeIdTasker")String employeeIdTasker
+    Page<TaskEntity> findTaskEntitiesByParamOne(
+            @Param("employeeIdTasker")String employeeIdTasker
             ,@Param("taskProblemId")String taskProblemId
-            ,@Param("dateBegin")Timestamp dateBegin
-            ,@Param("employeeIdExecuter")String employeeIdExecuter
+            ,@Param("dateBegin")Timestamp dateBegin,
+            @Param("employeeIdExecuter")String employeeIdExecuter
             ,@Param("departmentIdExecuter")String departmentIdExecuter
             ,@Param("dataFinish")Timestamp dataFinish
             ,@Param("status")Integer status
+            , Pageable pageable
                                                          );
 
 
@@ -107,13 +113,14 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             "order by t.dateBegin asc" +
             "")
     Collection<TaskEntity> findTaskEntitiesByParamTwo(@Param("employeeIdTasker")String employeeIdTasker
-            ,@Param("taskProblemId")String taskProblemId
-            ,@Param("dateBegin")Timestamp dateBegin
+            , @Param("taskProblemId")String taskProblemId
+            , @Param("dateBegin")Timestamp dateBegin
 //            ,@Param("employeeIdExecuter")String employeeIdExecuter
-            ,@Param("departmentIdExecuter")String departmentIdExecuter
-            ,@Param("dataFinish")Timestamp dataFinish
-            ,@Param("status")Integer status
-                                                         );
+            , @Param("departmentIdExecuter")String departmentIdExecuter
+            , @Param("dataFinish")Timestamp dataFinish
+            , @Param("status")Integer status
+
+                                                      );
 
 
 

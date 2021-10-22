@@ -13,6 +13,7 @@ import ru.olejkai.task_vsr.entity.DepartmentEntity;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.repository.DepartmentRepository;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
+import ru.olejkai.task_vsr.services.dbAccessServices.DepartmentServices;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +22,10 @@ import java.util.List;
 @RequestMapping("/start/departments")
 public class DepartmentController {
 
-    private DepartmentRepository departmentRepository;
+    private DepartmentServices departmentServices;
 
-    @Autowired
-    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
+    public DepartmentController(DepartmentServices departmentServices) {
+        this.departmentServices = departmentServices;
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
@@ -33,14 +33,14 @@ public class DepartmentController {
 
     @GetMapping("/all_departments")
     public ResponseEntity<Collection<DepartmentEntity>> getAllDepartments(){
-        return ResponseEntity.ok(departmentRepository.findAllByOrderByTitleAsc());
+        return ResponseEntity.ok(departmentServices.findAllByOrderByTitleAsc());
     }
 
     @GetMapping("/department/{id}")
     public ResponseEntity<DepartmentEntity> getDepartment(@PathVariable Long id){
         DepartmentEntity departmentEntity=null;
         try {
-            departmentEntity=departmentRepository.findById(id).get();
+            departmentEntity=departmentServices.findById(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("department with id={} not found",id);
@@ -56,7 +56,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentEntity> getParent(@PathVariable Long id){
         DepartmentEntity departmentEntity=null;
         try {
-            departmentEntity= departmentRepository.findById(id).get().getParent();
+            departmentEntity= departmentServices.findByIdGetParent(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("department with id={} not found",id);
@@ -72,7 +72,7 @@ public class DepartmentController {
     public ResponseEntity<Collection<DepartmentEntity>> getChildren(@PathVariable Long id){
         Collection<DepartmentEntity> departmentEntity=null;
         try {
-            departmentEntity= departmentRepository.findById(id).get().getChildren();
+            departmentEntity= departmentServices.findByIdGetChildren(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("department with id={} not found",id);
@@ -88,7 +88,7 @@ public class DepartmentController {
     public ResponseEntity<Collection<DepartmentEntity>> getAllChildren(@PathVariable Long id){
         Collection<DepartmentEntity> departmentEntity=null;
         try {
-            departmentEntity= departmentRepository.getAllChildren(id);
+            departmentEntity= departmentServices.getAllChildren(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("department with id={} not found",id);
@@ -104,7 +104,7 @@ public class DepartmentController {
     public ResponseEntity<Collection<DepartmentEntity>> getAllParent(@PathVariable Long id) {
         Collection<DepartmentEntity> departmentEntity=null;
         try {
-            departmentEntity= departmentRepository.getAllParent(id);
+            departmentEntity= departmentServices.getAllParent(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("department with id={} not found",id);

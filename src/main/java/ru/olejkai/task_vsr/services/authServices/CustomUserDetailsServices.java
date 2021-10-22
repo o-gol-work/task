@@ -1,4 +1,4 @@
-package ru.olejkai.task_vsr.services;
+package ru.olejkai.task_vsr.services.authServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

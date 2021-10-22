@@ -3,6 +3,10 @@ package ru.olejkai.task_vsr.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,9 @@ import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.DepartmentRepository;
 import ru.olejkai.task_vsr.repository.TaskRepository;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
+import ru.olejkai.task_vsr.services.dbAccessServices.TaskServices;
 
+import javax.swing.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -20,25 +26,50 @@ import java.util.Collection;
 @RequestMapping("start/tasks")
 public class TaskController {
 
-    private TaskRepository taskRepository;
+    private TaskServices taskServices;
 
-    @Autowired
-    public void setTaskRepository(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskServices taskServices) {
+        this.taskServices = taskServices;
     }
+
+
+
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
 
 
     @GetMapping("/all_tasks")
     public Collection<TaskEntity> taskEntities(){
-        Collection<TaskEntity> tasks=taskRepository.findAll();
-        return taskRepository.findAll();
+        return taskServices.findAll();
     }
 
+
+
     @PostMapping("/search")
-    public Collection<TaskEntity> findTaskEntitiesByParam(@RequestBody TaskSearchValues taskSearchValues){
-        if(taskSearchValues.getEmployeeIdExecuter()!=null && taskSearchValues.getEmployeeIdExecuter()!=""){
-        return taskRepository.findTaskEntitiesByParamOne(
+    public ResponseEntity<Page<TaskEntity>> findTaskEntitiesByParam(@RequestBody TaskSearchValues taskSearchValues){
+
+        String sortColumn=taskSearchValues.getSortColumn()!=null?taskSearchValues.getSortColumn():null;
+        String sortDirection=taskSearchValues.getSortDirection()!=null?taskSearchValues.getSortDirection():null;
+
+        Integer pageNumber=taskSearchValues.getPageNumber()!=null?taskSearchValues.getPageNumber():null;
+        Integer pageSize=taskSearchValues.getPageSize()!=null?taskSearchValues.getPageSize():null;
+
+        Sort.Direction direction =sortDirection==null || sortDirection.trim().length() == 0 || sortDirection.trim().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC;
+
+        Sort sort=Sort.by(direction,sortColumn);
+
+
+
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber
+                ,pageSize
+                ,sort
+                );
+
+        Page<TaskEntity> result=taskServices.findTaskEntitiesByParamOne(
+                taskSearchValues
+                ,pageRequest
+        );
+        /*Page result=taskRepository.findTaskEntitiesByParamOne(
                 taskSearchValues.getEmployeeIdTasker()
                 ,taskSearchValues.getTaskProblemId()
                 ,taskSearchValues.getDateBegin()
@@ -47,9 +78,13 @@ public class TaskController {
                 ,taskSearchValues.getDepartmentIdExecuter()
                 , taskSearchValues.getDataFinish()
                 , taskSearchValues.getStatus()
+                ,pageRequest
+        );*/
 
-        );
-        }else {
+
+//        if(taskSearchValues.getEmployeeIdExecuter()!=null && taskSearchValues.getEmployeeIdExecuter()!=""){
+        return ResponseEntity.ok(result);
+        /*}else {
             return taskRepository.findTaskEntitiesByParamTwo(
                     taskSearchValues.getEmployeeIdTasker()
                     ,taskSearchValues.getTaskProblemId()
@@ -60,8 +95,8 @@ public class TaskController {
                     , taskSearchValues.getDataFinish()
                     , taskSearchValues.getStatus()
             );
+        }*/
         }
-    }
 
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskEntity> getTask(@PathVariable Long id){
@@ -69,7 +104,7 @@ public class TaskController {
 //        return taskRepository.getTaskEntityById(275l);
         TaskEntity taskEntity=null;
         try {
-            taskEntity=taskRepository.findById(id).get();
+            taskEntity=taskServices.findById(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("task with id={} not found",id);
@@ -85,7 +120,7 @@ public class TaskController {
     public ResponseEntity<TaskEntity> getParent(@PathVariable Long id){
         TaskEntity taskEntity=null;
         try {
-            taskEntity=taskRepository.findById(id).get().getParent();
+            taskEntity=taskServices.findByIdGetParent(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("task with id={} not found",id);
@@ -101,7 +136,7 @@ public class TaskController {
     public ResponseEntity<Collection<TaskEntity>> getChildren(@PathVariable Long id){
         Collection<TaskEntity> taskEntity=null;
         try {
-            taskEntity=taskRepository.findById(id).get().getChildren();
+            taskEntity=taskServices.findByIdGetChildren(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("task with id={} not found",id);
@@ -117,7 +152,7 @@ public class TaskController {
     public ResponseEntity<Collection<TaskEntity>> getAllChildren(@PathVariable Long id){
         Collection<TaskEntity> taskEntity=null;
         try {
-            taskEntity=taskRepository.getAllChildren(id);
+            taskEntity=taskServices.getAllChildren(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("task with id={} not found",id);
@@ -133,7 +168,7 @@ public class TaskController {
     public ResponseEntity<Collection<TaskEntity>> getAllParent(@PathVariable Long id) {
         Collection<TaskEntity> taskEntity=null;
         try {
-            taskEntity=taskRepository.getAllParent(id);
+            taskEntity=taskServices.getAllParent(id);
         }catch (Exception e){
             e.printStackTrace();
             LOG.error("task with id={} not found",id);

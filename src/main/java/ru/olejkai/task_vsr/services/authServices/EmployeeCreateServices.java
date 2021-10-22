@@ -1,11 +1,9 @@
-package ru.olejkai.task_vsr.services;
+package ru.olejkai.task_vsr.services.authServices;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.util.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
@@ -14,12 +12,6 @@ import ru.olejkai.task_vsr.exeptions.EmployeeEntityExistExeption;
 import ru.olejkai.task_vsr.payload.request.SignupRequest;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
 import ru.olejkai.task_vsr.repository.EmployeeRoleEntityRepository;
-import ru.olejkai.task_vsr.security.JWTTokenProvider;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 @Slf4j
 @Service

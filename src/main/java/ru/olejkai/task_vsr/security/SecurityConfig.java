@@ -1,6 +1,5 @@
 package ru.olejkai.task_vsr.security;
 
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.olejkai.task_vsr.services.CustomUserDetailsServices;
+import ru.olejkai.task_vsr.services.authServices.CustomUserDetailsServices;
 
 /*@Configuration
 @EnableWebSecurity
