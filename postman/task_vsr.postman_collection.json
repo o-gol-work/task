@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "18d1c085-c1ed-45df-879c-1a6d2a6acde6",
+		"name": "task_vsr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": " http://localhost:8080/start/signin",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"1616\",\r\n    \"password\":\"1616\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/start/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tabelNumber\":\"1919\",\r\n    \"name\":\"sesese\",\r\n    \"surname\":\"ghghgh\",\r\n    \"telephoneNumber\":null,\r\n    \"postHasDepartmentId\":\"24\",\r\n    \"password\":\"1919\",\r\n    \"confirmPassword\":\"1919\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/start/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tabelNumber\":\"1616\",\r\n    \"name\":\"zuz\",\r\n    \"surname\":\"зуззи\",\r\n    \"telephoneNumber\":null,\r\n    \"postHasDepartmentId\":\"20\",\r\n    \"postHasDepartmentByPostHasDepartmentId\":{\r\n        \"id\": 20\r\n    },\r\n    \"password\":\"1616\",\r\n    \"confirmPassword\":\"1616\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/start/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/tasks/search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeIdTasker\":null,\r\n    \"taskProblemId\":null,\r\n    \"dateBegin\":null,\r\n    \"employeeIdExecuter\":null,\r\n    \"departmentIdExecuter\":null,\r\n    \"dataFinish\":null,\r\n    \"status\":null,\r\n    \"pageNumber\":0,\r\n    \"pageSize\":3,\r\n    \"sortColumn\":\"dateBegin\",\r\n    \"sortDirection\":\"desc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/start/tasks/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"tasks",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/employees/find_empl/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeSurname\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/start/employees/find_empl/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"employees",
+						"find_empl",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/employees/employee/19",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOSIsInN1cm5hbWUiOiLQt9GD0LfQt9C4IiwibmFtZSI6Inp1eiIsImlkIjoiMTkiLCJ1c2VybmFtZSI6IjE2MTYiLCJpYXQiOjE2MzQwMzUxNDUsImV4cCI6MTYzNDAzNTc0NX0.thhLrm3eKYQi5WaYqUFwCSfydRKQVKUV9qz4XdymIpMw-QftiFQ-l8GlqIHpfBGb2ndZQ7fLIUfkocKP_a5zvw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/employees/employee/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"employees",
+						"employee",
+						"19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/departments/all_departments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/departments/all_departments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"departments",
+						"all_departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/departments/department/16",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/departments/department/16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"departments",
+						"department",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/employees/employee/post/19",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/employees/employee/post/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"employees",
+						"employee",
+						"post",
+						"19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/tasks/task/275",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/tasks/task/275",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"tasks",
+						"task",
+						"275"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/start/tasks/parent_task/280",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start/tasks/parent_task/280",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start",
+						"tasks",
+						"parent_task",
+						"280"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

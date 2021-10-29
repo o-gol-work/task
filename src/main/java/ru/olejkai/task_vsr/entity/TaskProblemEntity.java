@@ -19,6 +19,11 @@ public class TaskProblemEntity {
     private Collection<TaskEntity> tasksById;
     private Collection<TaskProblemEntity> taskProblemsById;*/
 
+    public TaskProblemEntity(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     @Basic
     @Column(name = "parent_id", nullable = true)
     public Long getParentId() {
@@ -39,6 +44,8 @@ public class TaskProblemEntity {
     public String getTitle() {
         return title;
     }
+
+
 
 
 

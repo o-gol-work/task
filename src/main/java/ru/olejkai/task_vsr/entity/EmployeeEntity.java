@@ -61,6 +61,13 @@ public class EmployeeEntity
         this.authorities = authorities;
     }
 
+    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname) {
+        this.id = id;
+        this.tabelNumber = tabelNumber;
+        this.name = name;
+        this.surname = surname;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

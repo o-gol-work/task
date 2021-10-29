@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
+import ru.olejkai.task_vsr.entity.PostEntity;
+import ru.olejkai.task_vsr.entity.PostHasDepartmentEntity;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
 import ru.olejkai.task_vsr.search.EmployeeSearchValues;
 import ru.olejkai.task_vsr.services.authServices.CustomUserDetailsServices;
@@ -60,6 +62,25 @@ public class EmployeeController {
 
         }
 
-        return ResponseEntity.ok( employeeServices.findById(id));
+        return ResponseEntity.ok( employeeEntity);
     }
+
+
+    @GetMapping("/employee/post/{id}")
+    public ResponseEntity<PostEntity> employeePostById(@PathVariable Long id){
+
+        PostEntity post=null;
+        try {
+                        post=employeeServices.findById(id).getPostHasDepartmentByPostHasDepartmentId().getPostByPostId();
+        }catch (Exception e){
+            e.printStackTrace();
+            LOG.error("employee with id={} not found",id);
+            return new ResponseEntity(String.format("employee with id=%s not found",id), HttpStatus.NOT_ACCEPTABLE);
+
+
+        }
+
+        return ResponseEntity.ok( post);
+    }
+
 }

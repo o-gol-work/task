@@ -5,12 +5,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.data.repository.query.Param;
+import ru.olejkai.task_vsr.dto.TaskDto;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 
@@ -39,6 +42,262 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 
     TaskEntity getTaskEntityById(Long id);
     TaskEntity findTaskEntityById(Long id);
+
+
+
+
+
+
+    @Query("SELECT " +
+//            "new TaskEntity (" +
+//            "t" +
+//            ---------------------------------------------------------------------------------------------------------
+//            "t.parentId" +
+//            ",t.id" +
+//            ",t.employeeIdTasker" +
+//            ",t.employeeByEmployeeIdTasker" +
+//            ",t.taskProblemId" +
+//            ",t.taskProblemByTaskProblemId" +
+//            ",t.dateBegin" +
+//            ",t.employeeIdExecuter" +
+//            ",t.employeeByEmployeeIdExecuter" +
+//            ",t.departmentIdExecuter" +
+//            ",t.departmentByDepartmentIdExecuter" +
+//            ",t.dataFinish" +
+//            ",t.status" +
+//            ---------------------------------------------------------------------------------------------------------
+
+            "t.id" +
+            ",t.dataFinish" +
+            ",t.dateBegin" +
+//            ",t.departmentIdExecuter" +
+//            ",t.employeeIdExecuter" +
+//            ",t.employeeIdTasker" +
+            ",t.parentId" +
+            ",t.status" +
+//            ",t.taskProblemId" +
+            ",d.id" +
+//            ",d.parentId \n" +
+//            ",d.telephoneNumber\n" +
+            ",d.title ," +
+            "e.id,\n" +
+            "e.name ,\n" +
+//            "e.password ,\n" +
+//            "e.postHasDepartmentId ,\n" +
+            "e.surname ,\n" +
+            "e.tabelNumber ,\n" +
+//            "e.telephoneNumber ,\n" +
+//            "e.worked, " +
+//            "erool.employeeId ,\n" +
+//            "erool.id ,\n" +
+//            "erool.id ,\n" +
+//            "erool.employeeId ,\n" +
+//            "erool.role," +
+//            "phd.id ,\n" +
+//            "phd.departmentId ,\n" +
+//            "phd.postId ," +
+            "ee.id,\n" +
+            "ee.name ,\n" +
+//            "ee.password ,\n" +
+//            "ee.postHasDepartmentId ,\n" +
+            "ee.surname ,\n" +
+            "ee.tabelNumber ,\n" +
+//            "ee.telephoneNumber ,\n" +
+//            "ee.worked, " +
+//            "eerool.employeeId ,\n" +
+//            "eerool.id ,\n" +
+//            "eerool.id ,\n" +
+//            "eerool.employeeId ,\n" +
+//            "eerool.role," +
+//            "phde.id ,\n" +
+//            "phde.departmentId ,\n" +
+//            "phde.postId ," +
+            "tp.id ,\n" +
+//            "tp.parentId ,\n" +
+            "tp.title " +
+//            ")" +
+
+
+
+
+            " FROM TaskEntity t " +
+//            ---------------------------------------------------------------------------------------------------------
+            " left outer join DepartmentEntity  d on t.departmentIdExecuter=d.id\n " +
+
+
+            "left outer join  EmployeeEntity e on (t.employeeIdExecuter=e.id)\n" +
+//            "left outer join  EmployeeRoleEntity erool on (e.id=erool.employeeId)\n" +
+            "left outer join  PostHasDepartmentEntity phd on (phd.id=e.postHasDepartmentId)" +
+
+            "left outer join  EmployeeEntity ee on (ee.id=t.employeeIdTasker)\n" +
+//            "left outer join  EmployeeRoleEntity eerool on (ee.id=eerool.employeeId)\n" +
+            "left outer join  PostHasDepartmentEntity phde on (phde.id=ee.postHasDepartmentId)" +
+
+            " left outer join TaskProblemEntity tp on tp.id=t.taskProblemId\n" +
+
+
+
+
+
+//            "left outer join  PostEntity er on (er.id=phd.postId)" +
+//            "left outer join  DepartmentEntity de on (de.id=phd.departmentId)" +
+
+//            "left outer join  PostEntity ere on (ere.id=phde.postId)" +
+//            "left outer join  DepartmentEntity dee on (dee.id=phde.departmentId)" +
+
+
+//            ---------------------------------------------------------------------------------------------------------
+
+
+//            "join fetch EmployeeEntity e on (e.id=t.employeeIdExecuter)\n" +
+//            "join fetch  EmployeeRoleEntity erool on (e.id=erool.employeeId)\n" +
+//            "join fetch  PostHasDepartmentEntity phd on (phd.id=e.postHasDepartmentId)" +
+//            "join fetch  PostEntity er on (er.id=phd.postId)" +
+//            "join fetch  DepartmentEntity de on (de.id=phd.departmentId)" +
+//
+//            "join fetch  EmployeeEntity ee on (ee.id=t.employeeIdTasker)\n" +
+//            "join fetch  EmployeeRoleEntity eerool on (ee.id=eerool.employeeId)\n" +
+//            "join fetch  PostHasDepartmentEntity phde on (phde.id=ee.postHasDepartmentId)" +
+//            "join fetch  PostEntity ere on (ere.id=phde.postId)" +
+//            "join fetch  DepartmentEntity dee on (dee.id=phde.departmentId)" +
+//
+//
+//            "join fetch TaskProblemEntity tp on tp.id=t.taskProblemId\n" +
+//            "join fetch DepartmentEntity  d on d.id=t.departmentIdExecuter\n " +
+
+            "where t.id=:aLong" +
+            "" )
+//            "order by t.dateBegin asc")
+    public Optional<TaskDto> findTaskDto(@Param("aLong") Long aLong);
+
+
+
+
+
+
+
+    @Override
+    @Query("SELECT " +
+            "new TaskEntity (" +
+//            "t" +
+//            ---------------------------------------------------------------------------------------------------------
+//            "t.parentId" +
+//            ",t.id" +
+//            ",t.employeeIdTasker" +
+//            ",t.employeeByEmployeeIdTasker" +
+//            ",t.taskProblemId" +
+//            ",t.taskProblemByTaskProblemId" +
+//            ",t.dateBegin" +
+//            ",t.employeeIdExecuter" +
+//            ",t.employeeByEmployeeIdExecuter" +
+//            ",t.departmentIdExecuter" +
+//            ",t.departmentByDepartmentIdExecuter" +
+//            ",t.dataFinish" +
+//            ",t.status" +
+//            ---------------------------------------------------------------------------------------------------------
+
+            "t.id" +
+            ",t.dataFinish" +
+            ",t.dateBegin" +
+//            ",t.departmentIdExecuter" +
+//            ",t.employeeIdExecuter" +
+//            ",t.employeeIdTasker" +
+            ",t.parentId" +
+            ",t.status" +
+//            ",t.taskProblemId" +
+            ",d.id" +
+//            ",d.parentId \n" +
+//            ",d.telephoneNumber\n" +
+            ",d.title ," +
+            "e.id,\n" +
+            "e.name ,\n" +
+//            "e.password ,\n" +
+//            "e.postHasDepartmentId ,\n" +
+            "e.surname ,\n" +
+            "e.tabelNumber ,\n" +
+//            "e.telephoneNumber ,\n" +
+//            "e.worked, " +
+//            "erool.employeeId ,\n" +
+//            "erool.id ,\n" +
+//            "erool.id ,\n" +
+//            "erool.employeeId ,\n" +
+//            "erool.role," +
+//            "phd.id ,\n" +
+//            "phd.departmentId ,\n" +
+//            "phd.postId ," +
+            "ee.id,\n" +
+            "ee.name ,\n" +
+//            "ee.password ,\n" +
+//            "ee.postHasDepartmentId ,\n" +
+            "ee.surname ,\n" +
+            "ee.tabelNumber ,\n" +
+//            "ee.telephoneNumber ,\n" +
+//            "ee.worked, " +
+//            "eerool.employeeId ,\n" +
+//            "eerool.id ,\n" +
+//            "eerool.id ,\n" +
+//            "eerool.employeeId ,\n" +
+//            "eerool.role," +
+//            "phde.id ,\n" +
+//            "phde.departmentId ,\n" +
+//            "phde.postId ," +
+            "tp.id ,\n" +
+//            "tp.parentId ,\n" +
+            "tp.title " +
+            ")" +
+
+
+
+
+            " FROM TaskEntity t " +
+//            ---------------------------------------------------------------------------------------------------------
+            " left outer join DepartmentEntity  d on t.departmentIdExecuter=d.id\n " +
+
+
+            "left outer join  EmployeeEntity e on (t.employeeIdExecuter=e.id)\n" +
+//            "left outer join  EmployeeRoleEntity erool on (e.id=erool.employeeId)\n" +
+            "left outer join  PostHasDepartmentEntity phd on (phd.id=e.postHasDepartmentId)" +
+
+            "left outer join  EmployeeEntity ee on (ee.id=t.employeeIdTasker)\n" +
+//            "left outer join  EmployeeRoleEntity eerool on (ee.id=eerool.employeeId)\n" +
+            "left outer join  PostHasDepartmentEntity phde on (phde.id=ee.postHasDepartmentId)" +
+
+            " left outer join TaskProblemEntity tp on tp.id=t.taskProblemId\n" +
+
+
+
+
+
+//            "left outer join  PostEntity er on (er.id=phd.postId)" +
+//            "left outer join  DepartmentEntity de on (de.id=phd.departmentId)" +
+
+//            "left outer join  PostEntity ere on (ere.id=phde.postId)" +
+//            "left outer join  DepartmentEntity dee on (dee.id=phde.departmentId)" +
+
+
+//            ---------------------------------------------------------------------------------------------------------
+
+
+//            "join fetch EmployeeEntity e on (e.id=t.employeeIdExecuter)\n" +
+//            "join fetch  EmployeeRoleEntity erool on (e.id=erool.employeeId)\n" +
+//            "join fetch  PostHasDepartmentEntity phd on (phd.id=e.postHasDepartmentId)" +
+//            "join fetch  PostEntity er on (er.id=phd.postId)" +
+//            "join fetch  DepartmentEntity de on (de.id=phd.departmentId)" +
+//
+//            "join fetch  EmployeeEntity ee on (ee.id=t.employeeIdTasker)\n" +
+//            "join fetch  EmployeeRoleEntity eerool on (ee.id=eerool.employeeId)\n" +
+//            "join fetch  PostHasDepartmentEntity phde on (phde.id=ee.postHasDepartmentId)" +
+//            "join fetch  PostEntity ere on (ere.id=phde.postId)" +
+//            "join fetch  DepartmentEntity dee on (dee.id=phde.departmentId)" +
+//
+//
+//            "join fetch TaskProblemEntity tp on tp.id=t.taskProblemId\n" +
+//            "join fetch DepartmentEntity  d on d.id=t.departmentIdExecuter\n " +
+
+            "where t.id=:aLong" +
+            "" )
+//            "order by t.dateBegin asc")
+    Optional<TaskEntity> findById(@Param("aLong") Long aLong);
 
 
 

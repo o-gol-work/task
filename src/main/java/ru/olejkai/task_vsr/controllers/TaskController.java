@@ -7,10 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.olejkai.task_vsr.dto.TaskDto;
 import ru.olejkai.task_vsr.entity.DepartmentEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.DepartmentRepository;
@@ -28,6 +30,7 @@ public class TaskController {
 
     private TaskServices taskServices;
 
+    @Autowired
     public TaskController(TaskServices taskServices) {
         this.taskServices = taskServices;
     }
@@ -98,6 +101,9 @@ public class TaskController {
         }*/
         }
 
+
+
+
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskEntity> getTask(@PathVariable Long id){
 
@@ -116,6 +122,40 @@ public class TaskController {
         return ResponseEntity.ok(taskEntity);
     }
 
+
+
+
+    @GetMapping("/task/dto/{id}")
+    public void getTaskDto(@PathVariable Long id){
+
+//        return taskRepository.getTaskEntityById(275l);
+
+        try {
+            TaskDto taskEntity=taskServices.findTaskDto(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            LOG.error("task with id={} not found",id);
+
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/parent_task/{id}")
     public ResponseEntity<TaskEntity> getParent(@PathVariable Long id){
         TaskEntity taskEntity=null;
@@ -131,6 +171,14 @@ public class TaskController {
 
         return ResponseEntity.ok(taskEntity);
     }
+
+
+
+
+
+
+
+
 
     @GetMapping("/children_first_line_tasks/{id}")
     public ResponseEntity<Collection<TaskEntity>> getChildren(@PathVariable Long id){

@@ -5,37 +5,63 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "task", schema = "task_vsr")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","parent","children"})
-public class TaskEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "parent", "children"})
+public class TaskEntity implements Serializable {
     private Long parentId;
     private Long id;
     private Long employeeIdTasker;
     private Long taskProblemId;
-//    private String taskCommentId;
+    //    private String taskCommentId;
     private Timestamp dateBegin;
     private Long employeeIdExecuter;
     private Long departmentIdExecuter;
     private Timestamp dataFinish;
     private Integer status;
-    private Integer statusExec;
+    //    private Integer statusExec;
     private EmployeeEntity employeeByEmployeeIdTasker;
     private TaskProblemEntity taskProblemByTaskProblemId;
     private EmployeeEntity employeeByEmployeeIdExecuter;
     private DepartmentEntity departmentByDepartmentIdExecuter;
+    @Transient
     private TaskEntity parent;
+    @Transient
     private Collection<TaskEntity> children;
 
+    public TaskEntity(
+//            long id, Date dataFinish, Date dateBegin, long parentId, int status
+//            , long idDepartment, String titleDepartment
+//            , long idEmployeeExec, String nameExec, String surnameExec, int tabelNumberExec
+//            , long idEmployeeTasker, String nameTasker, String surnameTasker, int tabelNumberTasker
+//            , long idProblem, String titelProblem)
+            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status
+            , Long idDepartment, String titleDepartment
+            , Long idEmployeeExec, String nameExec, String surnameExec, Integer tabelNumberExec
+            , Long idEmployeeTasker, String nameTasker, String surnameTasker, Integer tabelNumberTasker
+            , Long idProblem, String titelProblem) {
+        if (parentId != null)
+            this.parentId = parentId;
+        this.id = id;
+        this.dateBegin = new Timestamp(dateBegin.getTime());
+        if (dataFinish != null)
+            this.dataFinish = new Timestamp(dataFinish.getTime());
+        this.status = status;
+        this.departmentByDepartmentIdExecuter = new DepartmentEntity(idDepartment, titleDepartment);
+        if (idEmployeeExec != null && tabelNumberExec!=null && nameExec!=null && surnameExec!=null)
+            this.employeeByEmployeeIdExecuter = new EmployeeEntity(idEmployeeExec, tabelNumberExec, nameExec, surnameExec);
+        this.employeeByEmployeeIdTasker = new EmployeeEntity(idEmployeeTasker, tabelNumberTasker, nameTasker, surnameTasker);
+        this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem);
+    }
 
-
-
-//    private Collection<TaskCommentsEntity> taskCommentsById;
+    //    private Collection<TaskCommentsEntity> taskCommentsById;
 //    private TaskStatusExecuterEntity taskStatusExecuterById;
 //    private TaskStatusTaskerEntity taskStatusTaskerById;
 
@@ -110,11 +136,11 @@ public class TaskEntity {
     }
 
 
-    @Basic
+    /*@Basic
     @Column(name = "status_exec", nullable = true)
     public Integer getStatusExec() {
         return statusExec;
-    }
+    }*/
 
 
     /*@ManyToOne
@@ -128,9 +154,8 @@ public class TaskEntity {
     }*/
 
 
-
     @ManyToOne
-    @JoinColumn(name = "employee_id_tasker", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "employee_id_tasker", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public EmployeeEntity getEmployeeByEmployeeIdTasker() {
         return employeeByEmployeeIdTasker;
     }
@@ -140,7 +165,7 @@ public class TaskEntity {
     }*/
 
     @ManyToOne
-    @JoinColumn(name = "task_problem_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "task_problem_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public TaskProblemEntity getTaskProblemByTaskProblemId() {
         return taskProblemByTaskProblemId;
     }
@@ -150,7 +175,7 @@ public class TaskEntity {
     }*/
 
     @ManyToOne
-    @JoinColumn(name = "employee_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "employee_id_executer", referencedColumnName = "id", insertable = false, updatable = false)
     public EmployeeEntity getEmployeeByEmployeeIdExecuter() {
         return employeeByEmployeeIdExecuter;
     }
@@ -160,7 +185,7 @@ public class TaskEntity {
     }*/
 
     @ManyToOne
-    @JoinColumn(name = "department_id_executer", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "department_id_executer", referencedColumnName = "id", insertable = false, updatable = false)
     public DepartmentEntity getDepartmentByDepartmentIdExecuter() {
         return departmentByDepartmentIdExecuter;
     }
@@ -173,19 +198,17 @@ public class TaskEntity {
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "parent_id", foreignKey=@ForeignKey(name="fk_task_task_parent"), insertable = false, updatable = false)
+    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_task_task_parent"), insertable = false, updatable = false)
     public TaskEntity getParent() {
         return parent;
     }
-
-
 
 
     @OneToMany(fetch = FetchType.LAZY
             , cascade = CascadeType.ALL
     )
     @JoinColumn(name = "parent_id")
-    public Collection<TaskEntity> getChildren (){
+    public Collection<TaskEntity> getChildren() {
         return children;
     }
 

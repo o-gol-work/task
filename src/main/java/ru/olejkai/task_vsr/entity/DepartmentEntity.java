@@ -40,6 +40,12 @@ public class DepartmentEntity {
     private Collection<PostHasDepartmentEntity> postHasDepartmentsById;
     private Collection<TaskEntity> tasksById;*/
 
+
+    public DepartmentEntity(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     @Basic
     @Column(name = "parent_id", nullable = true)
     public Long getParentId() {
