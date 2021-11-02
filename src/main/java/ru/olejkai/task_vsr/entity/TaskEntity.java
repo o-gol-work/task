@@ -14,7 +14,13 @@ import java.util.Date;
 @Table(name = "task", schema = "task_vsr")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "parent", "children"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "parent", "children"
+        ,"employeeIdTasker"
+        ,"taskProblemId"
+        ,"employeeIdExecuter"
+        ,"departmentIdExecuter"
+
+})
 public class TaskEntity implements Serializable {
     private Long parentId;
     private Long id;
@@ -60,6 +66,65 @@ public class TaskEntity implements Serializable {
         this.employeeByEmployeeIdTasker = new EmployeeEntity(idEmployeeTasker, tabelNumberTasker, nameTasker, surnameTasker);
         this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem);
     }
+
+
+
+    public TaskEntity(
+            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status
+
+            ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
+
+            , Long idEmployeeExec, String nameExec, String surnameExec, Integer tabelNumberExec, String telephoneNumberExec, Byte workedExec
+            ,Long idHasPostDepExec
+                    ,Long idPostExec,String titlePostExec,Long parentIdPostExec
+                    ,Long parentIdDepartmentExec, Long idDepartmentExec, String titleDepartmentExec, String telephoneNumberDepartmentExec
+
+            , Long idEmployeeTasker, String nameTasker, String surnameTasker, Integer tabelNumberTasker, String telephoneNumberTasker, Byte workedExecTasker
+            ,Long idHasPostDepTask
+                    ,Long idPostTasker,String titlePosTasker,Long parentIdTasker
+                    ,Long parentIdDepartmentTasker, Long idDepartmentTasker, String titleDepartmentTasker, String telephoneNumberDepartmentTasker
+
+            , Long idProblem, String titelProblem) {
+
+        if (parentId != null)
+            this.parentId = parentId;
+        this.id = id;
+        this.dateBegin = new Timestamp(dateBegin.getTime());
+        if (dataFinish != null)
+            this.dataFinish = new Timestamp(dataFinish.getTime());
+        this.status = status;
+        this.departmentByDepartmentIdExecuter = new DepartmentEntity(parentIdDepartment,idDepartment, titleDepartment,telephoneNumberDepartment);
+        if (idEmployeeExec != null && tabelNumberExec!=null && nameExec!=null && surnameExec!=null) {
+            this.employeeByEmployeeIdExecuter = new EmployeeEntity(idEmployeeExec, tabelNumberExec, nameExec, surnameExec, telephoneNumberExec, workedExec
+                    ,idHasPostDepExec
+                    , idPostExec, titlePostExec, parentIdPostExec
+                    , parentIdDepartmentExec, idDepartmentExec, titleDepartmentExec, telephoneNumberDepartmentExec
+
+            );
+        }
+        this.employeeByEmployeeIdTasker = new EmployeeEntity(idEmployeeTasker, tabelNumberTasker, nameTasker, surnameTasker,telephoneNumberTasker,workedExecTasker
+                ,idHasPostDepTask
+                , idPostTasker, titlePosTasker, parentIdTasker
+                , parentIdDepartmentTasker,  idDepartmentTasker,  titleDepartmentTasker,  telephoneNumberDepartmentTasker
+
+        );
+        this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //    private Collection<TaskCommentsEntity> taskCommentsById;
 //    private TaskStatusExecuterEntity taskStatusExecuterById;

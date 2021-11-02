@@ -81,7 +81,8 @@ public class TaskServices {
 
 
     public TaskEntity findByIdGetParent(Long id){
-            return taskRepository.findById(id).get().getParent();
+            return taskRepository.findDirectParentByChildId(id).get();
+//            return taskRepository.findById(id).get().getParent();
     }
 
 

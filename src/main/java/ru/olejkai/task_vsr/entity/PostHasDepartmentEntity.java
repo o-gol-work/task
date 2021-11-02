@@ -39,7 +39,15 @@ public class PostHasDepartmentEntity {
         return id;
     }
 
+    public PostHasDepartmentEntity(Long id
+            ,Long idPost,String titlePost,Long parentIdPost
+            ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
 
+                                   ) {
+        this.id = id;
+        this.postByPostId = new PostEntity(idPost, titlePost, parentIdPost);
+        this.departmentByDepartmentId = new DepartmentEntity(parentIdDepartment,idDepartment, titleDepartment,telephoneNumberDepartment);
+    }
 
 
     /*@OneToMany(mappedBy = "postHasDepartmentByPostHasDepartmentId")

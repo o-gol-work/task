@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Collection;
 @Table(name = "post", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class PostEntity {
     private Long id;
     private String title;

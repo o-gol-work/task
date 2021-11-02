@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 //@JsonIgnoreProperties({"hibernateLazyInitializer","postHasDepartmentByPostHasDepartmentId"})
 //@JsonIgnoreProperties({"hibernateLazyInitializer","employeeRolesById"})
-/*@JsonIgnoreProperties({
+@JsonIgnoreProperties({
         "hibernateLazyInitializer",
         "password",
         "username",
@@ -26,11 +26,12 @@ import java.util.stream.Collectors;
         "accountNonExpired",
         "credentialsNonExpired",
         "enabled",
-        "authorities"
-})*/
+        "authorities",
+        "employeeRolesById"
+
+})
 public class EmployeeEntity
-        implements UserDetails
-{
+        implements UserDetails {
     private Long id;
     private Integer tabelNumber;
     private String username;
@@ -41,11 +42,15 @@ public class EmployeeEntity
     private Byte worked;
     private Long postHasDepartmentId;
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
-//    private Collection<EmployeeRoleEntity> authorities;
-    private Collection<EmployeeRoleEntity> employeeRolesById=new ArrayList<>();
-//    private Collection<GrantedAuthority> authorities;
+    //    private Collection<EmployeeRoleEntity> authorities;
+    private Collection<EmployeeRoleEntity> employeeRolesById = new ArrayList<>();
+    //    private Collection<GrantedAuthority> authorities;
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
+    /*@Transient
+    private PostEntity post;
+    @Transient
+    private DepartmentEntity department;*/
 
     /*private Collection<EmployeeCommentEntity> employeeCommentsById;
     private Collection<TaskEntity> tasksById;
@@ -67,6 +72,26 @@ public class EmployeeEntity
         this.name = name;
         this.surname = surname;
     }
+
+    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String telephoneNumber, Byte worked
+                          ,Long idHasPostDep
+            ,Long idPost,String titlePost,Long parentIdPost
+            ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
+
+    ) {
+        this.id = id;
+        this.tabelNumber = tabelNumber;
+        this.name = name;
+        this.surname = surname;
+        if (telephoneNumber != null)
+            this.telephoneNumber = telephoneNumber;
+        this.worked = worked;
+        this.postHasDepartmentByPostHasDepartmentId=new PostHasDepartmentEntity( idHasPostDep
+                , idPost, titlePost, parentIdPost
+                , parentIdDepartment,  idDepartment,  titleDepartment,  telephoneNumberDepartment);
+
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,9 +129,6 @@ public class EmployeeEntity
     }
 
 
-
-
-
     @Basic
     @Column(name = "worked", nullable = false)
     public Byte getWorked() {
@@ -121,27 +143,24 @@ public class EmployeeEntity
     }
 
 
-
     @ManyToOne(
 //            fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "post_has_department_id", referencedColumnName = "id", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "post_has_department_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public PostHasDepartmentEntity getPostHasDepartmentByPostHasDepartmentId() {
         return postHasDepartmentByPostHasDepartmentId;
     }
 
 
-
-
-//    @OneToMany(mappedBy = "employeeByEmployeeId")
+    //    @OneToMany(mappedBy = "employeeByEmployeeId")
     @OneToMany(
             fetch = FetchType.EAGER
 //            cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "employee_id",referencedColumnName = "id")
-        public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
-            return employeeRolesById;
-        }
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
+        return employeeRolesById;
+    }
 
 
 
@@ -149,9 +168,9 @@ public class EmployeeEntity
 
 
     /*
-    * SECURiTY
-    *
-    * */
+     * SECURiTY
+     *
+     * */
 
     @Override
     @Basic

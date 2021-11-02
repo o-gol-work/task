@@ -10,14 +10,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-
-
-
 @Entity
 @Table(name = "department", schema = "task_vsr")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","parent","children"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "parent", "children"
+
+})
 
 public class DepartmentEntity {
     private Long parentId;
@@ -46,13 +45,20 @@ public class DepartmentEntity {
         this.title = title;
     }
 
+    public DepartmentEntity(Long parentId, Long id, String title, String telephoneNumber) {
+        if (parentId != null)
+            this.parentId = parentId;
+        this.id = id;
+        this.title = title;
+        if (telephoneNumber != null)
+            this.telephoneNumber = telephoneNumber;
+    }
+
     @Basic
     @Column(name = "parent_id", nullable = true)
     public Long getParentId() {
         return parentId;
     }
-
-
 
 
     @Id
@@ -79,7 +85,7 @@ public class DepartmentEntity {
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "parent_id", foreignKey=@ForeignKey(name="fk_department_parent"), insertable = false, updatable = false)
+    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_department_parent"), insertable = false, updatable = false)
     public DepartmentEntity getParent() {
         return parent;
     }
@@ -88,7 +94,7 @@ public class DepartmentEntity {
             , cascade = CascadeType.ALL
     )
     @JoinColumn(name = "parent_id")
-    public Collection<DepartmentEntity> getChildren (){
+    public Collection<DepartmentEntity> getChildren() {
         return children;
     }
 
