@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,12 @@ import java.util.Collection;
 @Table(name = "post_has_department", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({
+        "hibernateLazyInitializer",
+        "postId",
+        "departmentId"
+
+})
 public class PostHasDepartmentEntity {
     private Long postId;
     private Long departmentId;

@@ -27,7 +27,8 @@ import java.util.stream.Collectors;
         "credentialsNonExpired",
         "enabled",
         "authorities",
-        "employeeRolesById"
+        "employeeRolesById",
+        "postHasDepartmentId"
 
 })
 public class EmployeeEntity
