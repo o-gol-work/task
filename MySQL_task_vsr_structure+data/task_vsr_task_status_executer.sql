@@ -39,7 +39,7 @@ CREATE TABLE `task_status_executer` (
 
 LOCK TABLES `task_status_executer` WRITE;
 /*!40000 ALTER TABLE `task_status_executer` DISABLE KEYS */;
-INSERT INTO `task_status_executer` VALUES (275,0),(276,0),(277,0),(278,0),(279,0),(280,0);
+INSERT INTO `task_status_executer` VALUES (275,0),(276,0),(277,0),(278,0),(279,0),(280,0),(290,0),(291,0),(292,0),(293,0);
 /*!40000 ALTER TABLE `task_status_executer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-28 14:26:25
+-- Dump completed on 2021-11-08 14:24:06

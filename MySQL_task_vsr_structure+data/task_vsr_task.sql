@@ -48,7 +48,7 @@ CREATE TABLE `task` (
   CONSTRAINT `fk_task_employee_tasker` FOREIGN KEY (`employee_id_tasker`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_task_task_parent` FOREIGN KEY (`parent_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_task_task_problem` FOREIGN KEY (`task_problem_id`) REFERENCES `task_problem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=281 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (NULL,275,11,4,NULL,'2021-08-12 12:04:49',8,12,'2021-09-16 14:51:39',1,NULL),(NULL,276,5,6,NULL,'2021-08-12 12:04:50',NULL,12,NULL,0,NULL),(NULL,277,15,5,NULL,'2021-08-12 12:04:52',7,12,NULL,0,NULL),(NULL,278,3,5,NULL,'2021-08-12 12:04:58',NULL,27,NULL,0,NULL),(NULL,279,6,14,NULL,'2021-08-12 12:04:59',NULL,29,NULL,0,NULL),(275,280,5,6,NULL,'2021-08-12 12:05:16',NULL,12,NULL,0,NULL);
+INSERT INTO `task` VALUES (NULL,275,11,4,NULL,'2021-08-12 12:04:49',8,12,'2021-09-16 14:51:39',1,NULL),(NULL,276,5,6,NULL,'2021-08-12 12:04:50',NULL,12,NULL,0,NULL),(NULL,277,15,5,NULL,'2021-08-12 12:04:52',7,12,NULL,0,NULL),(NULL,278,3,5,NULL,'2021-08-12 12:04:58',NULL,27,NULL,0,NULL),(NULL,279,6,14,NULL,'2021-08-12 12:04:59',NULL,29,NULL,0,NULL),(275,280,5,6,NULL,'2021-08-12 12:05:16',NULL,12,NULL,0,NULL),(NULL,290,5,6,NULL,'2021-11-03 12:06:23',NULL,12,NULL,0,NULL),(NULL,291,5,6,NULL,'2021-11-03 12:08:01',NULL,12,NULL,0,NULL),(275,292,5,6,NULL,'2021-11-03 12:08:08',NULL,12,NULL,0,NULL),(280,293,11,4,NULL,'2021-11-03 12:12:21',NULL,27,NULL,0,NULL);
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -71,7 +71,10 @@ UNLOCK TABLES;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `task_BEFORE_INSERT` BEFORE INSERT ON `task` FOR EACH ROW BEGIN
 set new.date_begin=now();
+-- set new.department_id_executer=find_dep_exec_by_empl_and_probl(new.employee_id_tasker,new.task_problem_id);
 set new.department_id_executer=find_dep_exec_by_empl_and_probl(new.employee_id_tasker,new.task_problem_id);
+
+
 set new.status=0;
 
 
@@ -106,16 +109,17 @@ insert into task_status_tasker values (new.id,0);
 insert into task_status_executer values (new.id,0);
 end if;
 
-if(
-department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
-or 
-(
-new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
-)
-) then
-SIGNAL SQLSTATE '10000'
-        SET MESSAGE_TEXT = 'Исполнитель не является работникам подрозделения которому порученно выполнение данного задания';
-END IF;
+-- if(
+-- department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
+-- 
+-- or 
+-- (
+-- new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
+-- )
+-- ) then
+-- SIGNAL SQLSTATE '10000'
+--         SET MESSAGE_TEXT = 'Исполнитель не является работникам подрозделения которому порученно выполнение данного задания';
+-- END IF;
 
 
 END */;;
@@ -173,18 +177,18 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `task_AFTER_UPDATE` AFTER UPDATE ON `task` FOR EACH ROW BEGIN
 
-if(
-(
-(old.employee_id_executer<>new.employee_id_executer) and 
-new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
-) or 
-(
-new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
-)
-) then
-SIGNAL SQLSTATE '10000'
-        SET MESSAGE_TEXT = 'Исполнитель не является работникам подрозделения которому порученно выполнение данного задания';
-END IF;
+ if(
+ (
+ (old.employee_id_executer<>new.employee_id_executer) and 
+ new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
+ ) or 
+ (
+ new.department_id_executer != (select department_id from post_has_department where id = (select post_has_department_id from employee where id= new.employee_id_executer) )
+ )
+ ) then
+ SIGNAL SQLSTATE '10000'
+         SET MESSAGE_TEXT = 'Исполнитель не является работникам подрозделения которому порученно выполнение данного задания';
+ END IF;
 
 
 
@@ -307,4 +311,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-28 14:26:26
+-- Dump completed on 2021-11-08 14:24:04
