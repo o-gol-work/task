@@ -37,7 +37,7 @@ public class TaskController {
 
 
 
-    private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TaskController.class);
 
 
     @GetMapping("/all_tasks")

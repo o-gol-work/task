@@ -84,7 +84,7 @@ public class TaskEntity implements Serializable {
                     ,Long idPostTasker,String titlePosTasker,Long parentIdTasker
                     ,Long parentIdDepartmentTasker, Long idDepartmentTasker, String titleDepartmentTasker, String telephoneNumberDepartmentTasker
 
-            , Long idProblem, String titelProblem) {
+            , Long idProblem, String titelProblem,Integer parentNumber, Integer level) {
 
         if (parentId != null)
             this.parentId = parentId;
@@ -108,7 +108,7 @@ public class TaskEntity implements Serializable {
                 , parentIdDepartmentTasker,  idDepartmentTasker,  titleDepartmentTasker,  telephoneNumberDepartmentTasker
 
         );
-        this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem);
+        this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem,parentNumber,level);
     }
 
 

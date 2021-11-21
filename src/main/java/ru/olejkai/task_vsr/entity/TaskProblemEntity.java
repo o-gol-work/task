@@ -14,6 +14,8 @@ public class TaskProblemEntity {
     private Long parentId;
     private Long id;
     private String title;
+    private Integer parentNumber;
+    private Integer level;
     /*private TaskProblemEntity taskProblemByParentId;
     private Collection<DepartmentProblemEntity> departmentProblemsById;
     private Collection<TaskEntity> tasksById;
@@ -22,6 +24,13 @@ public class TaskProblemEntity {
     public TaskProblemEntity(Long id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public TaskProblemEntity(Long id, String title, Integer parentNumber, Integer level) {
+        this.id = id;
+        this.title = title;
+        this.parentNumber = parentNumber;
+        this.level = level;
     }
 
     @Basic
@@ -45,13 +54,20 @@ public class TaskProblemEntity {
         return title;
     }
 
+    @Basic
+    @Column(name = "parent_number", nullable = true)
+    public Integer getParentNumber() {
+        return parentNumber;
+    }
+
+    @Basic
+    @Column(name = "level", nullable = true)
+    public Integer getLevel() {
+        return level;
+    }
 
 
-
-
-
-
-/*
+    /*
     @ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id",insertable = false, updatable = false)
     public TaskProblemEntity getTaskProblemByParentId() {
