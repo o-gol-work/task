@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import ru.olejkai.task_vsr.repository.DepartmentRepository;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
 import ru.olejkai.task_vsr.search.EmployeeSearchValues;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +52,15 @@ public class EmployeeServices {
     public EmployeeEntity findById(Long id){
         return employeeRepository.findById(id).get();
 
+    }
+
+    private EmployeeEntity getEmployeeByPrincipal(Principal principal){
+        return employeeRepository.findEmployeeEntityByTabelNumber(Integer.parseInt(principal.getName())).
+                orElseThrow(() -> new UsernameNotFoundException(String.format("employee %s not found", principal.getName())));
+    }
+
+    public EmployeeEntity getCurrentEmployee(Principal principal){
+        return getEmployeeByPrincipal(principal);
     }
 
 

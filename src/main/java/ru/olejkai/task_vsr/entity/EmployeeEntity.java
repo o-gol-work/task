@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 
 })
 public class EmployeeEntity
-        implements UserDetails {
+        implements UserDetails, Serializable {
     private Long id;
     private Integer tabelNumber;
     private String username;
@@ -86,6 +87,26 @@ public class EmployeeEntity
         this.surname = surname;
         if (telephoneNumber != null)
             this.telephoneNumber = telephoneNumber;
+        this.worked = worked;
+        this.postHasDepartmentByPostHasDepartmentId=new PostHasDepartmentEntity( idHasPostDep
+                , idPost, titlePost, parentIdPost
+                , parentIdDepartment,  idDepartment,  titleDepartment,  telephoneNumberDepartment);
+
+    }
+
+    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String telephoneNumber,String password, Byte worked
+            ,Long idHasPostDep
+            ,Long idPost,String titlePost,Long parentIdPost
+            ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
+
+    ) {
+        this.id = id;
+        this.tabelNumber = tabelNumber;
+        this.name = name;
+        this.surname = surname;
+        if (telephoneNumber != null)
+            this.telephoneNumber = telephoneNumber;
+        this.password=password;
         this.worked = worked;
         this.postHasDepartmentByPostHasDepartmentId=new PostHasDepartmentEntity( idHasPostDep
                 , idPost, titlePost, parentIdPost

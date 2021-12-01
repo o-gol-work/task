@@ -22,16 +22,20 @@ import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.TaskRepository;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
 
+import java.security.Principal;
 import java.util.Collection;
 @Service
 @Transactional
 public class TaskServices {
 
     TaskRepository taskRepository;
+    EmployeeServices employeeServices;
+
 
     @Autowired
-    public TaskServices(TaskRepository taskRepository) {
+    public TaskServices(TaskRepository taskRepository, EmployeeServices employeeServices) {
         this.taskRepository = taskRepository;
+        this.employeeServices= employeeServices;
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskServices.class);
@@ -41,6 +45,56 @@ public class TaskServices {
     public Collection<TaskEntity> findAll(){
         return taskRepository.findAll();
     }
+
+
+    public TaskEntity createTaskParent(Long taskProblemID, Principal principal){
+        Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
+        return taskRepository.saveParent(taskProblemID,employeeIdTasker);
+
+    }
+
+    public TaskEntity createTaskChild(Long parentId,Long taskProblemID, Principal principal){
+        Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
+        return taskRepository.saveChild(parentId,taskProblemID,employeeIdTasker);
+
+    }
+
+
+    public Page<TaskEntity> findTaskEntitiesByParamTasker(TaskSearchValues taskSearchValues, Pageable pageRequest, Principal principal) {
+        Long employeeIdTasker = employeeServices.getCurrentEmployee(principal).getId();
+        return taskRepository.findTaskEntitiesByParamTasker(
+                employeeIdTasker
+                , taskSearchValues.getEmployeeIdTasker()
+                , taskSearchValues.getTaskProblemId()
+                , taskSearchValues.getDateBegin()
+                ,
+                taskSearchValues.getEmployeeIdExecuter()
+                , taskSearchValues.getDepartmentIdExecuter()
+                , taskSearchValues.getDataFinish()
+                , taskSearchValues.getStatus()
+                , pageRequest
+        );
+    }
+
+
+
+    public Page<TaskEntity> findTaskEntitiesByParamDepartmentExecuter(TaskSearchValues taskSearchValues, Pageable pageRequest, Principal principal) {
+        Long departmentIdExecuter=employeeServices.getCurrentEmployee(principal).getPostHasDepartmentByPostHasDepartmentId().getDepartmentId();
+        return taskRepository.findTaskEntitiesByParamDepartmentExecuter(
+                departmentIdExecuter
+                , taskSearchValues.getEmployeeIdTasker()
+                , taskSearchValues.getTaskProblemId()
+                , taskSearchValues.getDateBegin()
+                ,
+                taskSearchValues.getEmployeeIdExecuter()
+                , taskSearchValues.getDepartmentIdExecuter()
+                , taskSearchValues.getDataFinish()
+                , taskSearchValues.getStatus()
+                , pageRequest
+        );
+    }
+
+
 
 
 
@@ -62,6 +116,12 @@ public class TaskServices {
 
 
     }
+
+
+
+
+
+
 
 
     public TaskEntity findById(Long id){
