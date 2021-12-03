@@ -17,7 +17,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("start/tasks_problem")
+@RequestMapping("/tasks_problem")
+//@RequestMapping("start/tasks_problem")
 public class TaskProblemController {
 
     private TaskProblemServices taskProblemServices;
@@ -33,8 +34,8 @@ public class TaskProblemController {
 
 
 
-    @GetMapping("/by_empl_tasker/{employeeTaskerId}")
+    /*@GetMapping("/by_empl_tasker/{employeeTaskerId}")
     public ResponseEntity<Collection<TaskProblemEntity>> getTasksByEmployeeTaskerId(@PathVariable @NotNull Long employeeTaskerId) {
         return ResponseEntity.ok(taskProblemServices.findTaskProblemByEmployeeTaskerId(employeeTaskerId));
-    }
+    }*/
 }

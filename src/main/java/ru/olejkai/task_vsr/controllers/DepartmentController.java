@@ -19,7 +19,8 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/start/departments")
+@RequestMapping("/departments")
+//@RequestMapping("/start/departments")
 public class DepartmentController {
 
     private DepartmentServices departmentServices;
@@ -31,7 +32,7 @@ public class DepartmentController {
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
 
 
-    @GetMapping("/all_departments")
+    /*@GetMapping("/all_departments")
     public ResponseEntity<Collection<DepartmentEntity>> getAllDepartments(){
         return ResponseEntity.ok(departmentServices.findAllByOrderByTitleAsc());
     }
@@ -115,6 +116,8 @@ public class DepartmentController {
 
         return ResponseEntity.ok( departmentEntity);
     }
+
+*/
 
 
 

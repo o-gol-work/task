@@ -32,7 +32,7 @@ public class TaskEntity implements Serializable {
     private Long departmentIdExecuter;
     private Timestamp dataFinish;
     private Integer status;
-    //    private Integer statusExec;
+    private Integer statusExec;
     private EmployeeEntity employeeByEmployeeIdTasker;
     private TaskProblemEntity taskProblemByTaskProblemId;
     private EmployeeEntity employeeByEmployeeIdExecuter;
@@ -48,7 +48,7 @@ public class TaskEntity implements Serializable {
 //            , long idEmployeeExec, String nameExec, String surnameExec, int tabelNumberExec
 //            , long idEmployeeTasker, String nameTasker, String surnameTasker, int tabelNumberTasker
 //            , long idProblem, String titelProblem)
-            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status
+            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status, Integer statusExec
             , Long idDepartment, String titleDepartment
             , Long idEmployeeExec, String nameExec, String surnameExec, Integer tabelNumberExec
             , Long idEmployeeTasker, String nameTasker, String surnameTasker, Integer tabelNumberTasker
@@ -60,6 +60,7 @@ public class TaskEntity implements Serializable {
         if (dataFinish != null)
             this.dataFinish = new Timestamp(dataFinish.getTime());
         this.status = status;
+        this.statusExec=statusExec;
         this.departmentByDepartmentIdExecuter = new DepartmentEntity(idDepartment, titleDepartment);
         if (idEmployeeExec != null && tabelNumberExec!=null && nameExec!=null && surnameExec!=null)
             this.employeeByEmployeeIdExecuter = new EmployeeEntity(idEmployeeExec, tabelNumberExec, nameExec, surnameExec);
@@ -70,7 +71,7 @@ public class TaskEntity implements Serializable {
 
 
     public TaskEntity(
-            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status
+            Long id, Date dataFinish, Date dateBegin, Long parentId, Integer status,Integer statusExec
 
             ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
 
@@ -93,6 +94,7 @@ public class TaskEntity implements Serializable {
         if (dataFinish != null)
             this.dataFinish = new Timestamp(dataFinish.getTime());
         this.status = status;
+        this.statusExec=statusExec;
         this.departmentByDepartmentIdExecuter = new DepartmentEntity(parentIdDepartment,idDepartment, titleDepartment,telephoneNumberDepartment);
         if (idEmployeeExec != null && tabelNumberExec!=null && nameExec!=null && surnameExec!=null) {
             this.employeeByEmployeeIdExecuter = new EmployeeEntity(idEmployeeExec, tabelNumberExec, nameExec, surnameExec, telephoneNumberExec, workedExec
@@ -201,11 +203,11 @@ public class TaskEntity implements Serializable {
     }
 
 
-    /*@Basic
+    @Basic
     @Column(name = "status_exec", nullable = true)
     public Integer getStatusExec() {
         return statusExec;
-    }*/
+    }
 
 
     /*@ManyToOne

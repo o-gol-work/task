@@ -54,6 +54,9 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity,Long> {
     List<EmployeeEntity> findBySurname(@Param("surname")String surname);
 
 
+    EmployeeEntity save(EmployeeEntity employeeEntity);
+
+
 
 
 

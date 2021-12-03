@@ -35,6 +35,7 @@ public class BCriptEncodingController {
         for (EmployeeEntity employeeEntity :
                 entities) {
             employeeEntity.setPassword(bCryptPasswordEncoder.encode(employeeEntity.getPassword()));
+            employeeRepository.save(employeeEntity);
 
         }
     }

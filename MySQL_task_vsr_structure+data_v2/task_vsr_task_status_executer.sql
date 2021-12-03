@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `task_vsr` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `task_vsr`;
--- MySQL dump 10.13  Distrib 8.0.27, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: task_vsr
 -- ------------------------------------------------------
--- Server version	8.0.27-0ubuntu0.20.04.1
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `task_status_executer` (
 
 LOCK TABLES `task_status_executer` WRITE;
 /*!40000 ALTER TABLE `task_status_executer` DISABLE KEYS */;
-INSERT INTO `task_status_executer` VALUES (275,0),(276,0),(277,0),(278,0),(279,0),(280,0),(290,0),(291,0),(292,0),(293,0);
+INSERT INTO `task_status_executer` VALUES (275,0),(276,0),(277,0),(278,0),(279,0),(280,0),(290,0),(291,0),(292,0),(293,0),(294,0),(295,0),(296,0);
 /*!40000 ALTER TABLE `task_status_executer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-21 21:34:43
+-- Dump completed on 2021-12-03 15:32:22

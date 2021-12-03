@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `task_vsr` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `task_vsr`;
--- MySQL dump 10.13  Distrib 8.0.27, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: task_vsr
 -- ------------------------------------------------------
--- Server version	8.0.27-0ubuntu0.20.04.1
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -42,7 +42,7 @@ CREATE TABLE `department_task_stat` (
 
 LOCK TABLES `department_task_stat` WRITE;
 /*!40000 ALTER TABLE `department_task_stat` DISABLE KEYS */;
-INSERT INTO `department_task_stat` VALUES (1,1,9,0,10),(2,1,8,0,9),(3,0,0,0,0),(4,0,0,0,0),(5,0,7,0,7),(6,1,1,0,2),(7,0,0,0,0),(8,0,0,0,0),(9,0,0,0,0),(10,0,0,0,0),(11,0,0,0,0),(12,0,7,0,7),(13,0,0,0,0),(14,0,0,0,0),(15,0,0,0,0),(16,0,0,0,0),(17,0,0,0,0),(18,0,0,0,0),(19,0,0,0,0),(20,0,0,0,0),(21,0,0,0,0),(22,0,0,0,0),(23,0,0,0,0),(24,0,0,0,0),(25,0,0,0,0),(26,0,0,0,0),(27,1,1,0,2),(28,0,1,0,1),(29,0,1,0,1);
+INSERT INTO `department_task_stat` VALUES (1,1,12,0,13),(2,1,9,0,10),(3,0,0,0,0),(4,0,0,0,0),(5,0,7,0,7),(6,1,2,0,3),(7,0,0,0,0),(8,0,0,0,0),(9,0,0,0,0),(10,0,0,0,0),(11,0,0,0,0),(12,0,7,0,7),(13,0,0,0,0),(14,0,0,0,0),(15,0,0,0,0),(16,0,0,0,0),(17,0,0,0,0),(18,0,0,0,0),(19,0,0,0,0),(20,0,0,0,0),(21,0,0,0,0),(22,0,0,0,0),(23,0,0,0,0),(24,0,0,0,0),(25,0,0,0,0),(26,0,0,0,0),(27,1,2,0,3),(28,0,3,0,3),(29,0,3,0,3);
 /*!40000 ALTER TABLE `department_task_stat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-21 21:34:43
+-- Dump completed on 2021-12-03 15:32:20

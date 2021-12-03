@@ -4,9 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import ru.olejkai.task_vsr.dto.TaskDto;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
@@ -76,6 +78,8 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 //            ",t.employeeIdTasker" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
+
 //            ",t.taskProblemId" +
             ",d.id" +
 //            ",d.parentId \n" +
@@ -182,6 +186,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -432,6 +437,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -546,6 +552,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -737,6 +744,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -882,6 +890,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -995,6 +1004,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             ",t.dateBegin" +
             ",t.parentId" +
             ",t.status" +
+            ",t.statusExec" +
 
             ",d.parentId" +
             ",d.id" +
@@ -1133,15 +1143,16 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             , @Param("status")Integer status
 
                                                       );
-
-
-
+    @Transactional
+    @Modifying
     @Query(value = "Insert into task (employee_id_tasker, task_problem_id) values (:taskProblemId,:employeeIdTasker)", nativeQuery = true)
-    TaskEntity  saveParent ( @Param("taskProblemId") Long taskProblemId
+    void  saveParent ( @Param("taskProblemId") Long taskProblemId
             , @Param("employeeIdTasker" ) Long employeeIdTasker);
 
+    @Transactional
+    @Modifying
     @Query(value = "Insert into task (parent_id, employee_id_tasker, task_problem_id) values (:parentId,:taskProblemId,:employeeIdTasker)", nativeQuery = true)
-    TaskEntity  saveChild ( @Param("parentId") Long parentId
+    void  saveChild ( @Param("parentId") Long parentId
             , @Param("taskProblemId") Long taskProblemId
             , @Param("employeeIdTasker" ) Long employeeIdTasker);
 

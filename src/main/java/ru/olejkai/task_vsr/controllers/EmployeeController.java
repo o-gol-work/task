@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/start/employees")
+@RequestMapping("/employees")
+//@RequestMapping("/start/employees")
 //@RequestMapping
 public class EmployeeController {
 
@@ -31,6 +32,7 @@ public class EmployeeController {
         this.employeeServices = employeeServices;
         this.customUserDetailsServices = customUserDetailsServices;
     }
+/*
 
     @PostMapping("/find_empl")
     public ResponseEntity<Collection<EmployeeEntity>> findBySurname(@RequestBody EmployeeSearchValues surname1){
@@ -82,5 +84,6 @@ public class EmployeeController {
 
         return ResponseEntity.ok( post);
     }
+*/
 
 }

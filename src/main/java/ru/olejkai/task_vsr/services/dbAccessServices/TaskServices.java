@@ -47,15 +47,15 @@ public class TaskServices {
     }
 
 
-    public TaskEntity createTaskParent(Long taskProblemID, Principal principal){
+    public void createTaskParent(Long taskProblemID, Principal principal){
         Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
-        return taskRepository.saveParent(taskProblemID,employeeIdTasker);
+        taskRepository.saveParent(taskProblemID,employeeIdTasker);
 
     }
 
-    public TaskEntity createTaskChild(Long parentId,Long taskProblemID, Principal principal){
+    public void createTaskChild(Long parentId,Long taskProblemID, Principal principal){
         Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
-        return taskRepository.saveChild(parentId,taskProblemID,employeeIdTasker);
+        taskRepository.saveChild(parentId,taskProblemID,employeeIdTasker);
 
     }
 
@@ -82,6 +82,24 @@ public class TaskServices {
         Long departmentIdExecuter=employeeServices.getCurrentEmployee(principal).getPostHasDepartmentByPostHasDepartmentId().getDepartmentId();
         return taskRepository.findTaskEntitiesByParamDepartmentExecuter(
                 departmentIdExecuter
+                , taskSearchValues.getEmployeeIdTasker()
+                , taskSearchValues.getTaskProblemId()
+                , taskSearchValues.getDateBegin()
+                ,
+                taskSearchValues.getEmployeeIdExecuter()
+                , taskSearchValues.getDepartmentIdExecuter()
+                , taskSearchValues.getDataFinish()
+                , taskSearchValues.getStatus()
+                , pageRequest
+        );
+    }
+
+
+
+    public Page<TaskEntity> findTaskEntitiesByParamTaskerTest(TaskSearchValues taskSearchValues, Pageable pageRequest, Long id) {
+//        Long employeeIdTasker = employeeServices.getCurrentEmployee(principal).getId();
+        return taskRepository.findTaskEntitiesByParamTasker(
+                id
                 , taskSearchValues.getEmployeeIdTasker()
                 , taskSearchValues.getTaskProblemId()
                 , taskSearchValues.getDateBegin()

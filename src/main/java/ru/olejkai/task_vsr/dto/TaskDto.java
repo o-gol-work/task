@@ -49,4 +49,17 @@ public class TaskDto {
         this.idProblem = idProblem;
         this.titelProblem = titelProblem;
     }
+
+    public TaskDto(Long parentId, Long idEmployeeTasker, Long idProblem) {
+        this.parentId = parentId;
+        this.idProblem =idProblem;
+        this.idEmployeeTasker = idEmployeeTasker;
+
+    }
+    public TaskDto(Long idEmployeeTasker, Long idProblem) {
+
+        this.idProblem =idProblem;
+        this.idEmployeeTasker = idEmployeeTasker;
+
+    }
 }

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `task_vsr` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `task_vsr`;
--- MySQL dump 10.13  Distrib 8.0.27, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: task_vsr
 -- ------------------------------------------------------
--- Server version	8.0.27-0ubuntu0.20.04.1
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -47,7 +47,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,1111,'Олег','Олегович','Олегов','$2a$10$6unTehmoRteru7iN1dOo6u/srrBhYNbs.Ptu5WokmqdpHOFKnXtHO',0,1),(2,2222,'Игорь','Игоревич','Игорев','$2a$10$vR1glufn2Obu9AimexJMm.yEPErPd9F8ey30ZGk8I1rpspKHOLjB6',0,20),(3,3333,'Виктор','Викторович','Викторов','3333',0,22),(4,4444,'Сергей','Сергеевич','Сергеев','4444',0,24),(5,5555,'Юрий','Юрьевич','Юрьев','5555',0,2),(6,6666,'Анна','Анновна','Аннова','6666',0,6),(7,7777,'Ольга','Ольговна','Ольгова','7777',0,12),(8,8888,'Ким','Кимович','Кимов','8888',0,26),(9,9999,'Кус','Кусович','Кусов','9999',0,23),(10,1010,'Мус','Мусович','Мусов','1010',0,25),(11,101,'Зус','Зусович','Зусов','1111',0,42),(12,1212,'Гурус','Гурусович','Гурусов','1212',0,43),(13,1313,'Жор','Жорович','Жоров','1313',0,44),(14,1414,'Гор ','Горов ','Горович','1414',0,45),(15,1515,'Жих',' Хор',' Карович','1515',0,7),(19,1616,'zuz','зуззи',NULL,'$2a$10$Lz.oEO0tZj9lnoRK8iW5AeIcGVbML4FhNTUIHEYQoDIsG8pkroGOu',1,20),(24,1717,'ziz','',NULL,'$2a$10$Nh2rkG6E4rgeyjydp64tYe1oqtcibTMsxAnMIX7RTGvStVbFCnHB.',1,20),(26,1818,'ziztt','зiззиtt',NULL,'$2a$10$4USKfTbsMqjosbeIYx4X8.mH4q1XYT4OHjeQsFYRKZDLzZZWOONtC',1,20),(27,1919,'sesese','ghghgh',NULL,'$2a$10$MF80RI3JaP7ArwDOPUUjPua0Q.IonSDvhzZ5B4Nh8anF898bZorxu',1,24);
+INSERT INTO `employee` VALUES (1,1111,'Олег','Олегович','Олегов','$2a$10$SDMkjTcLf0aJLAsMf1odL.iJe8kK6/ok4swhF7ERcp2NqCu7WFZpG',0,1),(2,2222,'Игорь','Игоревич','Игорев','$2a$10$W8zKa7mjH8NfrnQFITGwge7XpfM0mg.i3wdOk2RRZiv9eSCqQHLFi',0,20),(3,3333,'Виктор','Викторович','Викторов','$2a$10$J7Djx0/irGontxI6mOT2tO45zsedxMkYuIx1y8FYf3w7EInpmo36G',0,22),(4,4444,'Сергей','Сергеевич','Сергеев','$2a$10$7lrLKgH718Ig4m9wMabAMOsrEOD2WmqFAwhcCgdpC26oEy2FYQXU.',0,24),(5,5555,'Юрий','Юрьевич','Юрьев','$2a$10$O61JmF9PoAefGvRQGs5bhO5F/0SqlERS8.ZldZGzI3VFuL5etTjCS',0,2),(6,6666,'Анна','Анновна','Аннова','$2a$10$7An8b2mU7QeDFn93mWlJVuM8qs2RsP1AR/p4YD.Y6a3LwjM854pUG',0,6),(7,7777,'Ольга','Ольговна','Ольгова','$2a$10$ebO6vH.ZR9SsBxqX9tU/a.LfXZStp5/bsOqYMRm94HX0WX/Noszw6',0,12),(8,8888,'Ким','Кимович','Кимов','$2a$10$6cXE.UUVaoxWUDAYWHIVTO5R40DI8y2ffyGPJhK1c6M4trIXCkebq',0,26),(9,9999,'Кус','Кусович','Кусов','$2a$10$/9zvmVvMDGIKhjiSFspc0.zK9hTq1TcXtDEUDvwhO9YPLaQ8Mc4OW',0,23),(10,1010,'Мус','Мусович','Мусов','$2a$10$kHm62t4Zs2YUriin0xdOg.JEvsrsKCKjb5YeiSte5gomUHM5yZzKS',0,25),(11,101,'Зус','Зусович','Зусов','$2a$10$s7FCgrlPd0NKkBFvF7Cgcuu/QulSITDXIbkILKpeqpF7oeep79ON2',0,42),(12,1212,'Гурус','Гурусович','Гурусов','$2a$10$tqRb6e5UtXzqq.0U1s2Gw.kOGBYY56/kBZGWDzIkfN9ilrfAgVCzW',0,43),(13,1313,'Жор','Жорович','Жоров','$2a$10$LwGgKu5hRQpRtfM/oEnk5ObCGehF/m9BeCInmigoGpl3Sqadsv4su',0,44),(14,1414,'Гор ','Горов ','Горович','$2a$10$DmDDM3DTdMFgAvuIboRCiedfdnoDbNzSF2I7Qfl1vJf8wrzvW3O.6',0,45),(15,1515,'Жих',' Хор',' Карович','$2a$10$bFGlkq/jX/QjUmI5A6gPiOEhCA4pTnU5ap/3pMxrGvk4hsTFuL5oq',0,7),(19,1616,'zuz','зуззи',NULL,'$2a$10$LUtNoQ1Gy5by3PFYY9Lxn.gGsQNygpMDKgtapLTOfeFPl/WrTJ/va',1,20),(24,1717,'ziz','',NULL,'$2a$10$YDe6HflAFsuYJHPMovhY1eKJO4aZGy38NAvelZu6ClHYTGa5SUYgK',1,20),(26,1818,'ziztt','зiззиtt',NULL,'$2a$10$1eOnSil0ZGEb/VrSuLw4f.WQTApsAMxzVoSpAVehKkB0zqQJUkOWa',1,20),(27,1919,'sesese','ghghgh',NULL,'$2a$10$eeUTLOZuhpiJZ3AWEr1ka.kwLmhZ738z0w.mnV/8C3YMbu00S9XOe',1,24);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-21 21:34:43
+-- Dump completed on 2021-12-03 15:32:19
