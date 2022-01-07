@@ -1,12 +1,12 @@
-export class Department{
+export class Department {
 
-    parentId? : number ;
+    parentId?: number ;
     id: number;
     title: string;
     telephoneNumber?: string;
 
 
-  constructor( id: number, title: string, telephoneNumber?: string,parentId?: number) {
+  constructor( id: number, title: string, telephoneNumber?: string, parentId?: number) {
     this.parentId = parentId;
     this.id = id;
     this.title = title;
