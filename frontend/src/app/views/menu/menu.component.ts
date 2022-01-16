@@ -11,6 +11,7 @@ export class MenuComponent implements OnInit {
 
   menuItems: string[] | undefined ;
 
+
   constructor(private dataHandler:DataHandlerService) { }
 
   ngOnInit(): void {

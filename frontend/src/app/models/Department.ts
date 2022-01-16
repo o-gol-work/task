@@ -1,9 +1,9 @@
 export class Department{
 
-    parentId? : number ;
+    parentId? : number | null;
     id: number;
     title: string;
-    telephoneNumber?: string;
+    telephoneNumber?: string|null;
 
 
   constructor( id: number, title: string, telephoneNumber?: string,parentId?: number) {

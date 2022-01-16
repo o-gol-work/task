@@ -7,7 +7,7 @@ import {Post} from "../models/Post";
 export class TestData{
 
   static departments:Department[]=[
-    {id:1,title:'ОАО"ТАЗ"'},
+    {parentId:null,id:1,title:'ОАО"ТАЗ"'},
     {parentId:1,id:2,title:'УИТ'},
     {parentId:1,id:3,title:'УГТ'},
     {parentId:1,id:4,title:'УГК'},
@@ -54,7 +54,7 @@ export class TestData{
 
 
   static taskProblem: TaskProblem[]=[
-{id:1,title:'Неисправна компьютерная техника\\принтер',parentNumber:1,level:1},
+{parentId:null,id:1,title:'Неисправна компьютерная техника\\принтер',parentNumber:1,level:1},
 {parentId:1,id:2,title:'Неисправен компьютер',parentNumber:1,level:2},
 {parentId:1,id:3,title:'Неисправен принтер',parentNumber:1,level:2},
 {parentId:2,id:4,title:'Не включается компьютер',parentNumber:1,level:3},
@@ -65,7 +65,7 @@ export class TestData{
 {parentId:3,id:9,title:'Не печатоет',parentNumber:1,level:3},
 {parentId:3,id:10,title:'Шумит',parentNumber:1,level:3},
 {parentId:3,id:11,title:'Закончился картредж',parentNumber:1,level:3},
-{id:12,title:'Электрика',parentNumber:2,level:1},
+{parentId:null,id:12,title:'Электрика',parentNumber:2,level:1},
 {parentId:12,id:13,title:'Недостаточное освещение',parentNumber:2,level:2},
 {parentId:12,id:14,title:'Нет питания в помещении',parentNumber:2,level:2}
   ];
@@ -100,20 +100,21 @@ export class TestData{
 ];
 
   static tasks: Task[]=[
-    {id:275,employeeTasker:TestData.employees[10],taskProblem:TestData.taskProblem[3],dateBegin:new Date('2021-08-12 12:04:49'),employeeExecuter:TestData.employees[7],departmentExecuter:TestData.departments[12],dataFinish:new Date('2021-09-16 14:51:39'),status:1,statusExec:1},
-{id:276,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-08-12 12:04:50'),departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{id:277,employeeTasker:TestData.employees[14],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-08-12 12:04:52'),employeeExecuter:TestData.employees[6],departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{id:278,employeeTasker:TestData.employees[2],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-08-12 12:04:58'),departmentExecuter:TestData.departments[27],status:0,statusExec:0},
-{id:279,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-08-12 12:04:59'),departmentExecuter:TestData.departments[29],status:0,statusExec:0},
-{parentId:275,id:280,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-08-12 12:05:16'),departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{id:290,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:06:23'),departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{id:291,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:08:01'),departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{parentId:275,id:292,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:08:08'),departmentExecuter:TestData.departments[12],status:0,statusExec:0},
-{parentId:280,id:293,employeeTasker:TestData.employees[10],taskProblem:TestData.taskProblem[3],dateBegin:new Date('2021-11-03 12:12:21'),departmentExecuter:TestData.departments[27],status:0,statusExec:0},
-{id:294,employeeTasker:TestData.employees[2],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-12-01 14:17:36'),departmentExecuter:TestData.departments[27],status:0,statusExec:0},
-{id:295,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-12-02 14:11:24'),departmentExecuter:TestData.departments[29],status:0,statusExec:0},
-{parentId:295,id:296,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-12-02 14:11:59'),departmentExecuter:TestData.departments[29],status:0,statusExec:0},
+{parentId:null,id:275,employeeTasker:TestData.employees[10],taskProblem:TestData.taskProblem[3],dateBegin:new Date('2021-08-12 12:04:49'),employeeExecuter:TestData.employees[7],departmentExecuter:TestData.departments[12],dataFinish:new Date('2021-09-16 14:51:39'),status:1,statusExec:1},
+{parentId:null,id:276,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-08-12 12:04:50'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:277,employeeTasker:TestData.employees[14],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-08-12 12:04:52'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:278,employeeTasker:TestData.employees[2],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-08-12 12:04:58'),employeeExecuter:null,departmentExecuter:TestData.departments[27],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:279,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-08-12 12:04:59'),employeeExecuter:null,departmentExecuter:TestData.departments[28],dataFinish:null,status:0,statusExec:0},
+{parentId:275,id:280,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-08-12 12:05:16'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:290,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:06:23'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:291,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:08:01'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:275,id:292,employeeTasker:TestData.employees[4],taskProblem:TestData.taskProblem[5],dateBegin:new Date('2021-11-03 12:08:08'),employeeExecuter:null,departmentExecuter:TestData.departments[12],dataFinish:null,status:0,statusExec:0},
+{parentId:280,id:293,employeeTasker:TestData.employees[10],taskProblem:TestData.taskProblem[3],dateBegin:new Date('2021-11-03 12:12:21'),employeeExecuter:null,departmentExecuter:TestData.departments[27],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:294,employeeTasker:TestData.employees[2],taskProblem:TestData.taskProblem[4],dateBegin:new Date('2021-12-01 14:17:36'),employeeExecuter:null,departmentExecuter:TestData.departments[27],dataFinish:null,status:0,statusExec:0},
+{parentId:null,id:295,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-12-02 14:11:24'),employeeExecuter:null,departmentExecuter:TestData.departments[28],dataFinish:null,status:0,statusExec:0},
+{parentId:295,id:296,employeeTasker:TestData.employees[5],taskProblem:TestData.taskProblem[13],dateBegin:new Date('2021-12-02 14:11:59'),employeeExecuter:null,departmentExecuter:TestData.departments[28],dataFinish:null,status:0,statusExec:0},
   ];
+
 
 
 }

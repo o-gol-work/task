@@ -3,17 +3,16 @@ import {Department} from "./Department";
 import {TaskProblem} from "./TaskProblem";
 
 export class Task{
-  parentId?: number;
+  parentId?: number|null;
   id:number;
   dateBegin: Date;
-  dataFinish?: Date;
+  dataFinish?: Date|null;
   status:number;
   statusExec: number;
   employeeTasker: Employee;
   taskProblem:TaskProblem;
-  employeeExecuter?:Employee;
+  employeeExecuter?:Employee|null;
   departmentExecuter:Department;
-
 
   constructor( id: number, dateBegin: Date,  status: number, statusExec: number, employeeTasker: Employee, taskProblem: TaskProblem, departmentExecuter: Department
                ,parentId?: number,dataFinish?: Date, employeeExecuter?: Employee) {

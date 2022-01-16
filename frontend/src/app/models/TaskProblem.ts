@@ -1,5 +1,5 @@
 export class TaskProblem{
-  parentId?: number;
+  parentId?: number|null;
   id: number;
   title: string;
   parentNumber: number;
