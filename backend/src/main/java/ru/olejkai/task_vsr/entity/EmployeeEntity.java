@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+
 @Entity
 @Table(name = "employee", schema = "task_vsr")
 @Data
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
         "accountNonExpired",
         "credentialsNonExpired",
         "enabled",
-        "authorities",
-        "employeeRolesById",
+//        "authorities",
+//        "employeeRolesById",
         "postHasDepartmentId"
 
 })
@@ -44,7 +45,10 @@ public class EmployeeEntity
     private Byte worked;
     private Long postHasDepartmentId;
     private PostHasDepartmentEntity postHasDepartmentByPostHasDepartmentId;
-    //    private Collection<EmployeeRoleEntity> authorities;
+
+
+
+    //    private Collection<EmployeeRoleEntity> authoritiesRole;
     private Collection<EmployeeRoleEntity> employeeRolesById = new ArrayList<>();
     //    private Collection<GrantedAuthority> authorities;
     @Transient
@@ -59,14 +63,26 @@ public class EmployeeEntity
     private Collection<TaskEntity> tasksById_0;*/
 
 
-    public EmployeeEntity(Long id, String username, String name, String surname, String password, Collection<GrantedAuthority> authorities) {
+    public EmployeeEntity(Long id, String username, String name, String surname, String password, Collection<GrantedAuthority> authorities,Collection<EmployeeRoleEntity> employeeRolesById) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.authorities = authorities;
+        this.employeeRolesById=employeeRolesById;
     }
+
+    public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String password) {
+        this.id = id;
+        this.tabelNumber = tabelNumber;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+
+    }
+
+
 
     public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname) {
         this.id = id;
@@ -76,7 +92,7 @@ public class EmployeeEntity
     }
 
     public EmployeeEntity(Long id, Integer tabelNumber, String name, String surname, String telephoneNumber, Byte worked
-                          ,Long idHasPostDep
+            ,Long idHasPostDep
             ,Long idPost,String titlePost,Long parentIdPost
             ,Long parentIdDepartment, Long idDepartment, String titleDepartment, String telephoneNumberDepartment
 
@@ -113,6 +129,10 @@ public class EmployeeEntity
                 , parentIdDepartment,  idDepartment,  titleDepartment,  telephoneNumberDepartment);
 
     }
+
+
+
+
 
 
     @Id
@@ -183,6 +203,10 @@ public class EmployeeEntity
     public Collection<EmployeeRoleEntity> getEmployeeRolesById() {
         return employeeRolesById;
     }
+
+
+
+
 
 
 

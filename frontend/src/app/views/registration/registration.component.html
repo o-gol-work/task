@@ -1,0 +1,137 @@
+<head>
+<!--  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  &lt;!&ndash; Template Main CSS File &ndash;&gt;
+  <link href="assets/css/style.css" rel="stylesheet">-->
+
+</head>
+
+<body>
+
+<main>
+  <div class="container">
+
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+            <div class="d-flex justify-content-center py-4">
+              <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">NiceAdmin</span>
+              </a>
+            </div><!-- End Logo -->
+
+            <div class="card mb-3">
+
+              <div class="card-body">
+
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                  <p class="text-center small">Enter your personal details to create account</p>
+                </div>
+
+
+
+<!--                <form  class="row g-3 needs-validation" novalidate>-->
+                <form [formGroup]="registrationForm"  class="row g-3 needs-validation" novalidate>
+
+                  <div class="col-12">
+                    <label for="tabelNumber" class="form-label">Tabel Number</label>
+                    <div class="input-group has-validation">
+                      <input id="tabelNumber" matInput formControlName="tabelNumber" class="form-control"  >
+                      <div class="invalid-feedback">Please enter your tabelNumber.</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12">
+                    <label for="name" class="form-label">Name</label>
+                    <div class="input-group has-validation">
+                      <input id="name" matInput formControlName="name" class="form-control"  >
+                      <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12">
+                    <label for="surname" class="form-label">Surname</label>
+                    <div class="input-group has-validation">
+                      <input id="surname" matInput formControlName="surname" class="form-control"  >
+                      <div class="invalid-feedback">Please enter your surname.</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12">
+                    <label for="telephoneNumber" class="form-label">Telephone Number</label>
+                    <div class="input-group has-validation">
+                      <input id="telephoneNumber" matInput formControlName="telephoneNumber" class="form-control"  >
+                      <div class="invalid-feedback">Please enter your telephoneNumber.</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12">
+                    <label for="postHasDepartmentId" class="form-label">Post-Department Id</label>
+                    <div class="input-group has-validation">
+                      <input id="postHasDepartmentId" matInput formControlName="postHasDepartmentId" class="form-control"  >
+                      <div class="invalid-feedback">Please enter your Post-Department Id.</div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-12">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" matInput formControlName="password" id="password" class="form-control">
+                    <div class="invalid-feedback">Please enter your password!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" matInput formControlName="confirmPassword" id="confirmPassword" class="form-control">
+                    <div class="invalid-feedback">Confirm Password!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <button [disabled]="registrationForm.invalid" class="btn btn-primary w-100" class="btn btn-primary w-100"  (click)="submit()">Create Account</button>
+                  </div>
+
+
+
+
+                  <!--<div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                  </div>-->
+                  <div class="col-12">
+                    <p class="small mb-0">Already have an account? <a href="login">Log in</a></p>
+                  </div>
+
+
+
+
+                </form>
+
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</main><!-- End #main -->
+
+<!--<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>-->
+
+</body>
+
+

@@ -16,6 +16,7 @@ import ru.olejkai.task_vsr.search.TaskSearchValues;
 import ru.olejkai.task_vsr.services.dbAccessServices.TaskServices;
 
 import java.security.Principal;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/tasks")
@@ -89,6 +90,13 @@ public class TaskController {
 
 
     }
+
+    @GetMapping("/all_tasks")
+    public Collection<TaskEntity> taskEntities(){
+        return taskServices.findAll();
+    }
+
+
 
 
 

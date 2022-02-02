@@ -8,35 +8,38 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
+import ru.olejkai.task_vsr.entity.EmployeeRoleEntity;
 import ru.olejkai.task_vsr.repository.EmployeeRepository;
+import ru.olejkai.task_vsr.repository.EmployeeRoleEntityRepository;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsServices implements UserDetailsService {
     EmployeeRepository employeeRepository;
+    EmployeeRoleEntityRepository employeeRoleEntityRepository;
 
     @Autowired
-    public CustomUserDetailsServices(EmployeeRepository employeeRepository) {
+    public CustomUserDetailsServices(EmployeeRepository employeeRepository,
+                                     EmployeeRoleEntityRepository employeeRoleEntityRepository) {
         this.employeeRepository = employeeRepository;
+        this.employeeRoleEntityRepository=employeeRoleEntityRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        EmployeeEntity emplTest=employeeRepository.findEmployeeEntityByTabelNumberDetails(Integer.parseInt(username)).get();
         EmployeeEntity employee=employeeRepository.findEmployeeEntityByTabelNumber(Integer.parseInt(username))
                 .orElseThrow(()->new UsernameNotFoundException(String.format("User %s not found",username)));
-
-
-
-
         return build(employee);
     }
 
 
     public EmployeeEntity loadUserById(Long id) throws UsernameNotFoundException {
-        return employeeRepository.findById(id)
-                .orElse(null);
+
+        return build(Objects.requireNonNull(employeeRepository.findById(id).orElse(null)));
 
     }
 
@@ -44,17 +47,20 @@ public class CustomUserDetailsServices implements UserDetailsService {
 
 
     private EmployeeEntity build(EmployeeEntity employee){
-        Collection<GrantedAuthority> roles=employee.getEmployeeRolesById().stream()
+        Collection<EmployeeRoleEntity> roleEmp=employeeRoleEntityRepository.findEmployeeRoleEntityByEmployeeId(employee.getId());
+//        Collection<GrantedAuthority> roles=employee.getEmployeeRolesById().stream().map(role-> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
+        Collection<GrantedAuthority> roles=employeeRoleEntityRepository.findEmployeeRoleEntityByEmployeeId(employee.getId()).stream()
                 .map(role-> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
-
-        return  new EmployeeEntity(
+        EmployeeEntity emplTast=new EmployeeEntity(
                 employee.getId(),
                 Integer.toString(employee.getTabelNumber()),
                 employee.getName(),
                 employee.getSurname(),
                 employee.getPassword(),
-                roles
-        );
+                roles,
+                roleEmp);
+        return  emplTast;
+
 
     }
 }

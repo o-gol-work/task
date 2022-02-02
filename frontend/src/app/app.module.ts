@@ -14,6 +14,9 @@ import {MaterialModule} from "./material-module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
+import {ErrorInterceptorService} from "./services/error/error-interceptor.service";
+import { HeaderNavComponent } from './views/header-nav/header-nav.component';
+import { RegistrationComponent } from './views/registration/registration.component';
 
 
 @NgModule({
@@ -22,7 +25,9 @@ import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
     MenuComponent,
     TableComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    HeaderNavComponent,
+    RegistrationComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +41,8 @@ import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
 
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

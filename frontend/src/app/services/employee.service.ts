@@ -4,29 +4,24 @@ import {Observable} from "rxjs";
 
 const USER_API="http://localhost:8080/employees/";
 
-
 @Injectable({
   providedIn: 'root'
 })
 
 
-
-export class UserService {
-
+export class EmployeeService {
 
   constructor(private httpClient:HttpClient) { }
 
-  public getCurrentUser():Observable<any>{
+  public getCurrentEmployee():Observable<any>{
     return this.httpClient.get(USER_API+"employee")
   }
 
-  public getUserById(id:number):Observable<any>{
+  public getEmployeeById(id:number):Observable<any>{
     return this.httpClient.get(USER_API+"employee/"+id)
   }
 
-  public getCurrentUserByPrincipal():Observable<any>{
+  public getCurrentEmployeeByPrincipal():Observable<any>{
     return this.httpClient.get(USER_API+"employeePrincipal")
   }
-
-
 }

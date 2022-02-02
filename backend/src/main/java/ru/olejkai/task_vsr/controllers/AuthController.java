@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.exeptions.ResponseErrorValidation;
 import ru.olejkai.task_vsr.payload.request.LoginRequest;
 import ru.olejkai.task_vsr.payload.request.SignupRequest;
@@ -20,6 +21,7 @@ import ru.olejkai.task_vsr.payload.responce.MessageResponse;
 import ru.olejkai.task_vsr.security.JWTTokenProvider;
 import ru.olejkai.task_vsr.security.SecurityConstants;
 import ru.olejkai.task_vsr.services.authServices.EmployeeCreateServices;
+import ru.olejkai.task_vsr.services.dbAccessServices.EmployeeServices;
 
 import javax.validation.Valid;
 
@@ -31,17 +33,19 @@ public class AuthController {
 
     public static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
+    private EmployeeServices employeeServices;
     private ResponseErrorValidation responseErrorValidation;
     private EmployeeCreateServices employeeCreateServices;
     private AuthenticationManager authenticationManager;
     private JWTTokenProvider jwtTokenProvider;
 
     @Autowired
-    public AuthController(ResponseErrorValidation responseErrorValidation, EmployeeCreateServices employeeCreateServices, AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
+    public AuthController(ResponseErrorValidation responseErrorValidation, EmployeeCreateServices employeeCreateServices, AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider,EmployeeServices employeeServices) {
         this.responseErrorValidation = responseErrorValidation;
         this.employeeCreateServices = employeeCreateServices;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.employeeServices=employeeServices;
     }
 
     @PostMapping("/signin")
@@ -59,9 +63,12 @@ public class AuthController {
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+//        EmployeeEntity employeeEntity=employeeServices.findEmployeeEntityByTabelNumber(Integer.getInteger(loginRequest.getUsername()));
+        EmployeeEntity employeeEntity=(EmployeeEntity) authentication.getPrincipal();
         LOG.info("Singin end");
         System.out.println("fuuuuuuuuuuuuuuuuuuuuu end");
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+        JWTTokenSuccessResponse jwtTokenSuccessResponse=new JWTTokenSuccessResponse(true, jwt,employeeEntity);
+        return ResponseEntity.ok(jwtTokenSuccessResponse);
 
 
 

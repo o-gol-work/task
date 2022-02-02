@@ -198,6 +198,14 @@
       </a>
     </li><!-- End Profile Page Nav -->
 
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/login" (click)="logout()" >
+        <i class="bi bi-box-arrow-left"></i>
+        <span>Logout</span>
+      </a>
+    </li><!-- End Logout Page Nav -->
+
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq.html">
         <i class="bi bi-question-circle"></i>
@@ -213,7 +221,7 @@
     </li><!-- End Contact Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-register.html">
+      <a class="nav-link collapsed" style="cursor: pointer" (click)="registration()">
         <i class="bi bi-card-list"></i>
         <span>Register</span>
       </a>

@@ -26,6 +26,7 @@ public class JWTTokenProvider {
 
         claimsMap.put("id",employeeId);
         claimsMap.put("username",employee.getUsername());
+//        claimsMap.put("username",employee.getTabelNumber());
         claimsMap.put("name",employee.getName());
         claimsMap.put("surname",employee.getSurname());
         String encodedString = Base64.getEncoder().encodeToString(SecurityConstants.SECRET.getBytes());

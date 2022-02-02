@@ -1,7 +1,8 @@
 package ru.olejkai.task_vsr.security;
 
 public class SecurityConstants {
-    public static final String SIGN_UP_URLS = "/start/**";
+//    public static final String SIGN_UP_URLS = "/start/**";
+    public static final String SIGN_UP_URLS = "/start/signin";
 
     public static final String SECRET = "SecretKeyGenJWT";
     public static final String TOKEN_PREFIX = "Bearer ";

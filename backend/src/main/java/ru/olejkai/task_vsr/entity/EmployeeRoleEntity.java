@@ -1,5 +1,6 @@
 package ru.olejkai.task_vsr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,10 @@ import javax.persistence.*;
 @Table(name = "employee_role", schema = "task_vsr")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({
+        "id",
+        "employeeId"
+})
 public class EmployeeRoleEntity {
     private Long id;
     private String role;

@@ -65,8 +65,8 @@
         <th scope="col">DataFinish</th>
       </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let task of tasks; let num=index ">
+      <tbody *ngIf="isDataLoading">
+      <tr  *ngFor="let task of tasks; let num=index ">
         <th scope="row">{{num+1}}</th>
         <td>{{task.parentId}}</td>
         <td>{{task.employeeTasker}}</td>

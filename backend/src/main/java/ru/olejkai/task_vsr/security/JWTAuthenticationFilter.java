@@ -1,8 +1,11 @@
 package ru.olejkai.task_vsr.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -26,8 +29,11 @@ import java.util.Collections;
     @Autowired
     private  JWTTokenProvider jwtTokenProvider;
 
+
     @Autowired
     private CustomUserDetailsServices customUserDetailsServices;
+
+
 
 
    @Override
@@ -35,6 +41,8 @@ import java.util.Collections;
         LOG.info("Filter begin");
         try {
             String jwt =getJWTFromRequest(request);
+            if(jwt==null)
+                throw new NullPointerException();
             LOG.info(jwt);
             if(StringUtils.hasText(jwt)&&jwtTokenProvider.validationToken(jwt)){
                 Long userId=jwtTokenProvider.getUserIdFromToken(jwt);
@@ -47,9 +55,11 @@ import java.util.Collections;
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOG.error(e.getMessage() + "error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
+        } catch (Exception e ) {
+            LOG.error( e.getMessage());
+            LOG.error(e.getMessage() + " error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.getWriter().write(convertObjectToJson(e));
         }
        LOG.info("Filter end");
             filterChain.doFilter(request,response);
@@ -57,8 +67,20 @@ import java.util.Collections;
 
     }
 
+
+
+     public String convertObjectToJson(Object object) throws JsonProcessingException {
+         if (object == null) {
+             return null;
+         }
+         ObjectMapper mapper = new ObjectMapper();
+         return mapper.writeValueAsString(object);
+     }
+
+
     private String getJWTFromRequest(HttpServletRequest request){
         String bearToken=request.getHeader(SecurityConstants.HEADER_STRING);
+        LOG.info(bearToken);
         if(StringUtils.hasText(bearToken) && bearToken.startsWith(SecurityConstants.TOKEN_PREFIX)){
             return bearToken.split(" ")[1];
 

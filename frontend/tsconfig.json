@@ -23,6 +23,10 @@
       "dom"
     ]
   },
+//  for init my change
+//  "strictPropertyInitialization": false,
+
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
