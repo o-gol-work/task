@@ -92,6 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
+                .antMatchers("/start/signup").hasRole("ADMIN")
+//                .antMatchers("/tasks/search").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RegistrationService} from "../../services/registration.service";
 import {SignupRequest} from "../../models/SignupRequest";
+import {MatDialog} from "@angular/material/dialog";
+import {PopUpComponent} from "../pop-up/pop-up.component";
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +14,10 @@ import {SignupRequest} from "../../models/SignupRequest";
 })
 export class RegistrationComponent implements OnInit {
   public registrationForm!:FormGroup;
+  public errorMessage!:string;
+
   constructor(
+    private refDialog:MatDialog,
     private registrationService:RegistrationService,
     private notification:NotificationService,
     private router:Router,
@@ -48,21 +53,43 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.value.postHasDepartmentId,
       this.registrationForm.value.password,
       this.registrationForm.value.confirmPassword
-    )).subscribe({
+    )).
+    subscribe({
         next: data => {
+          // this.notification.showSnackbar(data.username+data.password+'ffffffffffffffffffffffffffffffffffff');
+          // this.notification.showSnackbar(data.message);
+          // this.openDialog('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
+
           this.notification.showSnackbar(data.message);
           console.log(data.message)
-          //this.router.navigate(["main"]);
-         // window.location.reload();
+          this.router.navigate(["main"]);
+         window.location.reload();
 
         },
         error: err => {
-          console.log(err);
+          // this.errorMessage=err;
+          // console.log(this.errorMessage);
+          // this.notification.showSnackbar(err.data.username+'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu');
           this.notification.showSnackbar(err.message);
+          // this.openDialog('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');
 
         }
       }
     )
+      /*subscribe(value => {
+        this.notification.showSnackbar(value.message);
+      },error => {
+        this.notification.showSnackbar(error.message)
+      })*/
+
+  }
+
+  openDialog(message:string):void{
+    this.refDialog.open(PopUpComponent,{
+      data:{
+        errr:message
+      }
+    });
   }
 
 }

@@ -1,6 +1,7 @@
 package ru.olejkai.task_vsr.controllers;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.olejkai.task_vsr.dto.TaskDto;
+import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
 import ru.olejkai.task_vsr.services.dbAccessServices.TaskServices;
@@ -42,7 +45,7 @@ public class TaskController {
     public ResponseEntity<Page<TaskEntity>> findTaskEntitiesByParamTaskerTest(@RequestBody TaskSearchValues taskSearchValues,
                                                                               Principal principal){
 
-
+        LOG.info(principal.toString());
         String sortColumn=taskSearchValues.getSortColumn()!=null?taskSearchValues.getSortColumn():null;
         String sortDirection=taskSearchValues.getSortDirection()!=null?taskSearchValues.getSortDirection():null;
 

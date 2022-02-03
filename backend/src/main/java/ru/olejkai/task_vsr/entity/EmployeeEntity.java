@@ -63,7 +63,8 @@ public class EmployeeEntity
     private Collection<TaskEntity> tasksById_0;*/
 
 
-    public EmployeeEntity(Long id, String username, String name, String surname, String password, Collection<GrantedAuthority> authorities,Collection<EmployeeRoleEntity> employeeRolesById) {
+    public EmployeeEntity(Long id, String username, String name, String surname, String password,
+                          Collection<GrantedAuthority> authorities,Collection<EmployeeRoleEntity> employeeRolesById) {
         this.id = id;
         this.username = username;
         this.name = name;

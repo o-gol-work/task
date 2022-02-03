@@ -10,7 +10,7 @@ import {RegistrationComponent} from "./views/registration/registration.component
 const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'main', component: MainComponent},
-  {path:'registration', component: RegistrationComponent},
+  {path:'reg', component: RegistrationComponent},
   { path: '', component: AppComponent, canActivate: [AuthGuardService] },
 
 ];

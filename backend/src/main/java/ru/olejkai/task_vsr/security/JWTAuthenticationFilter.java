@@ -1,7 +1,7 @@
 package ru.olejkai.task_vsr.security;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +12,21 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
+import ru.olejkai.task_vsr.payload.request.SignupRequest;
 import ru.olejkai.task_vsr.services.authServices.CustomUserDetailsServices;
+import ru.olejkai.task_vsr.util.CachedBodyHttpServletRequest;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
+import java.util.Scanner;
 
 
- public class JWTAuthenticationFilter extends OncePerRequestFilter {
+public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     public static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
@@ -39,9 +43,26 @@ import java.util.Collections;
    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         LOG.info("Filter begin");
+       CachedBodyHttpServletRequest cachedBodyHttpServletRequest = new CachedBodyHttpServletRequest(request);
         try {
+
+
+            String body=reader(cachedBodyHttpServletRequest);
+            LOG.info(body);
+            ObjectMapper objectMapper=new ObjectMapper();
+            SignupRequest signupRequest=null;
+            try {
+                signupRequest = objectMapper.readValue(cachedBodyHttpServletRequest.getReader(), SignupRequest.class);
+            }catch (Exception e){
+
+            }
             String jwt =getJWTFromRequest(request);
-            if(jwt==null)
+
+
+
+//            String body=reader(request);
+
+            if(jwt==null && signupRequest!=null)
                 throw new NullPointerException();
             LOG.info(jwt);
             if(StringUtils.hasText(jwt)&&jwtTokenProvider.validationToken(jwt)){
@@ -49,23 +70,64 @@ import java.util.Collections;
                 LOG.info(userId.toString());
                 EmployeeEntity employeeDetail=customUserDetailsServices.loadUserById(userId);
 
-                UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
+                /*UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
                         employeeDetail,null, Collections.emptyList()
+                );*/
+                UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
+                        employeeDetail,null, employeeDetail.getAuthorities()
                 );
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                LOG.info("Filter end");
+
             }
         } catch (Exception e ) {
             LOG.error( e.getMessage());
             LOG.error(e.getMessage() + " error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.getWriter().write(convertObjectToJson(e));
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            LOG.info(convertObjectToJson(e));
+//            response.getWriter().write(convertObjectToJson(e.getMessage()+"FUUUUUUUUUUUUUUUUUUUUU"));
         }
-       LOG.info("Filter end");
-            filterChain.doFilter(request,response);
 
 
-    }
+       filterChain.doFilter(
+               cachedBodyHttpServletRequest
+//               request
+               ,response);
+
+   }
+
+
+   private String reader(HttpServletRequest request) throws IOException {
+       StringBuilder sb = new StringBuilder();
+
+//       BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+       BufferedReader reader = request.getReader();
+       try {
+           String line;
+           while ((line = reader.readLine()) != null) {
+               sb.append(line).append('\n');
+           }
+       } finally {
+           reader.close();
+       }
+       String str=sb.toString();
+       LOG.info(str);
+       return str;
+   }
+
+
+     static String extractPostRequestBody(HttpServletRequest request) throws IOException {
+         if ("POST".equalsIgnoreCase(request.getMethod())) {
+             Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
+             return s.hasNext() ? s.next() : "";
+         }
+         return "";
+     }
+
+
+
 
 
 

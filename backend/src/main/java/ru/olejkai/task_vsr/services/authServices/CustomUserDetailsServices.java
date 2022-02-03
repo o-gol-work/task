@@ -33,7 +33,8 @@ public class CustomUserDetailsServices implements UserDetailsService {
         EmployeeEntity emplTest=employeeRepository.findEmployeeEntityByTabelNumberDetails(Integer.parseInt(username)).get();
         EmployeeEntity employee=employeeRepository.findEmployeeEntityByTabelNumber(Integer.parseInt(username))
                 .orElseThrow(()->new UsernameNotFoundException(String.format("User %s not found",username)));
-        return build(employee);
+        EmployeeEntity employeeDetail=build(employee);
+        return employeeDetail;
     }
 
 
@@ -59,6 +60,7 @@ public class CustomUserDetailsServices implements UserDetailsService {
                 employee.getPassword(),
                 roles,
                 roleEmp);
+
         return  emplTast;
 
 

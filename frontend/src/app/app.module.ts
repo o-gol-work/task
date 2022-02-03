@@ -17,6 +17,8 @@ import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
 import {ErrorInterceptorService} from "./services/error/error-interceptor.service";
 import { HeaderNavComponent } from './views/header-nav/header-nav.component';
 import { RegistrationComponent } from './views/registration/registration.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { PopUpComponent } from './views/pop-up/pop-up.component';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { RegistrationComponent } from './views/registration/registration.compone
     LoginComponent,
     MainComponent,
     HeaderNavComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    PopUpComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { RegistrationComponent } from './views/registration/registration.compone
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MatDialogModule
 
   ],
   providers: [

@@ -220,7 +220,7 @@
       </a>
     </li><!-- End Contact Page Nav -->
 
-    <li class="nav-item">
+    <li *ngIf="isAdmin" class="nav-item">
       <a class="nav-link collapsed" style="cursor: pointer" (click)="registration()">
         <i class="bi bi-card-list"></i>
         <span>Register</span>
