@@ -26,8 +26,15 @@ export class TaskService {
   }
 
   public getTaskByCurrent(taskSearchValues:TaskSearchValues):Observable<any>{
-    return this.httpClient.post(TASK_API+'search',taskSearchValues)
+    // return this.httpClient.post(TASK_API+'search',taskSearchValues)
+    return this.httpClient.post(TASK_API+'searchMyTask',taskSearchValues)
   }
+
+  public getTaskByCurrentDep(taskSearchValues:TaskSearchValues):Observable<any>{
+    // return this.httpClient.post(TASK_API+'search',taskSearchValues)
+    return this.httpClient.post(TASK_API+'searcTaskForMyDep',taskSearchValues)
+  }
+
 
   public createNewTask(taskDto:TaskDto):Observable<any>{
     return this.httpClient.post(TASK_API+'create',taskDto)

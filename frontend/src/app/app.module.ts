@@ -19,6 +19,7 @@ import { HeaderNavComponent } from './views/header-nav/header-nav.component';
 import { RegistrationComponent } from './views/registration/registration.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { PopUpComponent } from './views/pop-up/pop-up.component';
+import { TableForMeComponent } from './views/table-for-me/table-for-me.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { PopUpComponent } from './views/pop-up/pop-up.component';
     MainComponent,
     HeaderNavComponent,
     RegistrationComponent,
-    PopUpComponent
+    PopUpComponent,
+    TableForMeComponent
   ],
   imports: [
     CommonModule,

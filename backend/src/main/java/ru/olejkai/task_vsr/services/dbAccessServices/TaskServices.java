@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.olejkai.task_vsr.controllers.DepartmentController;
 import ru.olejkai.task_vsr.dto.TaskDto;
+import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.TaskRepository;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
@@ -78,9 +79,12 @@ public class TaskServices {
 
 
 
+
+
     public Page<TaskEntity> findTaskEntitiesByParamDepartmentExecuter(TaskSearchValues taskSearchValues, Pageable pageRequest, Principal principal) {
-        Long departmentIdExecuter=employeeServices.getCurrentEmployee(principal).getPostHasDepartmentByPostHasDepartmentId().getDepartmentId();
-        return taskRepository.findTaskEntitiesByParamDepartmentExecuter(
+        EmployeeEntity employeeEntity=employeeServices.getCurrentEmployee(principal);
+        Long departmentIdExecuter=employeeEntity.getPostHasDepartmentByPostHasDepartmentId().getDepartmentByDepartmentId().getId();
+        Page<TaskEntity> tasks=taskRepository.findTaskEntitiesByParamDepartmentExecuter(
                 departmentIdExecuter
                 , taskSearchValues.getEmployeeIdTasker()
                 , taskSearchValues.getTaskProblemId()
@@ -92,6 +96,7 @@ public class TaskServices {
                 , taskSearchValues.getStatus()
                 , pageRequest
         );
+        return tasks;
     }
 
 

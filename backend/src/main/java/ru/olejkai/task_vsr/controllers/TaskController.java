@@ -77,6 +77,79 @@ public class TaskController {
     }
 
 
+
+    @PostMapping("/searchMyTask")
+    public ResponseEntity<Page<TaskEntity>> findTaskEntitiesByParamCurrentTasker(@RequestBody TaskSearchValues taskSearchValues,
+                                                                              Principal principal){
+
+        LOG.info(principal.toString());
+        String sortColumn=taskSearchValues.getSortColumn()!=null?taskSearchValues.getSortColumn():null;
+        String sortDirection=taskSearchValues.getSortDirection()!=null?taskSearchValues.getSortDirection():null;
+
+        Integer pageNumber=taskSearchValues.getPageNumber()!=null?taskSearchValues.getPageNumber():null;
+        Integer pageSize=taskSearchValues.getPageSize()!=null?taskSearchValues.getPageSize():null;
+
+        Sort.Direction direction =sortDirection==null || sortDirection.trim().length() == 0 || sortDirection.trim().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC;
+
+        Sort sort=Sort.by(direction,sortColumn);
+
+
+
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber
+                ,pageSize
+                ,sort
+        );
+
+
+
+        Page<TaskEntity> result=taskServices.findTaskEntitiesByParamTasker(
+                taskSearchValues
+                ,pageRequest
+                ,principal
+        );
+
+        return ResponseEntity.ok(result);
+
+    }
+
+
+    @PostMapping("/searcTaskForMyDep")
+    public ResponseEntity<Page<TaskEntity>> findTaskEntitiesByParamCurrentDep(@RequestBody TaskSearchValues taskSearchValues,
+                                                                                 Principal principal){
+
+        LOG.info(principal.toString());
+        String sortColumn=taskSearchValues.getSortColumn()!=null?taskSearchValues.getSortColumn():null;
+        String sortDirection=taskSearchValues.getSortDirection()!=null?taskSearchValues.getSortDirection():null;
+
+        Integer pageNumber=taskSearchValues.getPageNumber()!=null?taskSearchValues.getPageNumber():null;
+        Integer pageSize=taskSearchValues.getPageSize()!=null?taskSearchValues.getPageSize():null;
+
+        Sort.Direction direction =sortDirection==null || sortDirection.trim().length() == 0 || sortDirection.trim().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC;
+
+        Sort sort=Sort.by(direction,sortColumn);
+
+
+
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber
+                ,pageSize
+                ,sort
+        );
+
+
+
+        Page<TaskEntity> result=taskServices.findTaskEntitiesByParamDepartmentExecuter(
+                taskSearchValues
+                ,pageRequest
+                ,principal
+        );
+
+        return ResponseEntity.ok(result);
+
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity createTask(@RequestBody TaskDto taskDto,
                                      Principal principal){

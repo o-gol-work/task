@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
 
   isRegistrationEnable=false;
   isTableEnable=true;
+  isTableForMeEnable= true;
 
   constructor(private tokenStorageService:TokenStorageService,
               private router:Router) { }
@@ -30,6 +31,7 @@ export class MainComponent implements OnInit {
   registration():void{
     this.isRegistrationEnable=true;
     this.isTableEnable=false;
+    this.isTableForMeEnable=false;
   }
 
 }

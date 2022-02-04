@@ -1,0 +1,91 @@
+<head>
+  <style>
+    .scroll{
+      /*width: 200px;*/
+      overflow-x: scroll;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+
+<div class="card">
+  <div class="card-body horizontal-scroll">
+    <h5 class="card-title ">Datatables</h5>
+
+
+    <!-- Table with stripped rows -->
+
+    <div class="dataTable-top">
+
+
+      <div class="dataTable-dropdown">
+        <label>
+          <select class="dataTable-selector">
+            <option value="5">5</option>
+            <option value="10" selected="">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
+          entries per page
+        </label>
+      </div>
+      <div class="dataTable-search">
+        <input class="dataTable-input" placeholder="Search..." type="text">
+      </div>
+    </div>
+
+
+    <table class="table datatable ">
+      <!--    <table class="table datatable navbar navbar-light bg-light flex-column align-items-stretch p-3">-->
+      <!--
+      parentId?: number;
+      id:number;
+      dateBegin: Date;
+      dataFinish?: Date;
+      status:number;
+      statusExec: number;
+      employeeTasker: Employee;
+      taskProblem:TaskProblem;
+      employeeExecuter?:Employee;
+      departmentExecuter:Department;-->
+
+
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ParentId</th>
+        <th scope="col">EmployeeTasker</th>
+        <th scope="col">DateBegin</th>
+        <th scope="col">TaskProblem</th>
+        <th scope="col">DepartmentExecuter</th>
+        <th scope="col">EmployeeExecuter</th>
+        <th scope="col">Status</th>
+        <th scope="col">StatusExec</th>
+        <th scope="col">DataFinish</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="isDataLoading">
+      <tr  *ngFor="let task of tasks; let num=index ">
+        <th scope="row">{{num+1}}</th>
+        <td>{{task.parentId}}</td>
+        <td>{{task.employeeTasker}}</td>
+        <td>{{task.dateBegin}}</td>
+        <td>{{task.taskProblem}}</td>
+        <td>{{task.departmentExecuter}}</td>
+        <td>{{task.employeeExecuter}}</td>
+        <td>{{task.status}}</td>
+        <td>{{task.statusExec}}</td>
+        <td>{{task.dataFinish}}</td>
+        <!--        <td *ngIf="isNameCheck(task); then task.employeeExecuter.surname else 'нету'"></td>-->
+        <!--        <td>{{task!=null ? task.employeeExecuter.surname : "null "}}</td>-->
+      </tr>
+
+      </tbody>
+
+    </table>
+    <!-- End Table with stripped rows -->
+
+  </div>
+</div>
+
