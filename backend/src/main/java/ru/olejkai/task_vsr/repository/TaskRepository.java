@@ -1,23 +1,22 @@
 package ru.olejkai.task_vsr.repository;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.olejkai.task_vsr.dto.TaskDto;
 import ru.olejkai.task_vsr.entity.TaskEntity;
-import ru.olejkai.task_vsr.search.TaskSearchValues;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 
     final String queryAllChildren="WITH RECURSIVE r (parent_id, id, employee_id_tasker, task_problem_id,  date_begin,employee_id_executer,department_id_executer,data_finish,status,status_exec) AS\n" +
@@ -677,6 +676,9 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
 
 
 
+
+
+
     @Query(value = queryAllChildren ,nativeQuery = true)
     Collection<TaskEntity> getAllChildren(Long id);
 
@@ -1107,14 +1109,82 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
     );
 
 
+    @Query(
+            "SELECT " +
+                    "new TaskEntity (" +
 
 
+                    "t.id" +
+                    ",t.dataFinish" +
+                    ",t.dateBegin" +
+                    ",t.parentId" +
+                    ",t.status" +
+                    ",t.statusExec" +
+
+                    ",d.parentId" +
+                    ",d.id" +
+                    ",d.title " +
+                    ",d.telephoneNumber" +
+
+                    ",e.id,\n" +
+                    "e.name ,\n" +
+                    "e.surname ,\n" +
+                    "e.tabelNumber ,\n" +
+                    "e.telephoneNumber,\n" +
+                    "e.worked,\n" +
+                    "phd.id,\n" +
+                    "er.id,\n" +
+                    "er.title," +
+                    "er.parentId\n" +
+                    ",de.parentId" +
+                    ",de.id" +
+                    ",de.title " +
+                    ",de.telephoneNumber," +
+
+                    "ee.id,\n" +
+                    "ee.name ,\n" +
+                    "ee.surname ,\n" +
+                    "ee.tabelNumber ,\n" +
+                    "ee.telephoneNumber,\n" +
+                    "ee.worked,\n" +
+                    "phde.id,\n" +
+                    "ere.id,\n" +
+                    "ere.title," +
+                    "ere.parentId\n" +
+                    ",dee.parentId" +
+                    ",dee.id" +
+                    ",dee.title " +
+                    ",dee.telephoneNumber," +
+
+                    "tp.id ,\n" +
+                    "tp.title ,\n" +
+                    "tp.parentNumber ,\n" +
+                    "tp.level " +
+                    ")" +
 
 
+                    " FROM TaskEntity t " +
+//            ---------------------------------------------------------------------------------------------------------
+                    " left outer join DepartmentEntity  d on t.departmentIdExecuter=d.id\n " +
 
 
+                    "left outer join  EmployeeEntity e on (t.employeeIdExecuter=e.id)\n" +
+                    "left outer join  PostHasDepartmentEntity phd on (phd.id=e.postHasDepartmentId)" +
+                    "left outer join  PostEntity er on (er.id=phd.postId)" +
+                    "left outer join  DepartmentEntity de on (de.id=phd.departmentId)" +
+
+                    "left outer join  EmployeeEntity ee on (ee.id=t.employeeIdTasker)\n" +
+                    "left outer join  PostHasDepartmentEntity phde on (phde.id=ee.postHasDepartmentId)" +
+                    "left outer join  PostEntity ere on (ere.id=phde.postId)" +
+                    "left outer join  DepartmentEntity dee on (dee.id=phde.departmentId)" +
+
+                    " left outer join TaskProblemEntity tp on tp.id=t.taskProblemId\n" +
 
 
+                    "where t.id=:id")
+     TaskEntity findTaskByIdTesting(
+            @Param("id") Long id
+    ) ;
 
 
     @Query("SELECT t FROM TaskEntity t \n" +
@@ -1143,7 +1213,31 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
             , @Param("status")Integer status
 
                                                       );
+
+
+
+    TaskEntity saveAndFlush(TaskEntity taskEntity);
+
+
+    /*@Transactional
+    @Modifying
+    @Query(value = "Insert into task (employee_id_tasker, task_problem_id) values (:taskProblemId,:employeeIdTasker)", nativeQuery = true)
+    Optional<TaskEntity>  saveParent ( @Param("taskProblemId") Long taskProblemId
+            , @Param("employeeIdTasker" ) Long employeeIdTasker);
+
     @Transactional
+    @Modifying
+    @Query(value = "Insert into task (parent_id, employee_id_tasker, task_problem_id) values (:parentId,:taskProblemId,:employeeIdTasker)", nativeQuery = true)
+    Optional<TaskEntity>  saveChild ( @Param("parentId") Long parentId
+            , @Param("taskProblemId") Long taskProblemId
+            , @Param("employeeIdTasker" ) Long employeeIdTasker);*/
+
+
+
+
+
+
+    /*@Transactional
     @Modifying
     @Query(value = "Insert into task (employee_id_tasker, task_problem_id) values (:taskProblemId,:employeeIdTasker)", nativeQuery = true)
     void  saveParent ( @Param("taskProblemId") Long taskProblemId
@@ -1154,7 +1248,7 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
     @Query(value = "Insert into task (parent_id, employee_id_tasker, task_problem_id) values (:parentId,:taskProblemId,:employeeIdTasker)", nativeQuery = true)
     void  saveChild ( @Param("parentId") Long parentId
             , @Param("taskProblemId") Long taskProblemId
-            , @Param("employeeIdTasker" ) Long employeeIdTasker);
+            , @Param("employeeIdTasker" ) Long employeeIdTasker);*/
 
 
 
@@ -1242,6 +1336,13 @@ public interface TaskRepository extends JpaRepository< TaskEntity,Long> {
     TaskEntity findLastByTasker  (
             @Param("taskerId") Long taskerId
             );
+
+
+
+
+
+
+
 
 
 
