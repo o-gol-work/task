@@ -21,6 +21,10 @@ public class TaskProblemEntity {
     private Collection<TaskEntity> tasksById;
     private Collection<TaskProblemEntity> taskProblemsById;*/
 
+    public TaskProblemEntity(Long id) {
+        this.id = id;
+    }
+
     public TaskProblemEntity(Long id, String title) {
         this.id = id;
         this.title = title;

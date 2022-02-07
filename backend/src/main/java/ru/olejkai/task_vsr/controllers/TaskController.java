@@ -10,9 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.olejkai.task_vsr.dto.TaskDto;
+import ru.olejkai.task_vsr.dto.TaskDtoCreate;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.search.TaskSearchValues;
@@ -150,13 +153,36 @@ public class TaskController {
     }
 
 
+
+    @GetMapping("/task/{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable Long id){
+
+//        return taskRepository.getTaskEntityById(275l);
+        TaskDto taskEntity=null;
+        try {
+            taskEntity=taskServices.findTaskDto(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            LOG.error("task with id={} not found",id);
+            return new ResponseEntity(String.format("task with id=%s not found",id), HttpStatus.NOT_ACCEPTABLE);
+
+
+        }
+
+        return ResponseEntity.ok(taskEntity);
+    }
+
+
+
     @PostMapping("/create")
-    public ResponseEntity createTask(@RequestBody TaskDto taskDto,
+    public ResponseEntity createTask(@RequestBody TaskDtoCreate taskDto,
                                      Principal principal){
-        TaskEntity result;
-        result=taskServices.createTask(taskDto,principal);
-        if (result!=null)
-            return ResponseEntity.ok(result);
+        TaskEntity taskEntity;
+        taskEntity=taskServices.createTask(taskDto,principal);
+
+
+        if (taskEntity!=null)
+            return ResponseEntity.ok(taskEntity);
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Запрос не был создан!!");
 
@@ -170,6 +196,13 @@ public class TaskController {
     @GetMapping("/all_tasks")
     public Collection<TaskEntity> taskEntities(){
         return taskServices.findAll();
+    }
+
+
+    @MessageMapping("/createSocket")
+    @SendTo("/topic/newTask")
+    public TaskEntity createWithSocket(TaskEntity taskEntity){
+        return taskServices.createTaskSocKet(taskEntity);
     }
 
 

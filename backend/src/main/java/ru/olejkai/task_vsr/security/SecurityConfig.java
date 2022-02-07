@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import ru.olejkai.task_vsr.services.authServices.CustomUserDetailsServices;
 
 /*@Configuration
@@ -83,9 +84,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsServices customUserDetailsService;
 
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors()
+//                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and().csrf().disable()
+
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -20,6 +20,8 @@ import { RegistrationComponent } from './views/registration/registration.compone
 import {MatDialogModule} from "@angular/material/dialog";
 import { PopUpComponent } from './views/pop-up/pop-up.component';
 import { TableForMeComponent } from './views/table-for-me/table-for-me.component';
+import { AddtaskComponent } from './views/addtask/addtask.component';
+import {StompService} from "./services/stomp.service";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { TableForMeComponent } from './views/table-for-me/table-for-me.component
     HeaderNavComponent,
     RegistrationComponent,
     PopUpComponent,
-    TableForMeComponent
+    TableForMeComponent,
+    AddtaskComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +51,8 @@ import { TableForMeComponent } from './views/table-for-me/table-for-me.component
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
+    StompService
   ],
   bootstrap: [AppComponent]
 })

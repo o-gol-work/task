@@ -25,7 +25,7 @@ export class TableForMeComponent implements OnInit {
 
   private taskSearchValues:TaskSearchValues={
     pageNumber:0,
-    pageSize:10,
+    pageSize:30,
     sortColumn:"dateBegin",
     sortDirection:"desc"
 

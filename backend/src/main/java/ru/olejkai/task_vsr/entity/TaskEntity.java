@@ -1,8 +1,10 @@
 package ru.olejkai.task_vsr.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +20,7 @@ import java.util.Date;
         ,"employeeIdTasker"
         ,"taskProblemId"
         ,"employeeIdExecuter"
-        ,"departmentIdExecuter"
+//        ,"departmentIdExecuter"
 
 })
 public class TaskEntity implements Serializable {
@@ -113,17 +115,20 @@ public class TaskEntity implements Serializable {
         this.taskProblemByTaskProblemId = new TaskProblemEntity(idProblem, titelProblem,parentNumber,level);
     }
 
+    public TaskEntity(@Nullable Long parentId, Long employeeIdTasker, Long taskProblemId) {
+        this.parentId = parentId;
+        this.id = employeeIdTasker;
+        this.taskProblemId=taskProblemId;
+    }
 
 
 
 
-
-
-
-
-
-
-
+    public TaskEntity(TaskEntity taskEntity, Long employeeIdTasker) {
+        this.parentId = taskEntity.parentId;
+        this.id = employeeIdTasker;
+        this.taskProblemId=taskEntity.taskProblemId;
+    }
 
 
 
@@ -153,6 +158,9 @@ public class TaskEntity implements Serializable {
         return employeeIdTasker;
     }
 
+    public void setEmployeeIdTasker(Long employeeIdTasker) {
+        this.employeeIdTasker = employeeIdTasker;
+    }
 
     @Basic
     @Column(name = "task_problem_id", nullable = false)

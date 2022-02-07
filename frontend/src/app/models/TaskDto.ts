@@ -1,10 +1,10 @@
 export class TaskDto{
   parentId:number;
-  taskProblemId:number;
+  idProblem:number;
 
 
-  constructor(parentId: number, taskProblemId: number) {
+  constructor(parentId: number, idProblem: number) {
     this.parentId = parentId;
-    this.taskProblemId = taskProblemId;
+    this.idProblem = idProblem;
   }
 }

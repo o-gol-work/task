@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.olejkai.task_vsr.controllers.DepartmentController;
 import ru.olejkai.task_vsr.dto.TaskDto;
+import ru.olejkai.task_vsr.dto.TaskDtoCreate;
 import ru.olejkai.task_vsr.entity.EmployeeEntity;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.repository.TaskRepository;
@@ -25,6 +27,8 @@ import ru.olejkai.task_vsr.search.TaskSearchValues;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class TaskServices {
@@ -48,7 +52,7 @@ public class TaskServices {
     }
 
 
-    public void createTaskParent(Long taskProblemID, Principal principal){
+    /*public void createTaskParent(Long taskProblemID, Principal principal){
         Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
         taskRepository.saveParent(taskProblemID,employeeIdTasker);
 
@@ -58,7 +62,7 @@ public class TaskServices {
         Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId();
         taskRepository.saveChild(parentId,taskProblemID,employeeIdTasker);
 
-    }
+    }*/
 
 
     public Page<TaskEntity> findTaskEntitiesByParamTasker(TaskSearchValues taskSearchValues, Pageable pageRequest, Principal principal) {
@@ -143,6 +147,47 @@ public class TaskServices {
 
 
     @Transactional
+    public TaskEntity createTask(TaskDtoCreate taskEntity, Principal principal){
+        TaskEntity tse=new TaskEntity();
+        tse.setEmployeeIdTasker(employeeServices.getCurrentEmployee(principal).getId()!=null?employeeServices.getCurrentEmployee(principal).getId():null);
+        tse.setTaskProblemId(taskEntity.getIdProblem());
+        tse.setParentId(taskEntity.getParentId());
+        tse=taskRepository.findTaskByIdTesting(taskRepository.saveAndFlush(tse).getId());
+        return tse;
+    }
+
+
+    @Transactional
+    public TaskEntity createTaskSocKet(TaskEntity taskEntity){
+        return taskRepository.saveAndFlush(taskEntity);
+    }
+
+
+
+
+    /*@Transactional
+    public TaskEntity createTask(TaskDto taskDto, Principal principal){
+        Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
+        Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId()!=null?employeeServices.getCurrentEmployee(principal).getId():null;
+        TaskEntity result=null;
+
+
+        try {
+            if(parentId!=null)
+                result=taskRepository.saveChild(parentId,employeeIdTasker,taskDto.getIdProblem()).orElseThrow();
+            else
+                result=taskRepository.saveParent(employeeIdTasker,taskDto.getIdProblem()).orElseThrow();
+//            return taskRepository.findLastByTasker(taskDto.getIdEmployeeTasker());
+            return result;
+        }catch (Exception e){
+
+            LOG.error(e.getLocalizedMessage());
+            return null;
+        }
+    }*/
+
+
+    /*@Transactional
     public TaskEntity createTask(TaskDto taskDto, Principal principal){
         Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
         Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId()!=null?employeeServices.getCurrentEmployee(principal).getId():null;
@@ -160,9 +205,9 @@ public class TaskServices {
             LOG.error(e.getLocalizedMessage());
             return null;
         }
-    }
+    }*/
 
-    @Transactional
+    /*@Transactional
     public TaskEntity createTaskTest(TaskDto taskDto){
         Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
 //        TaskEntity result=null;
@@ -179,7 +224,7 @@ public class TaskServices {
             LOG.error(e.getLocalizedMessage());
             return null;
         }
-    }
+    }*/
 
 
 
@@ -224,4 +269,10 @@ public class TaskServices {
         return taskRepository.getAllParent(id);
 
     }
+
+
+    public TaskEntity findByIdTesting(Long id){
+        return taskRepository.findTaskByIdTesting(id);
+    }
+
 }

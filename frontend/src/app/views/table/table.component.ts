@@ -6,6 +6,8 @@ import {TaskService} from "../../services/task.service";
 import {Employee} from "../../models/Employee";
 import {TaskSearchValues} from "../../models/TaskSearchValues";
 import {TokenStorageService} from "../../services/auth/token-storage.service";
+import {HttpClient} from "@angular/common/http";
+import {StompService} from "../../services/stomp.service";
 
 
 @Component({
@@ -25,30 +27,38 @@ export class TableComponent implements OnInit {
 
   constructor(
     // private dataHandler:DataHandlerService,
-
+    // private http:HttpClient,
+    private stompService:StompService,
     private tokenStorageService:TokenStorageService,
     private taskService:TaskService
-  ) { }
+  ) {
+    // this.refreshTaskTable();
+  }
 
 
   private taskSearchValues:TaskSearchValues={
   pageNumber:0,
-  pageSize:10,
+  pageSize:30,
   sortColumn:"dateBegin",
   sortDirection:"desc"
 
   }
 
   ngOnInit(): void {
+
     this.isLoggedIn=!!this.tokenStorageService.getToken();
-    this.taskService.getTaskByCurrent(this.taskSearchValues).subscribe({next:value => {
+    this.stompService.subscribe('/topic/newTask',():any=>{
+      this.refreshTaskTable()
+    })
+    // this.refreshTaskTable()
+    /*this.taskService.getTaskByCurrent(this.taskSearchValues).subscribe({next:value => {
         // console.log(value)
         this.tasks=value.content;
         // console.log(this.tasks)
         this.isDataLoading=true;
       },error:err => {
       console.log(err.message)
-      }})
+      }})*/
 
     /*// this.tasks=this.dataHandler.getTaskDecFromTask();
 
@@ -68,6 +78,19 @@ export class TableComponent implements OnInit {
 
     // this.taskService.getTask().subscribe(data=>this.employees=JSON.stringify(data));
     console.log(this.employees)*/
+  }
+
+
+
+  private refreshTaskTable():void{
+    this.taskService.getTaskByCurrentSocket(this.taskSearchValues).subscribe({next:value => {
+        // console.log(value)
+        this.tasks=value.content;
+        // console.log(this.tasks)
+        this.isDataLoading=true;
+      },error:err => {
+        console.log(err.message)
+      }})
   }
 
   /*isNameCheck(task:Task): boolean {

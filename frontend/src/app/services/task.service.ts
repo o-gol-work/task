@@ -30,6 +30,11 @@ export class TaskService {
     return this.httpClient.post(TASK_API+'searchMyTask',taskSearchValues)
   }
 
+  public getTaskByCurrentSocket(taskSearchValues:TaskSearchValues):Observable<any>{
+    // return this.httpClient.post(TASK_API+'search',taskSearchValues)
+    return this.httpClient.post(TASK_API+'createSocket',taskSearchValues)
+  }
+
   public getTaskByCurrentDep(taskSearchValues:TaskSearchValues):Observable<any>{
     // return this.httpClient.post(TASK_API+'search',taskSearchValues)
     return this.httpClient.post(TASK_API+'searcTaskForMyDep',taskSearchValues)

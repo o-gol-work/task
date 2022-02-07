@@ -5,13 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.olejkai.task_vsr.entity.TaskEntity;
 import ru.olejkai.task_vsr.entity.TaskProblemEntity;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface TaskProblemRepository extends JpaRepository<TaskProblemEntity,Long> {
 
 

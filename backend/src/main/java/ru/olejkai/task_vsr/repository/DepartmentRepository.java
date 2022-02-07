@@ -2,11 +2,13 @@ package ru.olejkai.task_vsr.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.olejkai.task_vsr.entity.DepartmentEntity;
 
 import java.util.Collection;
 import java.util.List;
 
+@Repository
 public interface DepartmentRepository extends JpaRepository<DepartmentEntity,Long> {
 
      final String queryAllChildren="WITH RECURSIVE r (parent_id, id,  title, telephone_number) AS\n" +
