@@ -6,10 +6,7 @@ import {TaskDto} from "../models/TaskDto";
 
 
 
-// const TASK_API='http://localhost:8080/start/employees/all_employees';
-// const TASK_API='https://jsonplaceholder.typicode.com/posts';
 const TASK_API='http://localhost:8080/tasks/';
-// const TASK_API='http://localhost:8080/start/tasks/task/275';
 
 @Injectable({
   providedIn: 'root'

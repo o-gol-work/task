@@ -29,16 +29,12 @@ public class EmployeeCreateServices {
     }
 
     public EmployeeEntity createEmployee(SignupRequest employee)  {
-//        Collection<EmployeeRoleEntity> employeeRoleEntities=new ArrayList<>();
         EmployeeEntity employeeEntity= new EmployeeEntity();
         employeeEntity.setTabelNumber(Integer.parseInt(employee.getTabelNumber()));
         employeeEntity.setName(employee.getName());
         employeeEntity.setSurname(employee.getSurname());
         employeeEntity.setTelephoneNumber(employee.getTelephoneNumber());
         employeeEntity.setPostHasDepartmentId(Long.parseLong(employee.getPostHasDepartmentId()));
-//        employeeEntity.getEmployeeRolesById().add(new EmployeeRoleEntity(5L,"ROLE_USER"));
-//        employeeEntity.setEmployeeRolesById(employeeRoleEntities.add(new));
-//        employeeEntity.setEmployeeRolesById(new List<EmployeeRoleEntity>().add(new EmployeeRoleEntity("ROLE_USER")) );
         employeeEntity.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeEntity.setWorked((byte) 1);
         try{

@@ -26,7 +26,6 @@ public class JWTTokenProvider {
 
         claimsMap.put("id",employeeId);
         claimsMap.put("username",employee.getUsername());
-//        claimsMap.put("username",employee.getTabelNumber());
         claimsMap.put("name",employee.getName());
         claimsMap.put("surname",employee.getSurname());
         String encodedString = Base64.getEncoder().encodeToString(SecurityConstants.SECRET.getBytes());
@@ -35,8 +34,6 @@ public class JWTTokenProvider {
                 .addClaims(claimsMap)
                 .setIssuedAt(now)
                 .setExpiration(expiryDat)
-//                .signWith(SignatureAlgorithm.HS512, encodedString)
-//                .signWith(SignatureAlgorithm.HS512, "SecretKeyGenJWT")
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
 

@@ -53,10 +53,8 @@ public class AuthController {
             @Valid @RequestBody LoginRequest loginRequest
             , BindingResult bindingResult)  {
         LOG.info("Signin start");
-        System.out.println("fuuuuuuuuuuu");
         ResponseEntity<Object> responseEntity = responseErrorValidation.mapValidationServices(bindingResult);
         if (!ObjectUtils.isEmpty(responseEntity)) return responseEntity;
-        LOG.info("Signin no exeption");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()

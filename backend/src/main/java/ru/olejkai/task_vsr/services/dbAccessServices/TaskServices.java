@@ -165,66 +165,6 @@ public class TaskServices {
 
 
 
-    /*@Transactional
-    public TaskEntity createTask(TaskDto taskDto, Principal principal){
-        Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
-        Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId()!=null?employeeServices.getCurrentEmployee(principal).getId():null;
-        TaskEntity result=null;
-
-
-        try {
-            if(parentId!=null)
-                result=taskRepository.saveChild(parentId,employeeIdTasker,taskDto.getIdProblem()).orElseThrow();
-            else
-                result=taskRepository.saveParent(employeeIdTasker,taskDto.getIdProblem()).orElseThrow();
-//            return taskRepository.findLastByTasker(taskDto.getIdEmployeeTasker());
-            return result;
-        }catch (Exception e){
-
-            LOG.error(e.getLocalizedMessage());
-            return null;
-        }
-    }*/
-
-
-    /*@Transactional
-    public TaskEntity createTask(TaskDto taskDto, Principal principal){
-        Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
-        Long employeeIdTasker=employeeServices.getCurrentEmployee(principal).getId()!=null?employeeServices.getCurrentEmployee(principal).getId():null;
-//        TaskEntity result=null;
-
-
-        try {
-            if(parentId!=null)
-                taskRepository.saveChild(parentId,employeeIdTasker,taskDto.getIdProblem());
-            else
-                taskRepository.saveParent(employeeIdTasker,taskDto.getIdProblem());
-            return taskRepository.findLastByTasker(taskDto.getIdEmployeeTasker());
-        }catch (Exception e){
-
-            LOG.error(e.getLocalizedMessage());
-            return null;
-        }
-    }*/
-
-    /*@Transactional
-    public TaskEntity createTaskTest(TaskDto taskDto){
-        Long parentId=taskDto.getParentId()!=null?taskDto.getParentId():null;
-//        TaskEntity result=null;
-
-
-        try {
-            if(parentId!=null)
-                taskRepository.saveChild(parentId,taskDto.getIdEmployeeTasker(),taskDto.getIdProblem());
-            else
-                taskRepository.saveParent(taskDto.getIdEmployeeTasker(),taskDto.getIdProblem());
-            return taskRepository.findLastByTasker(taskDto.getIdEmployeeTasker());
-        }catch (Exception e){
-
-            LOG.error(e.getLocalizedMessage());
-            return null;
-        }
-    }*/
 
 
 

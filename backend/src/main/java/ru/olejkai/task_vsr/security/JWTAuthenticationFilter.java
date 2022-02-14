@@ -60,7 +60,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 
 
-//            String body=reader(request);
 
             if(jwt==null && signupRequest!=null)
                 throw new NullPointerException();
@@ -70,9 +69,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 LOG.info(userId.toString());
                 EmployeeEntity employeeDetail=customUserDetailsServices.loadUserById(userId);
 
-                /*UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
-                        employeeDetail,null, Collections.emptyList()
-                );*/
                 UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(
                         employeeDetail,null, employeeDetail.getAuthorities()
                 );
@@ -84,16 +80,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e ) {
             LOG.error( e.getMessage());
             LOG.error(e.getMessage() + " error Filter User Authentication class: JWTAuthenticationFilter method: doFilterInternal ");
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             LOG.info(convertObjectToJson(e));
-//            response.getWriter().write(convertObjectToJson(e.getMessage()+"FUUUUUUUUUUUUUUUUUUUUU"));
         }
 
 
        filterChain.doFilter(
                cachedBodyHttpServletRequest
-//               request
                ,response);
 
    }
@@ -102,7 +94,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
    private String reader(HttpServletRequest request) throws IOException {
        StringBuilder sb = new StringBuilder();
 
-//       BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
        BufferedReader reader = request.getReader();
        try {
            String line;
@@ -118,13 +109,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
    }
 
 
-     static String extractPostRequestBody(HttpServletRequest request) throws IOException {
-         if ("POST".equalsIgnoreCase(request.getMethod())) {
-             Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-             return s.hasNext() ? s.next() : "";
-         }
-         return "";
-     }
 
 
 
@@ -153,43 +137,3 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 }
 
 
-/*public class JWTAuthenticationFilter extends OncePerRequestFilter {
-    public static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
-
-    @Autowired
-    private JWTTokenProvider jwtTokenProvider;
-    @Autowired
-    private CustomUserDetailsServices customUserDetailsService;
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String jwt = getJWTFromRequest(httpServletRequest);
-            if (StringUtils.hasText(jwt) && jwtTokenProvider.validationToken(jwt)) {
-                Long userId = jwtTokenProvider.getUserIdFromToken(jwt);
-                EmployeeEntity userDetails = customUserDetailsService.loadUserById(userId);
-
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, Collections.emptyList()
-                );
-
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));;
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        } catch (Exception ex) {
-            LOG.error("Could not set user authentication");
-        }
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
-
-    private String getJWTFromRequest(HttpServletRequest request) {
-        String bearToken = request.getHeader(SecurityConstants.HEADER_STRING);
-        if (StringUtils.hasText(bearToken) && bearToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-            return bearToken.split(" ")[1];
-        }
-        return null;
-    }
-
-
-}*/

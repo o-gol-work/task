@@ -33,19 +33,15 @@ public class EmployeeController {
 
     private EmployeeServices employeeServices;
     private CustomUserDetailsServices customUserDetailsServices;
-//    private JWTTokenProvider jwtTokenProvider;
     public static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
     public EmployeeController(EmployeeServices employeeServices, CustomUserDetailsServices customUserDetailsServices
-//                              ,JWTTokenProvider jwtTokenProvider
     ) {
         this.employeeServices = employeeServices;
         this.customUserDetailsServices = customUserDetailsServices;
-//        this.jwtTokenProvider=jwtTokenProvider;
     }
 
 
-    //    @GetMapping("/api/auth/employee")
     @GetMapping("/employee")
     public ResponseEntity<EmployeeEntity> currentEmployee(@RequestHeader("Authorization") String token){
 

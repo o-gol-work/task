@@ -30,7 +30,6 @@ public class CustomUserDetailsServices implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        EmployeeEntity emplTest=employeeRepository.findEmployeeEntityByTabelNumberDetails(Integer.parseInt(username)).get();
         EmployeeEntity employee=employeeRepository.findEmployeeEntityByTabelNumber(Integer.parseInt(username))
                 .orElseThrow(()->new UsernameNotFoundException(String.format("User %s not found",username)));
         EmployeeEntity employeeDetail=build(employee);
@@ -49,7 +48,6 @@ public class CustomUserDetailsServices implements UserDetailsService {
 
     private EmployeeEntity build(EmployeeEntity employee){
         Collection<EmployeeRoleEntity> roleEmp=employeeRoleEntityRepository.findEmployeeRoleEntityByEmployeeId(employee.getId());
-//        Collection<GrantedAuthority> roles=employee.getEmployeeRolesById().stream().map(role-> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
         Collection<GrantedAuthority> roles=employeeRoleEntityRepository.findEmployeeRoleEntityByEmployeeId(employee.getId()).stream()
                 .map(role-> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
         EmployeeEntity emplTast=new EmployeeEntity(
